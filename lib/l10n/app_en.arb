@@ -1,0 +1,165 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Confidants",
+  "@appTitle": { "description": "Application name shown in the OS task switcher." },
+
+  "navChat": "Chat",
+  "navProfiles": "Profiles",
+  "navSettings": "Settings",
+
+  "chatTitle": "Confidants AI",
+  "chatSubtitle": "Offline personal context assistant",
+  "chatPlaceholderTitle": "Local AI Chat Interface",
+  "chatPlaceholderMessage": "Ask anything about your saved profiles. Context chunks are loaded locally on your device.",
+
+  "profilesTitle": "Profiles",
+  "profilesSubtitle": "Contacts & personal knowledge base",
+  "settingsTitle": "Settings",
+  "settingsSubtitle": "Security, appearance & AI",
+  "detailSubtitle": "Profile details & custom attributes",
+  "newProfileTitle": "New Confidant Profile",
+  "unnamedProfile": "Unnamed Profile",
+
+  "authVaultLockedTitle": "Confidants Vault Locked",
+  "authVaultLockedMessage": "Verify your identity with biometrics or device credentials to continue.",
+  "authVaultFailedMessage": "Authentication was canceled or did not succeed. Verify your identity to access offline profiles.",
+  "authUnlockButton": "Unlock Confidants",
+  "authUnlockReason": "Authenticate to unlock Confidants",
+  "authEnableReason": "Confirm your identity to enable biometric launch lock",
+  "biometricsUnavailable": "Biometric authentication is not available on this device.",
+
+  "darkModeTitle": "Dark Mode",
+  "darkModeSubtitleOn": "Dark blue & carbon theme active",
+  "darkModeSubtitleOff": "High-contrast light theme active",
+  "biometricLockTitle": "Biometric Launch Lock",
+  "biometricLockSubtitle": "Require fingerprint or device authentication on startup",
+  "trainingTitle": "Include in AI Knowledge Base",
+  "trainingSubtitle": "Export this profile to local mini-LLM context chunks",
+  "aiOptInTitle": "Enable Local AI Assistant",
+  "aiOptInSubtitle": "Opt in to query your profiles with an on-device mini-LLM",
+
+  "aiModelSectionTitle": "AI Model Configuration",
+  "aiModelDropdownLabel": "Select On-Device Model",
+
+  "aiModelSmolTitle": "SmolLM2 360M Instruct",
+  "aiModelSmolSpecs": "Storage: ~250 MB • RAM: ~450 MB",
+  "aiModelSmolWarning": "Featherlight footprint. Runs smoothly on almost any device with minimal battery impact, best for simple English keyword lookups.",
+
+  "aiModelQwenHalfTitle": "Qwen 2.5 0.5B Instruct (Default)",
+  "aiModelQwenHalfSpecs": "Storage: ~350 MB • RAM: ~600 MB",
+  "aiModelQwenHalfWarning": "Low storage and memory usage. Fast response speed on most phones and handles basic English context recall reliably.",
+
+  "aiModelLlamaOneTitle": "Llama 3.2 1B Instruct",
+  "aiModelLlamaOneSpecs": "Storage: ~750 MB • RAM: ~1.3 GB",
+  "aiModelLlamaOneWarning": "Moderate download and RAM usage. Stronger conversational English reasoning, but may warm up older devices.",
+
+  "aiModelQwenOneHalfTitle": "Qwen 2.5 1.5B Instruct",
+  "aiModelQwenOneHalfSpecs": "Storage: ~1.0 GB • RAM: ~1.8 GB",
+  "aiModelQwenOneHalfWarning": "Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-profile reasoning, recommended for mid-to-high-tier devices.",
+
+  "aiModelLlamaThreeTitle": "Llama 3.2 3B Instruct",
+  "aiModelLlamaThreeSpecs": "Storage: ~2.0 GB • RAM: ~3.2 GB",
+  "aiModelLlamaThreeWarning": "Heavy storage and RAM warning: Needs 2 GB disk space and over 3 GB free RAM. May cause slowdowns or out-of-memory crashes on budget phones.",
+
+  "aiModelCustomTitle": "Custom Local Model (.gguf)",
+  "aiModelCustomSpecs": "Storage & RAM: Depends on your .gguf file",
+  "aiModelCustomWarning": "Warning: Large quantizations (>2 GB) can exceed mobile RAM limits and crash the app. Prefer Q4_K_M models between 0.5B and 1.5B.",
+  "aiModelCustomSubtitleUnset": "No custom .gguf file path selected yet",
+  "aiModelCustomChangeButton": "Choose .gguf Path",
+
+  "aiModelCustomDialogTitle": "Set Custom Model Path",
+  "aiModelCustomPathLabel": "Local .gguf File Path",
+  "aiModelCustomPathHint": "/storage/emulated/0/Download/model.gguf",
+  "aiModelCustomSaveButton": "Use Model",
+  "aiModelCustomCancelButton": "Cancel",
+  "aiModelSwitchedToast": "Active model set to {modelName}.",
+  "@aiModelSwitchedToast": { "placeholders": { "modelName": { "type": "String" } } },
+  "aiModelCustomInvalidToast": "Please enter a valid .gguf file path.",
+
+  "chatOptInRequiredTitle": "Local AI is Disabled",
+  "chatOptInRequiredSubtitle": "Opt in to Local AI in Settings or tap below to enable on-device profile querying.",
+  "chatOptInButton": "Enable Local AI",
+  "chatEmptyTitle": "Ask About Your Confidants",
+  "chatEmptySubtitle": "Active model: {modelName} • {chunkCount, plural, =0{No profile chunks indexed yet} =1{1 profile chunk in memory} other{{chunkCount} profile chunks in memory}}",
+  "@chatEmptySubtitle": {
+    "placeholders": {
+      "modelName": { "type": "String" },
+      "chunkCount": { "type": "int" }
+    }
+  },
+  "chatInputHint": "Ask about birthdays, coffee orders, hobbies...",
+  "chatClearTooltip": "Clear Conversation",
+  "chatClearedToast": "Conversation cleared.",
+  "chatGeneratingStatus": "Thinking...",
+  "chatErrorResponse": "Unable to generate a response from local AI context.",
+  "chatNoContextResponse": "No training-enabled profile chunks are indexed yet. Add a profile in the Profiles tab first.",
+  "chatMockPrefix": "[{modelName} • {chunkCount} chunks in context]\n{summary}",
+  "@chatMockPrefix": {
+    "placeholders": {
+      "modelName": { "type": "String" },
+      "chunkCount": { "type": "int" },
+      "summary": { "type": "String" }
+    }
+  },
+  "chatNoMatchSummary": "I checked your exported profile context chunks, but couldn't find a direct match for that query. Try asking by a person's name, nickname, birthday, likes, or custom attributes.",
+
+  "searchProfilesHint": "Search profiles by name, phone, or notes...",
+  "importFromContactsTooltip": "Import from Contacts",
+  "newProfileTooltip": "New Profile",
+  "addProfileButton": "Add Profile",
+  "noContactsFound": "No contacts found or permission denied.",
+  "emptyInitialTitle": "No Confidant Profiles Yet",
+  "emptyInitialSubtitle": "Import a contact from your address book or create a rich personal profile manually.",
+  "importContactButton": "Import Contact",
+  "createManuallyButton": "Create Manually",
+  "emptySearchTitle": "No Matching Profiles",
+  "emptySearchSubtitle": "Try adjusting your search keywords or phone number filter.",
+
+  "importDeviceContactTitle": "Import Device Contact",
+  "searchContactsHint": "Search contacts by name or phone...",
+  "noMatchingContacts": "No matching contacts found.",
+
+  "enterNameError": "Please enter a name for this profile.",
+  "profileSaved": "Profile saved for {name}.",
+  "@profileSaved": { "placeholders": { "name": { "type": "String" } } },
+  "profileDeleted": "Deleted {name}.",
+  "@profileDeleted": { "placeholders": { "name": { "type": "String" } } },
+  "deleteProfileTooltip": "Delete Profile",
+
+  "noPhoneNumber": "No phone number",
+  "sha256Label": "SHA-256: {hash}",
+  "@sha256Label": { "placeholders": { "hash": { "type": "String" } } },
+  "customAttributesCount": "{count, plural, =0{No custom attributes} =1{1 custom attribute} other{{count} custom attributes}}",
+  "@customAttributesCount": { "placeholders": { "count": { "type": "int" } } },
+
+  "fieldFullName": "Full Name",
+  "hintFullName": "Enter contact name",
+  "fieldNickname": "Nickname (Optional)",
+  "hintNickname": "What do you call them?",
+  "fieldPhone": "Phone Number",
+  "hintPhone": "+1 555 010 9999",
+  "fieldEmail": "Email Address (Optional)",
+  "hintEmail": "person@example.com",
+  "fieldNotes": "Notes to Remember",
+  "hintNotes": "Key personal context, stories, and reminders...",
+  "fieldLikes": "Likes (comma-separated)",
+  "hintLikes": "Matcha, jazz, sci-fi books",
+  "fieldDislikes": "Dislikes (comma-separated)",
+  "hintDislikes": "Crowded places, cilantro",
+  "fieldHobbies": "Hobbies & Interests (comma-separated)",
+  "hintHobbies": "Bouldering, analog photography, chess",
+  "selectBirthday": "Select Birthday",
+  "birthdayStoredHint": "ISO 8601 date stored locally",
+  "saveProfileButton": "Save Profile",
+
+  "customAttributesTitle": "Custom Attributes",
+  "addRowButton": "Add Row",
+  "customAttributesEmptyHint": "Add dynamic key-value pairs (e.g., Favorite Coffee, Allergies, Pet Name).",
+  "attributeLabel": "Attribute",
+  "attributeHint": "e.g. Coffee",
+  "valueLabel": "Value",
+  "valueHint": "e.g. Oat Cortado",
+  "removeAttributeTooltip": "Remove attribute",
+  "addAnotherButton": "Add Another"
+}

@@ -1,0 +1,164 @@
+{
+  "@@locale": "tr",
+
+  "appTitle": "Confidants",
+
+  "navChat": "Sohbet",
+  "navProfiles": "Profiller",
+  "navSettings": "Ayarlar",
+
+  "chatTitle": "Confidants Yapay Zekâ",
+  "chatSubtitle": "Çevrimdışı kişisel bağlam asistanı",
+  "chatPlaceholderTitle": "Yerel Yapay Zekâ Sohbeti",
+  "chatPlaceholderMessage": "Kayıtlı profilleriniz hakkında her şeyi sorun. Bağlam parçaları cihazınızda yerel olarak yüklenir.",
+
+  "profilesTitle": "Profiller",
+  "profilesSubtitle": "Kişiler ve kişisel bilgi tabanı",
+  "settingsTitle": "Ayarlar",
+  "settingsSubtitle": "Güvenlik, görünüm ve yapay zekâ",
+  "detailSubtitle": "Profil ayrıntıları ve özel nitelikler",
+  "newProfileTitle": "Yeni Confidant Profili",
+  "unnamedProfile": "Adsız Profil",
+
+  "authVaultLockedTitle": "Confidants Kasası Kilitli",
+  "authVaultLockedMessage": "Devam etmek için biyometrik verilerinizle veya cihaz kimlik bilgilerinizle kimliğinizi doğrulayın.",
+  "authVaultFailedMessage": "Kimlik doğrulama iptal edildi veya başarısız oldu. Çevrimdışı profillere erişmek için kimliğinizi doğrulayın.",
+  "authUnlockButton": "Confidants Kilidini Aç",
+  "authUnlockReason": "Confidants kilidini açmak için kimliğinizi doğrulayın",
+  "authEnableReason": "Biyometrik başlangıç kilidini etkinleştirmek için kimliğinizi doğrulayın",
+  "biometricsUnavailable": "Bu cihazda biyometrik kimlik doğrulama kullanılamıyor.",
+
+  "darkModeTitle": "Karanlık Mod",
+  "darkModeSubtitleOn": "Koyu mavi ve karbon teması etkin",
+  "darkModeSubtitleOff": "Yüksek kontrastlı açık tema etkin",
+  "biometricLockTitle": "Biyometrik Başlangıç Kilidi",
+  "biometricLockSubtitle": "Açılışta parmak izi veya cihaz doğrulaması iste",
+  "trainingTitle": "Yapay Zekâ Bilgi Tabanına Dahil Et",
+  "trainingSubtitle": "Bu profili yerel mini-LLM bağlam parçalarına aktar",
+  "aiOptInTitle": "Yerel Yapay Zekâ Asistanını Etkinleştir",
+  "aiOptInSubtitle": "Profillerinizi cihaz içi mini-LLM ile sorgulamak için onay verin",
+
+  "aiModelSectionTitle": "Yapay Zekâ Model Yapılandırması",
+  "aiModelDropdownLabel": "Cihaz İçi Model Seçin",
+
+  "aiModelSmolTitle": "SmolLM2 360M Instruct",
+  "aiModelSmolSpecs": "Depolama: ~250 MB • RAM: ~450 MB",
+  "aiModelSmolWarning": "Çok düşük bellek kullanımı. Minimum pil tüketimiyle neredeyse her cihazda akıcı çalışır; basit İngilizce anahtar kelime aramaları için uygundur.",
+
+  "aiModelQwenHalfTitle": "Qwen 2.5 0.5B Instruct (Varsayılan)",
+  "aiModelQwenHalfSpecs": "Depolama: ~350 MB • RAM: ~600 MB",
+  "aiModelQwenHalfWarning": "Düşük depolama ve RAM kullanımı. Çoğu telefonda hızlı yanıt verir ve temel İngilizce bağlam hatırlamayı güvenilir şekilde yapar.",
+
+  "aiModelLlamaOneTitle": "Llama 3.2 1B Instruct",
+  "aiModelLlamaOneSpecs": "Depolama: ~750 MB • RAM: ~1.3 GB",
+  "aiModelLlamaOneWarning": "Orta düzeyde indirme boyutu ve RAM kullanımı. Daha güçlü İngilizce sohbet yeteneği sunar ancak eski cihazları ısıtabilir.",
+
+  "aiModelQwenOneHalfTitle": "Qwen 2.5 1.5B Instruct",
+  "aiModelQwenOneHalfSpecs": "Depolama: ~1.0 GB • RAM: ~1.8 GB",
+  "aiModelQwenOneHalfWarning": "~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu profil çıkarımlarında daha başarılıdır; orta ve üst segment cihazlar için önerilir.",
+
+  "aiModelLlamaThreeTitle": "Llama 3.2 3B Instruct",
+  "aiModelLlamaThreeSpecs": "Depolama: ~2.0 GB • RAM: ~3.2 GB",
+  "aiModelLlamaThreeWarning": "Yüksek depolama ve RAM uyarısı: 2 GB disk alanı ve 3 GB'tan fazla boş RAM gerektirir. Düşük bellekli telefonlarda yavaşlamaya veya çökmelere yol açabilir.",
+
+  "aiModelCustomTitle": "Özel Yerel Model (.gguf)",
+  "aiModelCustomSpecs": "Depolama ve RAM: Seçtiğiniz .gguf dosyasına bağlıdır",
+  "aiModelCustomWarning": "Uyarı: Büyük modeller (>2 GB) mobil RAM sınırlarını aşarak uygulamayı çökertebilir. 0.5B ile 1.5B arasında Q4_K_M modelleri tercih edin.",
+  "aiModelCustomSubtitleUnset": "Henüz özel bir .gguf dosya yolu seçilmedi",
+  "aiModelCustomChangeButton": ".gguf Yolu Seç",
+
+  "aiModelCustomDialogTitle": "Özel Model Yolu Belirle",
+  "aiModelCustomPathLabel": "Yerel .gguf Dosya Yolu",
+  "aiModelCustomPathHint": "/storage/emulated/0/Download/model.gguf",
+  "aiModelCustomSaveButton": "Modeli Kullan",
+  "aiModelCustomCancelButton": "İptal",
+  "aiModelSwitchedToast": "Etkin model {modelName} olarak ayarlandı.",
+  "@aiModelSwitchedToast": { "placeholders": { "modelName": { "type": "String" } } },
+  "aiModelCustomInvalidToast": "Lütfen geçerli bir .gguf dosya yolu girin.",
+
+  "chatOptInRequiredTitle": "Yerel Yapay Zekâ Devre Dışı",
+  "chatOptInRequiredSubtitle": "Cihaz içi profil sorgulamayı açmak için Ayarlar'dan veya aşağıdaki düğmeden etkinleştirin.",
+  "chatOptInButton": "Yerel Yapay Zekâyı Etkinleştir",
+  "chatEmptyTitle": "Confidant'larınız Hakkında Sorun",
+  "chatEmptySubtitle": "Etkin model: {modelName} • {chunkCount, plural, =0{Henüz profil parçası dizine eklenmedi} =1{Bellekte 1 profil parçası var} other{Bellekte {chunkCount} profil parçası var}}",
+  "@chatEmptySubtitle": {
+    "placeholders": {
+      "modelName": { "type": "String" },
+      "chunkCount": { "type": "int" }
+    }
+  },
+  "chatInputHint": "Doğum günleri, kahve tercihleri, hobiler hakkında sorun...",
+  "chatClearTooltip": "Sohbeti Temizle",
+  "chatClearedToast": "Sohbet temizlendi.",
+  "chatGeneratingStatus": "Düşünüyor...",
+  "chatErrorResponse": "Yerel yapay zekâ bağlamından yanıt üretilemedi.",
+  "chatNoContextResponse": "Henüz eğitim için etkinleştirilmiş bir profil parçası yok. Önce Profiller sekmesinden bir profil ekleyin.",
+  "chatMockPrefix": "[{modelName} • bağlamda {chunkCount} parça]\n{summary}",
+  "@chatMockPrefix": {
+    "placeholders": {
+      "modelName": { "type": "String" },
+      "chunkCount": { "type": "int" },
+      "summary": { "type": "String" }
+    }
+  },
+  "chatNoMatchSummary": "Dışa aktarılan profil bağlam parçalarını kontrol ettim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişinin adı, takma adı, doğum günü, sevdikleri veya özel nitelikleriyle sormayı deneyin.",
+
+  "searchProfilesHint": "Profilleri ad, telefon veya nota göre ara...",
+  "importFromContactsTooltip": "Kişilerden İçe Aktar",
+  "newProfileTooltip": "Yeni Profil",
+  "addProfileButton": "Profil Ekle",
+  "noContactsFound": "Kişi bulunamadı veya izin reddedildi.",
+  "emptyInitialTitle": "Henüz Confidant Profili Yok",
+  "emptyInitialSubtitle": "Rehberinizden bir kişi aktarın veya zengin bir kişisel profili elle oluşturun.",
+  "importContactButton": "Kişi Aktar",
+  "createManuallyButton": "Elle Oluştur",
+  "emptySearchTitle": "Eşleşen Profil Yok",
+  "emptySearchSubtitle": "Arama kelimelerinizi veya telefon filtrenizi değiştirmeyi deneyin.",
+
+  "importDeviceContactTitle": "Cihazdan Kişi Aktar",
+  "searchContactsHint": "Kişileri ad veya telefona göre ara...",
+  "noMatchingContacts": "Eşleşen kişi bulunamadı.",
+
+  "enterNameError": "Lütfen bu profil için bir ad girin.",
+  "profileSaved": "{name} için profil kaydedildi.",
+  "@profileSaved": { "placeholders": { "name": { "type": "String" } } },
+  "profileDeleted": "{name} silindi.",
+  "@profileDeleted": { "placeholders": { "name": { "type": "String" } } },
+  "deleteProfileTooltip": "Profili Sil",
+
+  "noPhoneNumber": "Telefon numarası yok",
+  "sha256Label": "SHA-256: {hash}",
+  "@sha256Label": { "placeholders": { "hash": { "type": "String" } } },
+  "customAttributesCount": "{count, plural, =0{Özel nitelik yok} =1{1 özel nitelik} other{{count} özel nitelik}}",
+  "@customAttributesCount": { "placeholders": { "count": { "type": "int" } } },
+
+  "fieldFullName": "Ad Soyad",
+  "hintFullName": "Kişinin adını girin",
+  "fieldNickname": "Takma Ad (İsteğe Bağlı)",
+  "hintNickname": "Ona nasıl hitap ediyorsunuz?",
+  "fieldPhone": "Telefon Numarası",
+  "hintPhone": "+90 555 010 9999",
+  "fieldEmail": "E-posta Adresi (İsteğe Bağlı)",
+  "hintEmail": "kisi@ornek.com",
+  "fieldNotes": "Hatırlanacak Notlar",
+  "hintNotes": "Önemli kişisel bağlam, hikâyeler ve hatırlatmalar...",
+  "fieldLikes": "Sevdikleri (virgülle ayırın)",
+  "hintLikes": "Matcha, caz, bilim kurgu kitapları",
+  "fieldDislikes": "Sevmedikleri (virgülle ayırın)",
+  "hintDislikes": "Kalabalık yerler, kişniş",
+  "fieldHobbies": "Hobiler ve İlgi Alanları (virgülle ayırın)",
+  "hintHobbies": "Kaya tırmanışı, analog fotoğrafçılık, satranç",
+  "selectBirthday": "Doğum Günü Seç",
+  "birthdayStoredHint": "ISO 8601 tarihi yerel olarak saklanır",
+  "saveProfileButton": "Profili Kaydet",
+
+  "customAttributesTitle": "Özel Nitelikler",
+  "addRowButton": "Satır Ekle",
+  "customAttributesEmptyHint": "Dinamik anahtar-değer çiftleri ekleyin (ör. Favori Kahve, Alerjiler, Evcil Hayvan Adı).",
+  "attributeLabel": "Nitelik",
+  "attributeHint": "ör. Kahve",
+  "valueLabel": "Değer",
+  "valueHint": "ör. Yulaflı Cortado",
+  "removeAttributeTooltip": "Niteliği kaldır",
+  "addAnotherButton": "Bir Tane Daha Ekle"
+}
