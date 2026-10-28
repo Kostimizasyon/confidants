@@ -61,20 +61,8 @@
   "aiModelLlamaThreeSpecs": "Depolama: ~2.0 GB • RAM: ~3.2 GB",
   "aiModelLlamaThreeWarning": "Yüksek depolama ve RAM uyarısı: 2 GB disk alanı ve 3 GB'tan fazla boş RAM gerektirir. Düşük bellekli telefonlarda yavaşlamaya veya çökmelere yol açabilir.",
 
-  "aiModelCustomTitle": "Özel Yerel Model (.gguf)",
-  "aiModelCustomSpecs": "Depolama ve RAM: Seçtiğiniz .gguf dosyasına bağlıdır",
-  "aiModelCustomWarning": "Uyarı: Büyük modeller (>2 GB) mobil RAM sınırlarını aşarak uygulamayı çökertebilir. 0.5B ile 1.5B arasında Q4_K_M modelleri tercih edin.",
-  "aiModelCustomSubtitleUnset": "Henüz özel bir .gguf dosya yolu seçilmedi",
-  "aiModelCustomChangeButton": ".gguf Yolu Seç",
-
-  "aiModelCustomDialogTitle": "Özel Model Yolu Belirle",
-  "aiModelCustomPathLabel": "Yerel .gguf Dosya Yolu",
-  "aiModelCustomPathHint": "/storage/emulated/0/Download/model.gguf",
-  "aiModelCustomSaveButton": "Modeli Kullan",
-  "aiModelCustomCancelButton": "İptal",
   "aiModelSwitchedToast": "Etkin model {modelName} olarak ayarlandı.",
   "@aiModelSwitchedToast": { "placeholders": { "modelName": { "type": "String" } } },
-  "aiModelCustomInvalidToast": "Lütfen geçerli bir .gguf dosya yolu girin.",
 
   "chatOptInRequiredTitle": "Yerel Yapay Zekâ Devre Dışı",
   "chatOptInRequiredSubtitle": "Cihaz içi profil sorgulamayı açmak için Ayarlar'dan veya aşağıdaki düğmeden etkinleştirin.",

@@ -168,46 +168,9 @@ class AppLocalizationsTr extends AppLocalizations {
       'Yüksek depolama ve RAM uyarısı: 2 GB disk alanı ve 3 GB\'tan fazla boş RAM gerektirir. Düşük bellekli telefonlarda yavaşlamaya veya çökmelere yol açabilir.';
 
   @override
-  String get aiModelCustomTitle => 'Özel Yerel Model (.gguf)';
-
-  @override
-  String get aiModelCustomSpecs =>
-      'Depolama ve RAM: Seçtiğiniz .gguf dosyasına bağlıdır';
-
-  @override
-  String get aiModelCustomWarning =>
-      'Uyarı: Büyük modeller (>2 GB) mobil RAM sınırlarını aşarak uygulamayı çökertebilir. 0.5B ile 1.5B arasında Q4_K_M modelleri tercih edin.';
-
-  @override
-  String get aiModelCustomSubtitleUnset =>
-      'Henüz özel bir .gguf dosya yolu seçilmedi';
-
-  @override
-  String get aiModelCustomChangeButton => '.gguf Yolu Seç';
-
-  @override
-  String get aiModelCustomDialogTitle => 'Özel Model Yolu Belirle';
-
-  @override
-  String get aiModelCustomPathLabel => 'Yerel .gguf Dosya Yolu';
-
-  @override
-  String get aiModelCustomPathHint => '/storage/emulated/0/Download/model.gguf';
-
-  @override
-  String get aiModelCustomSaveButton => 'Modeli Kullan';
-
-  @override
-  String get aiModelCustomCancelButton => 'İptal';
-
-  @override
   String aiModelSwitchedToast(String modelName) {
     return 'Etkin model $modelName olarak ayarlandı.';
   }
-
-  @override
-  String get aiModelCustomInvalidToast =>
-      'Lütfen geçerli bir .gguf dosya yolu girin.';
 
   @override
   String get chatOptInRequiredTitle => 'Yerel Yapay Zekâ Devre Dışı';

@@ -386,77 +386,11 @@ abstract class AppLocalizations {
   /// **'Heavy storage and RAM warning: Needs 2 GB disk space and over 3 GB free RAM. May cause slowdowns or out-of-memory crashes on budget phones.'**
   String get aiModelLlamaThreeWarning;
 
-  /// No description provided for @aiModelCustomTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Custom Local Model (.gguf)'**
-  String get aiModelCustomTitle;
-
-  /// No description provided for @aiModelCustomSpecs.
-  ///
-  /// In en, this message translates to:
-  /// **'Storage & RAM: Depends on your .gguf file'**
-  String get aiModelCustomSpecs;
-
-  /// No description provided for @aiModelCustomWarning.
-  ///
-  /// In en, this message translates to:
-  /// **'Warning: Large quantizations (>2 GB) can exceed mobile RAM limits and crash the app. Prefer Q4_K_M models between 0.5B and 1.5B.'**
-  String get aiModelCustomWarning;
-
-  /// No description provided for @aiModelCustomSubtitleUnset.
-  ///
-  /// In en, this message translates to:
-  /// **'No custom .gguf file path selected yet'**
-  String get aiModelCustomSubtitleUnset;
-
-  /// No description provided for @aiModelCustomChangeButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose .gguf Path'**
-  String get aiModelCustomChangeButton;
-
-  /// No description provided for @aiModelCustomDialogTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Set Custom Model Path'**
-  String get aiModelCustomDialogTitle;
-
-  /// No description provided for @aiModelCustomPathLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Local .gguf File Path'**
-  String get aiModelCustomPathLabel;
-
-  /// No description provided for @aiModelCustomPathHint.
-  ///
-  /// In en, this message translates to:
-  /// **'/storage/emulated/0/Download/model.gguf'**
-  String get aiModelCustomPathHint;
-
-  /// No description provided for @aiModelCustomSaveButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Use Model'**
-  String get aiModelCustomSaveButton;
-
-  /// No description provided for @aiModelCustomCancelButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get aiModelCustomCancelButton;
-
   /// No description provided for @aiModelSwitchedToast.
   ///
   /// In en, this message translates to:
   /// **'Active model set to {modelName}.'**
   String aiModelSwitchedToast(String modelName);
-
-  /// No description provided for @aiModelCustomInvalidToast.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter a valid .gguf file path.'**
-  String get aiModelCustomInvalidToast;
 
   /// No description provided for @chatOptInRequiredTitle.
   ///

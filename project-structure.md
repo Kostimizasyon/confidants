@@ -83,7 +83,7 @@ lib/
 - Const named constructors can't read a `BuildContext`, so they store `L10nText` tear-offs (e.g. `CustomAppBar.chat`, `SettingsToggleTile.aiOptIn`, `ModelOptionTile.qwen`, `_ProfileField.nickname`) that are resolved with the active `AppLocalizations` in `build`.
 
 ### Data Models (`lib/data_models/`)
-- `lib/data_models/ai_model_config.dart`: Encapsulates swappable local LLM configurations with preset named constructors (`AiModelConfig.smolLm2`, `AiModelConfig.qwen25HalfB`, `AiModelConfig.llama32OneB`, `AiModelConfig.qwen25OneHalfB`, `AiModelConfig.llama32ThreeB`) and a custom GGUF constructor (`AiModelConfig.custom`). Isolates model metadata and URLs so adding, removing, or replacing default models requires no UI or service rewrites.
+- `lib/data_models/ai_model_config.dart`: Encapsulates swappable local LLM configurations with preset named constructors (`AiModelConfig.smolLm2`, `AiModelConfig.qwen25HalfB`, `AiModelConfig.llama32OneB`, `AiModelConfig.qwen25OneHalfB`, `AiModelConfig.llama32ThreeB`). Isolates model metadata and URLs so adding, removing, or replacing default models requires no UI or service rewrites.
 - `lib/data_models/user_profile.dart`: Core entity representing a person's profile (`id`, `profileHash`, `name`, `phoneNumber`, `email`, `birthday`, optional `nickname`, `notesToRemember`, `likes`, `dislikes`, `hobbies`, `isTrainingEnabled`, timestamps, and linked `CustomField` list). Includes named constructors (`UserProfile.fromContact`, `UserProfile.empty`, `UserProfile.fromMap`), SQLite serialization (`toMap`), and privacy-preserving LLM chunk serialization (`toExportJson`).
 - `lib/data_models/custom_field.dart`: Dynamic key-value attribute attached to a profile (`id`, `profileId`, `fieldKey`, `fieldValue`). Provides `CustomField.draft` and `CustomField.fromMap` named constructors plus SQLite and export map helpers.
 - `lib/data_models/contact_item.dart`: Lightweight transfer model representing an imported device address book entry (`displayName`, `phoneNumber`, `email`) with `ContactItem.phoneOnly` and `ContactItem.fromMap` named constructors.
@@ -121,7 +121,7 @@ lib/
 - `lib/frontend/profiles_page/util/custom_field_editor.dart`: Dynamic key-value row editor for adding, updating, and removing arbitrary custom profile attributes.
 - `lib/frontend/settings_page/settings_page.dart`: Settings screen wrapping Dark Mode (`SettingsToggleTile.theme`), Biometric Launch Lock (`SettingsToggleTile.biometrics`), Local AI Opt-In (`SettingsToggleTile.aiOptIn`), and—when AI is enabled—the model dropdown & hardware warning card (`ModelSelectorCard` + `ModelWarningCard`).
 - `lib/frontend/settings_page/util/settings_toggle_tile.dart`: Reusable preference switch card with preset named constructors (`SettingsToggleTile.theme`, `SettingsToggleTile.biometrics`, `SettingsToggleTile.training`, `SettingsToggleTile.aiOptIn`).
-- `lib/frontend/settings_page/util/model_selector_card.dart`: Dropdown model selector (`ModelSelectorCard`) showing storage and RAM specs inside each dropdown option, paired with a contextual hardware warning card below (`ModelWarningCard.smolLm2`, `.qwenHalfB`, `.llamaOneB`, `.qwenOneHalfB`, `.llamaThreeB`, `.custom`).
+- `lib/frontend/settings_page/util/model_selector_card.dart`: Dropdown model selector (`ModelSelectorCard`) showing storage and RAM specs inside each dropdown option, paired with a contextual hardware warning card below (`ModelWarningCard.smolLm2`, `.qwenHalfB`, `.llamaOneB`, `.qwenOneHalfB`, `.llamaThreeB`).
 
 ---
 

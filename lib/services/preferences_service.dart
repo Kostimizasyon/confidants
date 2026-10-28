@@ -11,7 +11,6 @@ class PreferencesService {
   static const String _keyRequireFingerprintLock = 'require_fingerprint_lock';
   static const String _keyIsAiEnabled = 'is_ai_enabled';
   static const String _keySelectedAiModel = 'selected_ai_model';
-  static const String _keyCustomAiModelPath = 'custom_ai_model_path';
 
   SharedPreferences? _prefs;
 
@@ -21,8 +20,6 @@ class PreferencesService {
   final ValueNotifier<bool> isAiEnabledNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<String> selectedModelIdNotifier =
       ValueNotifier<String>(AiModelConfig.idQwen25HalfB);
-  final ValueNotifier<String?> customModelPathNotifier =
-      ValueNotifier<String?>(null);
 
   Future<void> init() async {
     _prefs ??= await SharedPreferences.getInstance();
@@ -32,7 +29,6 @@ class PreferencesService {
     isAiEnabledNotifier.value = _prefs!.getBool(_keyIsAiEnabled) ?? false;
     selectedModelIdNotifier.value =
         _prefs!.getString(_keySelectedAiModel) ?? AiModelConfig.idQwen25HalfB;
-    customModelPathNotifier.value = _prefs!.getString(_keyCustomAiModelPath);
   }
 
   bool get isDarkMode => isDarkModeNotifier.value;
@@ -43,11 +39,8 @@ class PreferencesService {
 
   String get selectedModelId => selectedModelIdNotifier.value;
 
-  String? get customModelPath => customModelPathNotifier.value;
-
   AiModelConfig get activeAiModel => AiModelConfig.resolve(
         selectedId: selectedModelIdNotifier.value,
-        customPath: customModelPathNotifier.value,
       );
 
   Future<void> setDarkMode(bool value) async {
@@ -72,17 +65,5 @@ class PreferencesService {
     final prefs = _prefs ?? await SharedPreferences.getInstance();
     await prefs.setString(_keySelectedAiModel, modelId);
     selectedModelIdNotifier.value = modelId;
-  }
-
-  Future<void> setCustomModelPath(String? path) async {
-    final prefs = _prefs ?? await SharedPreferences.getInstance();
-    if (path == null || path.trim().isEmpty) {
-      await prefs.remove(_keyCustomAiModelPath);
-      customModelPathNotifier.value = null;
-    } else {
-      final cleaned = path.trim();
-      await prefs.setString(_keyCustomAiModelPath, cleaned);
-      customModelPathNotifier.value = cleaned;
-    }
   }
 }

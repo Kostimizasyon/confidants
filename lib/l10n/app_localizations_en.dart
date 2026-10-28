@@ -167,45 +167,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Heavy storage and RAM warning: Needs 2 GB disk space and over 3 GB free RAM. May cause slowdowns or out-of-memory crashes on budget phones.';
 
   @override
-  String get aiModelCustomTitle => 'Custom Local Model (.gguf)';
-
-  @override
-  String get aiModelCustomSpecs => 'Storage & RAM: Depends on your .gguf file';
-
-  @override
-  String get aiModelCustomWarning =>
-      'Warning: Large quantizations (>2 GB) can exceed mobile RAM limits and crash the app. Prefer Q4_K_M models between 0.5B and 1.5B.';
-
-  @override
-  String get aiModelCustomSubtitleUnset =>
-      'No custom .gguf file path selected yet';
-
-  @override
-  String get aiModelCustomChangeButton => 'Choose .gguf Path';
-
-  @override
-  String get aiModelCustomDialogTitle => 'Set Custom Model Path';
-
-  @override
-  String get aiModelCustomPathLabel => 'Local .gguf File Path';
-
-  @override
-  String get aiModelCustomPathHint => '/storage/emulated/0/Download/model.gguf';
-
-  @override
-  String get aiModelCustomSaveButton => 'Use Model';
-
-  @override
-  String get aiModelCustomCancelButton => 'Cancel';
-
-  @override
   String aiModelSwitchedToast(String modelName) {
     return 'Active model set to $modelName.';
   }
-
-  @override
-  String get aiModelCustomInvalidToast =>
-      'Please enter a valid .gguf file path.';
 
   @override
   String get chatOptInRequiredTitle => 'Local AI is Disabled';

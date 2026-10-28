@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import '../../data_models/ai_model_config.dart';
 import '../../services/auth_service.dart';
 import '../../services/preferences_service.dart';
 import '../theme/app_colors.dart';
@@ -47,86 +46,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _handleModelDropdownChanged(String modelId) async {
     final l10n = context.l10n;
-    if (modelId == AiModelConfig.idCustom) {
-      await _prefs.setSelectedModelId(modelId);
-      if (_prefs.customModelPath == null ||
-          _prefs.customModelPath!.trim().isEmpty) {
-        await _promptCustomModelPath();
-      }
-      return;
-    }
-
     await _prefs.setSelectedModelId(modelId);
     if (!mounted) return;
     proteinBar(
       context,
       l10n.aiModelSwitchedToast(ModelSelectorCard.titleForId(l10n, modelId)),
       icon: LucideIcons.cpu,
-    );
-  }
-
-  Future<void> _promptCustomModelPath() async {
-    final l10n = context.l10n;
-    final controller = TextEditingController(
-      text: _prefs.customModelPath ?? '',
-    );
-
-    final chosenPath = await showDialog<String>(
-      context: context,
-      builder: (dialogContext) {
-        final isDark = Theme.of(dialogContext).brightness == Brightness.dark;
-        final btnBg =
-            isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
-
-        return AlertDialog(
-          title: Text(l10n.aiModelCustomDialogTitle),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: l10n.aiModelCustomPathLabel,
-              hintText: l10n.aiModelCustomPathHint,
-              prefixIcon: const Icon(LucideIcons.fileCode, size: 18),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(l10n.aiModelCustomCancelButton),
-            ),
-            FilledButton(
-              onPressed: () =>
-                  Navigator.of(dialogContext).pop(controller.text.trim()),
-              style: FilledButton.styleFrom(
-                backgroundColor: btnBg,
-                foregroundColor: AppColors.surfaceLight,
-              ),
-              child: Text(l10n.aiModelCustomSaveButton),
-            ),
-          ],
-        );
-      },
-    );
-
-    controller.dispose();
-    if (!mounted || chosenPath == null) return;
-
-    if (chosenPath.isEmpty || !chosenPath.toLowerCase().endsWith('.gguf')) {
-      proteinBar(
-        context,
-        l10n.aiModelCustomInvalidToast,
-        icon: LucideIcons.circleAlert,
-      );
-      return;
-    }
-
-    await _prefs.setCustomModelPath(chosenPath);
-    await _prefs.setSelectedModelId(AiModelConfig.idCustom);
-    if (!mounted) return;
-
-    proteinBar(
-      context,
-      l10n.aiModelSwitchedToast(l10n.aiModelCustomTitle),
-      icon: LucideIcons.folderCheck,
     );
   }
 
@@ -187,16 +112,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     ValueListenableBuilder<String>(
                       valueListenable: _prefs.selectedModelIdNotifier,
                       builder: (context, selectedId, _) {
-                        return ValueListenableBuilder<String?>(
-                          valueListenable: _prefs.customModelPathNotifier,
-                          builder: (context, customPath, _) {
-                            return ModelSelectorCard(
-                              selectedModelId: selectedId,
-                              customFilePath: customPath,
-                              onModelChanged: _handleModelDropdownChanged,
-                              onPickCustomPath: _promptCustomModelPath,
-                            );
-                          },
+                        return ModelSelectorCard(
+                          selectedModelId: selectedId,
+                          onModelChanged: _handleModelDropdownChanged,
                         );
                       },
                     ),

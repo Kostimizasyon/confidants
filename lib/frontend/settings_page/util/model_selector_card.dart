@@ -7,16 +7,12 @@ import '../../util/l10n_extensions.dart';
 
 class ModelSelectorCard extends StatelessWidget {
   final String selectedModelId;
-  final String? customFilePath;
   final ValueChanged<String> onModelChanged;
-  final VoidCallback onPickCustomPath;
 
   const ModelSelectorCard({
     super.key,
     required this.selectedModelId,
-    required this.customFilePath,
     required this.onModelChanged,
-    required this.onPickCustomPath,
   });
 
   static String titleForId(AppLocalizations l10n, String id) {
@@ -29,8 +25,6 @@ class ModelSelectorCard extends StatelessWidget {
         return l10n.aiModelQwenOneHalfTitle;
       case AiModelConfig.idLlama32ThreeB:
         return l10n.aiModelLlamaThreeTitle;
-      case AiModelConfig.idCustom:
-        return l10n.aiModelCustomTitle;
       case AiModelConfig.idQwen25HalfB:
       default:
         return l10n.aiModelQwenHalfTitle;
@@ -47,8 +41,6 @@ class ModelSelectorCard extends StatelessWidget {
         return l10n.aiModelQwenOneHalfSpecs;
       case AiModelConfig.idLlama32ThreeB:
         return l10n.aiModelLlamaThreeSpecs;
-      case AiModelConfig.idCustom:
-        return l10n.aiModelCustomSpecs;
       case AiModelConfig.idQwen25HalfB:
       default:
         return l10n.aiModelQwenHalfSpecs;
@@ -148,11 +140,6 @@ class ModelSelectorCard extends StatelessWidget {
         return const ModelWarningCard.qwenOneHalfB();
       case AiModelConfig.idLlama32ThreeB:
         return const ModelWarningCard.llamaThreeB();
-      case AiModelConfig.idCustom:
-        return ModelWarningCard.custom(
-          customFilePath: customFilePath,
-          onPickPath: onPickCustomPath,
-        );
       case AiModelConfig.idQwen25HalfB:
       default:
         return const ModelWarningCard.qwenHalfB();
@@ -165,8 +152,6 @@ class ModelWarningCard extends StatelessWidget {
   final L10nText specsOf;
   final L10nText warningOf;
   final bool isHeavyWarning;
-  final String? customFilePath;
-  final VoidCallback? onPickPath;
 
   const ModelWarningCard({
     super.key,
@@ -174,57 +159,36 @@ class ModelWarningCard extends StatelessWidget {
     required this.specsOf,
     required this.warningOf,
     this.isHeavyWarning = false,
-    this.customFilePath,
-    this.onPickPath,
   });
 
   const ModelWarningCard.smolLm2({super.key})
       : icon = LucideIcons.feather,
         specsOf = _smolSpecs,
         warningOf = _smolWarning,
-        isHeavyWarning = false,
-        customFilePath = null,
-        onPickPath = null;
+        isHeavyWarning = false;
 
   const ModelWarningCard.qwenHalfB({super.key})
       : icon = LucideIcons.gauge,
         specsOf = _qwenHalfSpecs,
         warningOf = _qwenHalfWarning,
-        isHeavyWarning = false,
-        customFilePath = null,
-        onPickPath = null;
+        isHeavyWarning = false;
 
   const ModelWarningCard.llamaOneB({super.key})
       : icon = LucideIcons.memoryStick,
         specsOf = _llamaOneSpecs,
         warningOf = _llamaOneWarning,
-        isHeavyWarning = false,
-        customFilePath = null,
-        onPickPath = null;
+        isHeavyWarning = false;
 
   const ModelWarningCard.qwenOneHalfB({super.key})
       : icon = LucideIcons.hardDrive,
         specsOf = _qwenOneHalfSpecs,
         warningOf = _qwenOneHalfWarning,
-        isHeavyWarning = true,
-        customFilePath = null,
-        onPickPath = null;
+        isHeavyWarning = true;
 
   const ModelWarningCard.llamaThreeB({super.key})
       : icon = LucideIcons.triangleAlert,
         specsOf = _llamaThreeSpecs,
         warningOf = _llamaThreeWarning,
-        isHeavyWarning = true,
-        customFilePath = null,
-        onPickPath = null;
-
-  const ModelWarningCard.custom({
-    super.key,
-    required this.customFilePath,
-    required VoidCallback this.onPickPath,
-  })  : icon = LucideIcons.folderInput,
-        specsOf = _customSpecs,
-        warningOf = _customWarning,
         isHeavyWarning = true;
 
   static String _smolSpecs(AppLocalizations l10n) => l10n.aiModelSmolSpecs;
@@ -245,9 +209,6 @@ class ModelWarningCard extends StatelessWidget {
       l10n.aiModelLlamaThreeSpecs;
   static String _llamaThreeWarning(AppLocalizations l10n) =>
       l10n.aiModelLlamaThreeWarning;
-  static String _customSpecs(AppLocalizations l10n) => l10n.aiModelCustomSpecs;
-  static String _customWarning(AppLocalizations l10n) =>
-      l10n.aiModelCustomWarning;
 
   @override
   Widget build(BuildContext context) {
@@ -308,26 +269,6 @@ class ModelWarningCard extends StatelessWidget {
                 height: 1.4,
               ),
             ),
-            if (onPickPath != null) ...[
-              const SizedBox(height: 10),
-              Text(
-                (customFilePath != null && customFilePath!.trim().isNotEmpty)
-                    ? customFilePath!
-                    : l10n.aiModelCustomSubtitleUnset,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.centerRight,
-                child: OutlinedButton.icon(
-                  onPressed: onPickPath,
-                  icon: const Icon(LucideIcons.folderOpen, size: 16),
-                  label: Text(l10n.aiModelCustomChangeButton),
-                ),
-              ),
-            ],
           ],
         ),
       ),

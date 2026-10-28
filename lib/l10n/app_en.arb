@@ -62,20 +62,8 @@
   "aiModelLlamaThreeSpecs": "Storage: ~2.0 GB • RAM: ~3.2 GB",
   "aiModelLlamaThreeWarning": "Heavy storage and RAM warning: Needs 2 GB disk space and over 3 GB free RAM. May cause slowdowns or out-of-memory crashes on budget phones.",
 
-  "aiModelCustomTitle": "Custom Local Model (.gguf)",
-  "aiModelCustomSpecs": "Storage & RAM: Depends on your .gguf file",
-  "aiModelCustomWarning": "Warning: Large quantizations (>2 GB) can exceed mobile RAM limits and crash the app. Prefer Q4_K_M models between 0.5B and 1.5B.",
-  "aiModelCustomSubtitleUnset": "No custom .gguf file path selected yet",
-  "aiModelCustomChangeButton": "Choose .gguf Path",
-
-  "aiModelCustomDialogTitle": "Set Custom Model Path",
-  "aiModelCustomPathLabel": "Local .gguf File Path",
-  "aiModelCustomPathHint": "/storage/emulated/0/Download/model.gguf",
-  "aiModelCustomSaveButton": "Use Model",
-  "aiModelCustomCancelButton": "Cancel",
   "aiModelSwitchedToast": "Active model set to {modelName}.",
   "@aiModelSwitchedToast": { "placeholders": { "modelName": { "type": "String" } } },
-  "aiModelCustomInvalidToast": "Please enter a valid .gguf file path.",
 
   "chatOptInRequiredTitle": "Local AI is Disabled",
   "chatOptInRequiredSubtitle": "Opt in to Local AI in Settings or tap below to enable on-device profile querying.",
