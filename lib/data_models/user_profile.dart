@@ -13,6 +13,8 @@ class UserProfile {
   final List<String> likes;
   final List<String> dislikes;
   final List<String> hobbies;
+  final String avatarIcon;
+  final bool isFavorite;
   final bool isTrainingEnabled;
   final int createdAt;
   final int updatedAt;
@@ -30,6 +32,8 @@ class UserProfile {
     this.likes = const [],
     this.dislikes = const [],
     this.hobbies = const [],
+    this.avatarIcon = 'user',
+    this.isFavorite = false,
     this.isTrainingEnabled = true,
     required this.createdAt,
     required this.updatedAt,
@@ -46,6 +50,8 @@ class UserProfile {
       name: contact.displayName,
       phoneNumber: contact.phoneNumber,
       email: contact.email,
+      avatarIcon: 'user',
+      isFavorite: false,
       createdAt: now,
       updatedAt: now,
     );
@@ -57,6 +63,8 @@ class UserProfile {
       profileHash: profileHash,
       name: '',
       phoneNumber: '',
+      avatarIcon: 'user',
+      isFavorite: false,
       createdAt: now,
       updatedAt: now,
     );
@@ -78,6 +86,8 @@ class UserProfile {
       likes: _parseCommaSeparated(map['likes'] as String?),
       dislikes: _parseCommaSeparated(map['dislikes'] as String?),
       hobbies: _parseCommaSeparated(map['hobbies'] as String?),
+      avatarIcon: (map['avatar_icon'] as String?) ?? 'user',
+      isFavorite: (map['is_favorite'] as int? ?? 0) == 1,
       isTrainingEnabled: (map['is_training_enabled'] as int? ?? 1) == 1,
       createdAt: (map['created_at'] as int?) ?? 0,
       updatedAt: (map['updated_at'] as int?) ?? 0,
@@ -98,6 +108,8 @@ class UserProfile {
       'likes': _joinCommaSeparated(likes),
       'dislikes': _joinCommaSeparated(dislikes),
       'hobbies': _joinCommaSeparated(hobbies),
+      'avatar_icon': avatarIcon,
+      'is_favorite': isFavorite ? 1 : 0,
       'is_training_enabled': isTrainingEnabled ? 1 : 0,
       'created_at': createdAt,
       'updated_at': updatedAt,
@@ -117,6 +129,8 @@ class UserProfile {
       'likes': likes,
       'dislikes': dislikes,
       'hobbies': hobbies,
+      'avatar_icon': avatarIcon,
+      'is_favorite': isFavorite,
       'custom_attributes': {
         for (final field in customFields)
           if (field.fieldKey.trim().isNotEmpty)
@@ -138,6 +152,8 @@ class UserProfile {
     List<String>? likes,
     List<String>? dislikes,
     List<String>? hobbies,
+    String? avatarIcon,
+    bool? isFavorite,
     bool? isTrainingEnabled,
     int? createdAt,
     int? updatedAt,
@@ -155,6 +171,8 @@ class UserProfile {
       likes: likes ?? this.likes,
       dislikes: dislikes ?? this.dislikes,
       hobbies: hobbies ?? this.hobbies,
+      avatarIcon: avatarIcon ?? this.avatarIcon,
+      isFavorite: isFavorite ?? this.isFavorite,
       isTrainingEnabled: isTrainingEnabled ?? this.isTrainingEnabled,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

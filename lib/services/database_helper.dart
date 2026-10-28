@@ -9,7 +9,7 @@ class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._();
 
   static const String _dbName = 'confidants.db';
-  static const int _dbVersion = 1;
+  static const int _dbVersion = 2;
 
   static const String tableProfiles = 'profiles';
   static const String tableCustomFields = 'custom_fields';
@@ -35,6 +35,7 @@ class DatabaseHelper {
         await db.execute('PRAGMA foreign_keys = ON');
       },
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -52,6 +53,8 @@ class DatabaseHelper {
         likes TEXT NOT NULL,
         dislikes TEXT NOT NULL,
         hobbies TEXT NOT NULL,
+        avatar_icon TEXT NOT NULL DEFAULT 'user',
+        is_favorite INTEGER NOT NULL DEFAULT 0,
         is_training_enabled INTEGER NOT NULL DEFAULT 1,
         created_at INTEGER NOT NULL,
         updated_at INTEGER NOT NULL
@@ -80,6 +83,17 @@ class DatabaseHelper {
     await db.execute(
       'CREATE INDEX idx_custom_fields_profile_id ON $tableCustomFields (profile_id)',
     );
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute(
+        "ALTER TABLE $tableProfiles ADD COLUMN avatar_icon TEXT NOT NULL DEFAULT 'user'",
+      );
+      await db.execute(
+        "ALTER TABLE $tableProfiles ADD COLUMN is_favorite INTEGER NOT NULL DEFAULT 0",
+      );
+    }
   }
 
   Future<int> saveProfile(UserProfile profile) async {
@@ -146,6 +160,16 @@ class DatabaseHelper {
     });
   }
 
+  Future<void> toggleFavorite(int id, bool isFavorite) async {
+    final db = await database;
+    await db.update(
+      tableProfiles,
+      {'is_favorite': isFavorite ? 1 : 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<UserProfile>> getAllProfiles({String? searchQuery}) async {
     final db = await database;
     final trimmed = searchQuery?.trim() ?? '';
@@ -154,15 +178,16 @@ class DatabaseHelper {
     if (trimmed.isEmpty) {
       profileRows = await db.query(
         tableProfiles,
-        orderBy: 'name COLLATE NOCASE ASC',
+        orderBy: 'is_favorite DESC, name COLLATE NOCASE ASC',
       );
     } else {
       final pattern = '%$trimmed%';
       profileRows = await db.query(
         tableProfiles,
-        where: 'name LIKE ? OR phone_number LIKE ? OR nickname LIKE ? OR notes_to_remember LIKE ?',
+        where:
+            'name LIKE ? OR phone_number LIKE ? OR nickname LIKE ? OR notes_to_remember LIKE ?',
         whereArgs: [pattern, pattern, pattern, pattern],
-        orderBy: 'name COLLATE NOCASE ASC',
+        orderBy: 'is_favorite DESC, name COLLATE NOCASE ASC',
       );
     }
 
@@ -175,7 +200,7 @@ class DatabaseHelper {
       tableProfiles,
       where: 'is_training_enabled = ?',
       whereArgs: [1],
-      orderBy: 'name COLLATE NOCASE ASC',
+      orderBy: 'is_favorite DESC, name COLLATE NOCASE ASC',
     );
     return _hydrateProfilesWithCustomFields(db, profileRows);
   }

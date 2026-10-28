@@ -9,7 +9,6 @@ import '../theme/app_colors.dart';
 import '../util/custom_app_bar.dart';
 import '../util/l10n_extensions.dart';
 import '../util/proteinbar.dart';
-import 'util/profile_card.dart';
 import 'util/profile_form.dart';
 
 class ProfileDetailPage extends StatefulWidget {
@@ -110,7 +109,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     final l10n = context.l10n;
     final headerTitle = widget.isNew
         ? l10n.newProfileTitle
-        : widget.initialProfile.name;
+        : (widget.initialProfile.name.trim().isNotEmpty
+            ? widget.initialProfile.name
+            : l10n.unnamedProfile);
 
     return Scaffold(
       appBar: CustomAppBar.detail(
@@ -129,10 +130,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
-          if (!widget.isNew)
-            ProfileCard.detailed(profile: widget.initialProfile),
           ProfileForm(
             initialProfile: widget.initialProfile,
             onSave: _handleSave,

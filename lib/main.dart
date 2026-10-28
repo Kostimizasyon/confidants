@@ -23,20 +23,26 @@ class ConfidantsApp extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: PreferencesService.instance.isDarkModeNotifier,
       builder: (context, isDarkMode, _) {
-        return MaterialApp(
-          onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          home: const AuthGuardScreen(),
+        return ValueListenableBuilder<Locale?>(
+          valueListenable: PreferencesService.instance.localeNotifier,
+          builder: (context, activeLocale, _) {
+            return MaterialApp(
+              onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+              debugShowCheckedModeBanner: false,
+              locale: activeLocale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+              home: const AuthGuardScreen(),
+            );
+          },
         );
       },
     );

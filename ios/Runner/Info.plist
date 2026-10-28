@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+	<string>Confidants needs access to contacts so you can securely import and manage your profiles offline.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Confidants uses Face ID to protect your private profile data from unauthorized access.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

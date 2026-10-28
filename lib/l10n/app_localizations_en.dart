@@ -81,6 +81,26 @@ class AppLocalizationsEn extends AppLocalizations {
       'Biometric authentication is not available on this device.';
 
   @override
+  String get languageTitle => 'Display Language';
+
+  @override
+  String get languageSubtitle => 'Choose your preferred display language';
+
+  @override
+  String get languageSystem => 'System Default';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageTurkish => 'Türkçe';
+
+  @override
+  String languageSwitchedToast(String language) {
+    return 'Language changed to $language.';
+  }
+
+  @override
   String get darkModeTitle => 'Dark Mode';
 
   @override
@@ -305,6 +325,50 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sectionBasicInfo => 'Basic Information';
+
+  @override
+  String get sectionBasicInfoSubtitle =>
+      'Name, avatar icon, and favorite status';
+
+  @override
+  String get sectionContactDetails => 'Contact Details';
+
+  @override
+  String get sectionContactDetailsSubtitle => 'Phone, email, and birthday';
+
+  @override
+  String get sectionPersonalContext => 'Personal Context';
+
+  @override
+  String get sectionPersonalContextSubtitle =>
+      'Notes, likes, dislikes, and hobbies';
+
+  @override
+  String get sectionCustomAttributes => 'Custom Attributes';
+
+  @override
+  String get sectionCustomAttributesSubtitle => 'Dynamic key-value pairs';
+
+  @override
+  String get chooseAvatarTitle => 'Choose Avatar Icon';
+
+  @override
+  String get favoriteTooltip => 'Toggle Favorite';
+
+  @override
+  String get favoriteLabel => 'Favorite Confidant';
+
+  @override
+  String get favoriteSubtitle => 'Pin to the top of your profiles list';
+
+  @override
+  String get favoritesOnlyFilter => 'Favorites';
+
+  @override
+  String get allProfilesFilter => 'All';
 
   @override
   String get fieldFullName => 'Full Name';

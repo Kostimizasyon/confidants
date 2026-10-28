@@ -230,6 +230,42 @@ abstract class AppLocalizations {
   /// **'Biometric authentication is not available on this device.'**
   String get biometricsUnavailable;
 
+  /// No description provided for @languageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display Language'**
+  String get languageTitle;
+
+  /// No description provided for @languageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred display language'**
+  String get languageSubtitle;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System Default'**
+  String get languageSystem;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageTurkish.
+  ///
+  /// In en, this message translates to:
+  /// **'Türkçe'**
+  String get languageTurkish;
+
+  /// No description provided for @languageSwitchedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Language changed to {language}.'**
+  String languageSwitchedToast(String language);
+
   /// No description provided for @darkModeTitle.
   ///
   /// In en, this message translates to:
@@ -595,6 +631,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{No custom attributes} =1{1 custom attribute} other{{count} custom attributes}}'**
   String customAttributesCount(int count);
+
+  /// No description provided for @sectionBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get sectionBasicInfo;
+
+  /// No description provided for @sectionBasicInfoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, avatar icon, and favorite status'**
+  String get sectionBasicInfoSubtitle;
+
+  /// No description provided for @sectionContactDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Details'**
+  String get sectionContactDetails;
+
+  /// No description provided for @sectionContactDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone, email, and birthday'**
+  String get sectionContactDetailsSubtitle;
+
+  /// No description provided for @sectionPersonalContext.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Context'**
+  String get sectionPersonalContext;
+
+  /// No description provided for @sectionPersonalContextSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes, likes, dislikes, and hobbies'**
+  String get sectionPersonalContextSubtitle;
+
+  /// No description provided for @sectionCustomAttributes.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Attributes'**
+  String get sectionCustomAttributes;
+
+  /// No description provided for @sectionCustomAttributesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dynamic key-value pairs'**
+  String get sectionCustomAttributesSubtitle;
+
+  /// No description provided for @chooseAvatarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Avatar Icon'**
+  String get chooseAvatarTitle;
+
+  /// No description provided for @favoriteTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle Favorite'**
+  String get favoriteTooltip;
+
+  /// No description provided for @favoriteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite Confidant'**
+  String get favoriteLabel;
+
+  /// No description provided for @favoriteSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin to the top of your profiles list'**
+  String get favoriteSubtitle;
+
+  /// No description provided for @favoritesOnlyFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favoritesOnlyFilter;
+
+  /// No description provided for @allProfilesFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allProfilesFilter;
 
   /// No description provided for @fieldFullName.
   ///

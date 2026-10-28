@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data_models/ai_model_config.dart';
 
@@ -11,6 +11,7 @@ class PreferencesService {
   static const String _keyRequireFingerprintLock = 'require_fingerprint_lock';
   static const String _keyIsAiEnabled = 'is_ai_enabled';
   static const String _keySelectedAiModel = 'selected_ai_model';
+  static const String _keyLocale = 'app_locale';
 
   SharedPreferences? _prefs;
 
@@ -20,6 +21,9 @@ class PreferencesService {
   final ValueNotifier<bool> isAiEnabledNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<String> selectedModelIdNotifier =
       ValueNotifier<String>(AiModelConfig.idQwen25HalfB);
+  final ValueNotifier<String> languageCodeNotifier =
+      ValueNotifier<String>('system');
+  final ValueNotifier<Locale?> localeNotifier = ValueNotifier<Locale?>(null);
 
   Future<void> init() async {
     _prefs ??= await SharedPreferences.getInstance();
@@ -29,6 +33,10 @@ class PreferencesService {
     isAiEnabledNotifier.value = _prefs!.getBool(_keyIsAiEnabled) ?? false;
     selectedModelIdNotifier.value =
         _prefs!.getString(_keySelectedAiModel) ?? AiModelConfig.idQwen25HalfB;
+
+    final savedLocale = _prefs!.getString(_keyLocale) ?? 'system';
+    languageCodeNotifier.value = savedLocale;
+    localeNotifier.value = _resolveLocale(savedLocale);
   }
 
   bool get isDarkMode => isDarkModeNotifier.value;
@@ -38,6 +46,10 @@ class PreferencesService {
   bool get isAiEnabled => isAiEnabledNotifier.value;
 
   String get selectedModelId => selectedModelIdNotifier.value;
+
+  String get languageCode => languageCodeNotifier.value;
+
+  Locale? get activeLocale => localeNotifier.value;
 
   AiModelConfig get activeAiModel => AiModelConfig.resolve(
         selectedId: selectedModelIdNotifier.value,
@@ -65,5 +77,18 @@ class PreferencesService {
     final prefs = _prefs ?? await SharedPreferences.getInstance();
     await prefs.setString(_keySelectedAiModel, modelId);
     selectedModelIdNotifier.value = modelId;
+  }
+
+  Future<void> setLocaleCode(String code) async {
+    final prefs = _prefs ?? await SharedPreferences.getInstance();
+    await prefs.setString(_keyLocale, code);
+    languageCodeNotifier.value = code;
+    localeNotifier.value = _resolveLocale(code);
+  }
+
+  static Locale? _resolveLocale(String code) {
+    if (code == 'en') return const Locale('en');
+    if (code == 'tr') return const Locale('tr');
+    return null;
   }
 }

@@ -22,17 +22,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get navSettings => 'Ayarlar';
 
   @override
-  String get chatTitle => 'Confidants Yapay Zekâ';
+  String get chatTitle => 'Confidants AI';
 
   @override
   String get chatSubtitle => 'Çevrimdışı kişisel bağlam asistanı';
 
   @override
-  String get chatPlaceholderTitle => 'Yerel Yapay Zekâ Sohbeti';
+  String get chatPlaceholderTitle => 'Yerel Yapay Zeka Sohbet Arayüzü';
 
   @override
   String get chatPlaceholderMessage =>
-      'Kayıtlı profilleriniz hakkında her şeyi sorun. Bağlam parçaları cihazınızda yerel olarak yüklenir.';
+      'Kayıtlı profilleriniz hakkında sorular sorun. Bağlam parçaları cihazınızda tamamen yerel olarak işlenir.';
 
   @override
   String get profilesTitle => 'Profiller';
@@ -44,23 +44,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsTitle => 'Ayarlar';
 
   @override
-  String get settingsSubtitle => 'Güvenlik, görünüm ve yapay zekâ';
+  String get settingsSubtitle => 'Güvenlik, görünüm ve yapay zeka';
 
   @override
-  String get detailSubtitle => 'Profil ayrıntıları ve özel nitelikler';
+  String get detailSubtitle => 'Profil detayları ve özel nitelikler';
 
   @override
   String get newProfileTitle => 'Yeni Confidant Profili';
 
   @override
-  String get unnamedProfile => 'Adsız Profil';
+  String get unnamedProfile => 'İsimsiz Profil';
 
   @override
   String get authVaultLockedTitle => 'Confidants Kasası Kilitli';
 
   @override
   String get authVaultLockedMessage =>
-      'Devam etmek için biyometrik verilerinizle veya cihaz kimlik bilgilerinizle kimliğinizi doğrulayın.';
+      'Devam etmek için biyometrik doğrulama veya cihaz parolanız ile kimliğinizi onaylayın.';
 
   @override
   String get authVaultFailedMessage =>
@@ -75,47 +75,67 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get authEnableReason =>
-      'Biyometrik başlangıç kilidini etkinleştirmek için kimliğinizi doğrulayın';
+      'Açılışta biyometrik kilit özelliğini etkinleştirmek için kimliğinizi onaylayın';
 
   @override
   String get biometricsUnavailable =>
       'Bu cihazda biyometrik kimlik doğrulama kullanılamıyor.';
 
   @override
-  String get darkModeTitle => 'Karanlık Mod';
+  String get languageTitle => 'Uygulama Dili';
 
   @override
-  String get darkModeSubtitleOn => 'Koyu mavi ve karbon teması etkin';
+  String get languageSubtitle => 'Tercih ettiğiniz görüntüleme dilini seçin';
 
   @override
-  String get darkModeSubtitleOff => 'Yüksek kontrastlı açık tema etkin';
+  String get languageSystem => 'Sistem Varsayılanı';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageTurkish => 'Türkçe';
+
+  @override
+  String languageSwitchedToast(String language) {
+    return 'Uygulama dili $language olarak ayarlandı.';
+  }
+
+  @override
+  String get darkModeTitle => 'Koyu Tema';
+
+  @override
+  String get darkModeSubtitleOn => 'Koyu mavi ve karbon teması aktif';
+
+  @override
+  String get darkModeSubtitleOff => 'Yüksek kontrastlı açık tema aktif';
 
   @override
   String get biometricLockTitle => 'Biyometrik Başlangıç Kilidi';
 
   @override
   String get biometricLockSubtitle =>
-      'Açılışta parmak izi veya cihaz doğrulaması iste';
+      'Uygulama açılışında parmak izi veya cihaz kimlik doğrulaması iste';
 
   @override
-  String get trainingTitle => 'Yapay Zekâ Bilgi Tabanına Dahil Et';
+  String get trainingTitle => 'Yapay Zeka Bilgi Tabanına Dahil Et';
 
   @override
   String get trainingSubtitle =>
-      'Bu profili yerel mini-LLM bağlam parçalarına aktar';
+      'Bu profili yerel mini-LLM bağlam parçalarına dışa aktar';
 
   @override
-  String get aiOptInTitle => 'Yerel Yapay Zekâ Asistanını Etkinleştir';
+  String get aiOptInTitle => 'Yerel Yapay Zekayı Etkinleştir';
 
   @override
   String get aiOptInSubtitle =>
-      'Profillerinizi cihaz içi mini-LLM ile sorgulamak için onay verin';
+      'Profillerinizi cihaz içi mini-LLM ile sorgulamak için izin verin';
 
   @override
-  String get aiModelSectionTitle => 'Yapay Zekâ Model Yapılandırması';
+  String get aiModelSectionTitle => 'Yapay Zeka Model Yapılandırması';
 
   @override
-  String get aiModelDropdownLabel => 'Cihaz İçi Model Seçin';
+  String get aiModelDropdownLabel => 'Cihaz İçi Modeli Seçin';
 
   @override
   String get aiModelSmolTitle => 'SmolLM2 360M Instruct';
@@ -125,7 +145,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiModelSmolWarning =>
-      'Çok düşük bellek kullanımı. Minimum pil tüketimiyle neredeyse her cihazda akıcı çalışır; basit İngilizce anahtar kelime aramaları için uygundur.';
+      'Tüy kadar hafif boyut. Minimum pil tüketimiyle neredeyse her cihazda akıcı çalışır; basit anahtar kelime sorguları için en iyisidir.';
 
   @override
   String get aiModelQwenHalfTitle => 'Qwen 2.5 0.5B Instruct (Varsayılan)';
@@ -135,7 +155,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiModelQwenHalfWarning =>
-      'Düşük depolama ve RAM kullanımı. Çoğu telefonda hızlı yanıt verir ve temel İngilizce bağlam hatırlamayı güvenilir şekilde yapar.';
+      'Düşük depolama ve bellek kullanımı. Çoğu telefonda hızlı yanıt verir ve temel İngilizce bağlam hatırlamayı güvenle yürütür.';
 
   @override
   String get aiModelLlamaOneTitle => 'Llama 3.2 1B Instruct';
@@ -145,7 +165,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiModelLlamaOneWarning =>
-      'Orta düzeyde indirme boyutu ve RAM kullanımı. Daha güçlü İngilizce sohbet yeteneği sunar ancak eski cihazları ısıtabilir.';
+      'Orta düzey indirme boyutu ve RAM kullanımı. Daha güçlü konuşma mantığı sunar, ancak eski cihazları ısıtabilir.';
 
   @override
   String get aiModelQwenOneHalfTitle => 'Qwen 2.5 1.5B Instruct';
@@ -155,7 +175,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiModelQwenOneHalfWarning =>
-      '~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu profil çıkarımlarında daha başarılıdır; orta ve üst segment cihazlar için önerilir.';
+      '~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu profil çıkarımı için daha iyidir, orta ve üst segment cihazlar için önerilir.';
 
   @override
   String get aiModelLlamaThreeTitle => 'Llama 3.2 3B Instruct';
@@ -165,41 +185,41 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiModelLlamaThreeWarning =>
-      'Yüksek depolama ve RAM uyarısı: 2 GB disk alanı ve 3 GB\'tan fazla boş RAM gerektirir. Düşük bellekli telefonlarda yavaşlamaya veya çökmelere yol açabilir.';
+      'Yüksek depolama ve RAM uyarısı: 2 GB disk alanı ve 3 GB\'tan fazla boş RAM gerektirir. Bütçe dostu telefonlarda yavaşlamalara veya bellek yetersizliği çökmelerine yol açabilir.';
 
   @override
   String aiModelSwitchedToast(String modelName) {
-    return 'Etkin model $modelName olarak ayarlandı.';
+    return 'Aktif model $modelName olarak ayarlandı.';
   }
 
   @override
-  String get chatOptInRequiredTitle => 'Yerel Yapay Zekâ Devre Dışı';
+  String get chatOptInRequiredTitle => 'Yerel Yapay Zeka Devre Dışı';
 
   @override
   String get chatOptInRequiredSubtitle =>
-      'Cihaz içi profil sorgulamayı açmak için Ayarlar\'dan veya aşağıdaki düğmeden etkinleştirin.';
+      'Ayarlar\'dan Yerel Yapay Zekayı etkinleştirin veya cihaz içi sorgulama için aşağıya dokunun.';
 
   @override
-  String get chatOptInButton => 'Yerel Yapay Zekâyı Etkinleştir';
+  String get chatOptInButton => 'Yerel Yapay Zekayı Etkinleştir';
 
   @override
-  String get chatEmptyTitle => 'Confidant\'larınız Hakkında Sorun';
+  String get chatEmptyTitle => 'Kişileriniz Hakkında Soru Sorun';
 
   @override
   String chatEmptySubtitle(String modelName, int chunkCount) {
     String _temp0 = intl.Intl.pluralLogic(
       chunkCount,
       locale: localeName,
-      other: 'Bellekte $chunkCount profil parçası var',
-      one: 'Bellekte 1 profil parçası var',
-      zero: 'Henüz profil parçası dizine eklenmedi',
+      other: 'Bellekte $chunkCount profil parçası',
+      one: 'Bellekte 1 profil parçası',
+      zero: 'Henüz dizine eklenmiş profil yok',
     );
-    return 'Etkin model: $modelName • $_temp0';
+    return 'Aktif model: $modelName • $_temp0';
   }
 
   @override
   String get chatInputHint =>
-      'Doğum günleri, kahve tercihleri, hobiler hakkında sorun...';
+      'Doğum günleri, kahve siparişleri, hobiler hakkında sorun...';
 
   @override
   String get chatClearTooltip => 'Sohbeti Temizle';
@@ -208,31 +228,30 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chatClearedToast => 'Sohbet temizlendi.';
 
   @override
-  String get chatGeneratingStatus => 'Düşünüyor...';
+  String get chatGeneratingStatus => 'Düşünülüyor...';
 
   @override
   String get chatErrorResponse =>
-      'Yerel yapay zekâ bağlamından yanıt üretilemedi.';
+      'Yerel yapay zeka bağlamından yanıt üretilemedi.';
 
   @override
   String get chatNoContextResponse =>
-      'Henüz eğitim için etkinleştirilmiş bir profil parçası yok. Önce Profiller sekmesinden bir profil ekleyin.';
+      'Henüz yapay zekaya dahil edilmiş profil parçası bulunmuyor. Önce Profiller sekmesinden bir profil ekleyin.';
 
   @override
   String chatMockPrefix(String modelName, int chunkCount, String summary) {
-    return '[$modelName • bağlamda $chunkCount parça]\n$summary';
+    return '[$modelName • Bağlamda $chunkCount parça]\n$summary';
   }
 
   @override
   String get chatNoMatchSummary =>
-      'Dışa aktarılan profil bağlam parçalarını kontrol ettim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişinin adı, takma adı, doğum günü, sevdikleri veya özel nitelikleriyle sormayı deneyin.';
+      'Dışa aktarılan profil bağlam parçalarını inceledim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişi adı, takma adı, doğum günü, sevdikleri veya özel nitelikleri belirterek sormayı deneyin.';
 
   @override
-  String get searchProfilesHint =>
-      'Profilleri ad, telefon veya nota göre ara...';
+  String get searchProfilesHint => 'İsim, telefon veya notlara göre ara...';
 
   @override
-  String get importFromContactsTooltip => 'Kişilerden İçe Aktar';
+  String get importFromContactsTooltip => 'Rehberden İçe Aktar';
 
   @override
   String get newProfileTooltip => 'Yeni Profil';
@@ -241,39 +260,39 @@ class AppLocalizationsTr extends AppLocalizations {
   String get addProfileButton => 'Profil Ekle';
 
   @override
-  String get noContactsFound => 'Kişi bulunamadı veya izin reddedildi.';
+  String get noContactsFound => 'Kişi bulunamadı veya rehber izni verilmedi.';
 
   @override
   String get emptyInitialTitle => 'Henüz Confidant Profili Yok';
 
   @override
   String get emptyInitialSubtitle =>
-      'Rehberinizden bir kişi aktarın veya zengin bir kişisel profili elle oluşturun.';
+      'Rehberinizden bir kişi içe aktarın veya manuel olarak zengin bir kişisel profil oluşturun.';
 
   @override
-  String get importContactButton => 'Kişi Aktar';
+  String get importContactButton => 'Kişi İçe Aktar';
 
   @override
-  String get createManuallyButton => 'Elle Oluştur';
+  String get createManuallyButton => 'Manuel Oluştur';
 
   @override
-  String get emptySearchTitle => 'Eşleşen Profil Yok';
+  String get emptySearchTitle => 'Eşleşen Profil Bulunamadı';
 
   @override
   String get emptySearchSubtitle =>
-      'Arama kelimelerinizi veya telefon filtrenizi değiştirmeyi deneyin.';
+      'Arama sözcüklerinizi veya telefon filtresini değiştirmeyi deneyin.';
 
   @override
-  String get importDeviceContactTitle => 'Cihazdan Kişi Aktar';
+  String get importDeviceContactTitle => 'Cihaz Kişisi İçe Aktar';
 
   @override
-  String get searchContactsHint => 'Kişileri ad veya telefona göre ara...';
+  String get searchContactsHint => 'İsim veya telefona göre kişi ara...';
 
   @override
   String get noMatchingContacts => 'Eşleşen kişi bulunamadı.';
 
   @override
-  String get enterNameError => 'Lütfen bu profil için bir ad girin.';
+  String get enterNameError => 'Lütfen bu profil için bir isim girin.';
 
   @override
   String profileSaved(String name) {
@@ -307,6 +326,51 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get sectionBasicInfo => 'Temel Bilgiler';
+
+  @override
+  String get sectionBasicInfoSubtitle =>
+      'İsim, profil simgesi ve favori durumu';
+
+  @override
+  String get sectionContactDetails => 'İletişim Bilgileri';
+
+  @override
+  String get sectionContactDetailsSubtitle => 'Telefon, e-posta ve doğum günü';
+
+  @override
+  String get sectionPersonalContext => 'Kişisel Bağlam';
+
+  @override
+  String get sectionPersonalContextSubtitle =>
+      'Notlar, sevdikleri, sevmedikleri ve hobiler';
+
+  @override
+  String get sectionCustomAttributes => 'Özel Nitelikler';
+
+  @override
+  String get sectionCustomAttributesSubtitle =>
+      'Dinamik anahtar-değer çiftleri';
+
+  @override
+  String get chooseAvatarTitle => 'Profil Simgesi Seç';
+
+  @override
+  String get favoriteTooltip => 'Favorilere Ekle/Çıkar';
+
+  @override
+  String get favoriteLabel => 'Favori Kişi';
+
+  @override
+  String get favoriteSubtitle => 'Profil listenizin en üstüne sabitleyin';
+
+  @override
+  String get favoritesOnlyFilter => 'Favoriler';
+
+  @override
+  String get allProfilesFilter => 'Tümü';
 
   @override
   String get fieldFullName => 'Ad Soyad';

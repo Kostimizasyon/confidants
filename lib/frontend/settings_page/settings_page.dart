@@ -7,6 +7,7 @@ import '../util/custom_app_bar.dart';
 import '../util/l10n_extensions.dart';
 import '../util/proteinbar.dart';
 import 'util/model_selector_card.dart';
+import 'util/settings_language_tile.dart';
 import 'util/settings_toggle_tile.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -19,6 +20,22 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final PreferencesService _prefs = PreferencesService.instance;
   final AuthService _authService = AuthService.instance;
+
+  Future<void> _handleLanguageChanged(String code) async {
+    final l10n = context.l10n;
+    await _prefs.setLocaleCode(code);
+    if (!mounted) return;
+    final langName = switch (code) {
+      'en' => l10n.languageEnglish,
+      'tr' => l10n.languageTurkish,
+      _ => l10n.languageSystem,
+    };
+    proteinBar(
+      context,
+      l10n.languageSwitchedToast(langName),
+      icon: LucideIcons.globe,
+    );
+  }
 
   Future<void> _handleFingerprintToggle(bool requestedValue) async {
     final l10n = context.l10n;
@@ -68,6 +85,15 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          ValueListenableBuilder<String>(
+            valueListenable: _prefs.languageCodeNotifier,
+            builder: (context, languageCode, _) {
+              return SettingsLanguageTile(
+                selectedCode: languageCode,
+                onLanguageChanged: _handleLanguageChanged,
+              );
+            },
+          ),
           ValueListenableBuilder<bool>(
             valueListenable: _prefs.isDarkModeNotifier,
             builder: (context, isDarkMode, _) {

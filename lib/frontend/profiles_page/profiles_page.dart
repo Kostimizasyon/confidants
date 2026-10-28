@@ -1,6 +1,6 @@
+import 'package:confidants/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:confidants/l10n/app_localizations.dart';
 import '../../data_models/contact_item.dart';
 import '../../data_models/user_profile.dart';
 import '../../services/contact_service.dart';
@@ -49,6 +49,13 @@ class _ProfilesPageState extends State<ProfilesPage> {
       _profiles = loaded;
       _isLoading = false;
     });
+  }
+
+  Future<void> _handleToggleFavorite(UserProfile profile) async {
+    final id = profile.id;
+    if (id == null) return;
+    await _dbHelper.toggleFavorite(id, !profile.isFavorite);
+    await _loadProfiles();
   }
 
   Future<void> _openCreateManual() async {
@@ -114,21 +121,19 @@ class _ProfilesPageState extends State<ProfilesPage> {
     final buttonBg =
         isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
     final hasSearchQuery = _searchController.text.trim().isNotEmpty;
+    final hasProfiles = _profiles.isNotEmpty;
 
     return Scaffold(
       appBar: CustomAppBar.profiles(
-        actions: [
-          IconButton(
-            onPressed: _openImportContact,
-            icon: const Icon(LucideIcons.bookUser, size: 20),
-            tooltip: l10n.importFromContactsTooltip,
-          ),
-          IconButton(
-            onPressed: _openCreateManual,
-            icon: const Icon(LucideIcons.userPlus, size: 20),
-            tooltip: l10n.newProfileTooltip,
-          ),
-        ],
+        actions: hasProfiles
+            ? [
+                IconButton(
+                  onPressed: _openImportContact,
+                  icon: const Icon(LucideIcons.bookUser, size: 20),
+                  tooltip: l10n.importFromContactsTooltip,
+                ),
+              ]
+            : null,
       ),
       body: Column(
         children: [
@@ -170,19 +175,23 @@ class _ProfilesPageState extends State<ProfilesPage> {
                           return ProfileCard.compact(
                             profile: profile,
                             onTap: () => _openEditProfile(profile),
+                            onToggleFavorite: () =>
+                                _handleToggleFavorite(profile),
                           );
                         },
                       ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _openCreateManual,
-        backgroundColor: buttonBg,
-        foregroundColor: AppColors.surfaceLight,
-        icon: const Icon(LucideIcons.userPlus, size: 18),
-        label: Text(l10n.addProfileButton),
-      ),
+      floatingActionButton: hasProfiles
+          ? FloatingActionButton.extended(
+              onPressed: _openCreateManual,
+              backgroundColor: buttonBg,
+              foregroundColor: AppColors.surfaceLight,
+              icon: const Icon(LucideIcons.userPlus, size: 18),
+              label: Text(l10n.addProfileButton),
+            )
+          : null,
     );
   }
 }
@@ -220,23 +229,29 @@ class _ProfilesEmptyState extends StatelessWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final secondaryColor =
+    final iconBoxColor =
+        isDark ? AppColors.secondaryDarkBlue : AppColors.backgroundLight;
+    final iconColor =
+        isDark ? AppColors.accentHighlight : AppColors.primaryDarkBlue;
+    final secondaryTextColor =
         isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
     final primaryBtnBg =
         isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
 
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(28),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 44,
-              color: isDark
-                  ? AppColors.accentHighlight
-                  : AppColors.primaryDarkBlue,
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: iconBoxColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(icon, size: 30, color: iconColor),
             ),
             const SizedBox(height: 16),
             Text(
@@ -250,29 +265,28 @@ class _ProfilesEmptyState extends StatelessWidget {
             Text(
               subtitleOf(l10n),
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: secondaryColor,
+                color: secondaryTextColor,
               ),
               textAlign: TextAlign.center,
             ),
             if (onImport != null && onCreateManual != null) ...[
               const SizedBox(height: 24),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                alignment: WrapAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FilledButton.icon(
+                  OutlinedButton.icon(
                     onPressed: onImport,
+                    icon: const Icon(LucideIcons.bookUser, size: 16),
+                    label: Text(l10n.importContactButton),
+                  ),
+                  const SizedBox(width: 12),
+                  FilledButton.icon(
+                    onPressed: onCreateManual,
                     style: FilledButton.styleFrom(
                       backgroundColor: primaryBtnBg,
                       foregroundColor: AppColors.surfaceLight,
                     ),
-                    icon: const Icon(LucideIcons.bookUser, size: 17),
-                    label: Text(l10n.importContactButton),
-                  ),
-                  OutlinedButton.icon(
-                    onPressed: onCreateManual,
-                    icon: const Icon(LucideIcons.userPlus, size: 17),
+                    icon: const Icon(LucideIcons.userPlus, size: 16),
                     label: Text(l10n.createManuallyButton),
                   ),
                 ],

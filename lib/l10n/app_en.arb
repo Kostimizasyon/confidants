@@ -29,6 +29,18 @@
   "authEnableReason": "Confirm your identity to enable biometric launch lock",
   "biometricsUnavailable": "Biometric authentication is not available on this device.",
 
+  "languageTitle": "Display Language",
+  "languageSubtitle": "Choose your preferred display language",
+  "languageSystem": "System Default",
+  "languageEnglish": "English",
+  "languageTurkish": "Türkçe",
+  "languageSwitchedToast": "Language changed to {language}.",
+  "@languageSwitchedToast": {
+    "placeholders": {
+      "language": { "type": "String" }
+    }
+  },
+
   "darkModeTitle": "Dark Mode",
   "darkModeSubtitleOn": "Dark blue & carbon theme active",
   "darkModeSubtitleOff": "High-contrast light theme active",
@@ -120,6 +132,22 @@
   "@sha256Label": { "placeholders": { "hash": { "type": "String" } } },
   "customAttributesCount": "{count, plural, =0{No custom attributes} =1{1 custom attribute} other{{count} custom attributes}}",
   "@customAttributesCount": { "placeholders": { "count": { "type": "int" } } },
+
+  "sectionBasicInfo": "Basic Information",
+  "sectionBasicInfoSubtitle": "Name, avatar icon, and favorite status",
+  "sectionContactDetails": "Contact Details",
+  "sectionContactDetailsSubtitle": "Phone, email, and birthday",
+  "sectionPersonalContext": "Personal Context",
+  "sectionPersonalContextSubtitle": "Notes, likes, dislikes, and hobbies",
+  "sectionCustomAttributes": "Custom Attributes",
+  "sectionCustomAttributesSubtitle": "Dynamic key-value pairs",
+
+  "chooseAvatarTitle": "Choose Avatar Icon",
+  "favoriteTooltip": "Toggle Favorite",
+  "favoriteLabel": "Favorite Confidant",
+  "favoriteSubtitle": "Pin to the top of your profiles list",
+  "favoritesOnlyFilter": "Favorites",
+  "allProfilesFilter": "All",
 
   "fieldFullName": "Full Name",
   "hintFullName": "Enter contact name",
