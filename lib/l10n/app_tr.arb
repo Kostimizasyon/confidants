@@ -3,7 +3,7 @@
 
   "appTitle": "Confidants",
   "navChat": "Sohbet",
-  "navProfiles": "Sırdaşlar",
+  "navProfiles": "Confidants",
   "navSettings": "Ayarlar",
   "navKeypad": "Klavye",
   "settingsTooltip": "Ayarlar",
@@ -15,7 +15,7 @@
   "dialerCallTooltip": "Ara",
   "dialerBackspaceTooltip": "Sil",
   "dialerCallFailed": "Bu cihazda telefon çeviricisi açılamadı.",
-  "dialerCreateProfile": "Bu numarayla sırdaş oluştur",
+  "dialerCreateProfile": "Bu numarayla Confidant oluştur",
   "dialerOpenKeypad": "Klavyeyi aç",
   "dialerHideKeypad": "Klavyeyi kapat",
 
@@ -41,19 +41,19 @@
   "chatTitle": "Confidants AI",
   "chatSubtitle": "Çevrimdışı kişisel bağlam asistanı",
   "chatPlaceholderTitle": "Yerel Yapay Zeka Sohbet Arayüzü",
-  "chatPlaceholderMessage": "Kayıtlı sırdaşlarınız hakkında sorular sorun. Bağlam parçaları cihazınızda tamamen yerel olarak işlenir.",
+  "chatPlaceholderMessage": "Kayıtlı Confidant'larınız hakkında sorular sorun. Bağlam parçaları cihazınızda tamamen yerel olarak işlenir.",
 
-  "profilesTitle": "Sırdaşlar",
-  "profilesSubtitle": "Sırdaşlar ve kişisel bilgi tabanı",
+  "profilesTitle": "Confidants",
+  "profilesSubtitle": "Confidants ve kişisel bilgi tabanı",
   "settingsTitle": "Ayarlar",
   "settingsSubtitle": "Güvenlik, görünüm ve yapay zeka",
-  "detailSubtitle": "Sırdaş detayları ve özel nitelikler",
-  "newProfileTitle": "Yeni Sırdaş",
-  "unnamedProfile": "İsimsiz Sırdaş",
+  "detailSubtitle": "Confidant detayları ve özel nitelikler",
+  "newProfileTitle": "Yeni Confidant",
+  "unnamedProfile": "İsimsiz Confidant",
 
   "authVaultLockedTitle": "Confidants Kasası Kilitli",
   "authVaultLockedMessage": "Devam etmek için biyometrik doğrulama veya cihaz parolanız ile kimliğinizi onaylayın.",
-  "authVaultFailedMessage": "Kimlik doğrulama iptal edildi veya başarısız oldu. Çevrimdışı sırdaşlara erişmek için kimliğinizi doğrulayın.",
+  "authVaultFailedMessage": "Kimlik doğrulama iptal edildi veya başarısız oldu. Çevrimdışı Confidant'lara erişmek için kimliğinizi doğrulayın.",
   "authUnlockButton": "Confidants Kilidini Aç",
   "authUnlockReason": "Confidants kilidini açmak için kimliğinizi doğrulayın",
   "authEnableReason": "Açılışta biyometrik kilit özelliğini etkinleştirmek için kimliğinizi onaylayın",
@@ -77,9 +77,9 @@
   "biometricLockTitle": "Biyometrik Başlangıç Kilidi",
   "biometricLockSubtitle": "Uygulama açılışında parmak izi veya cihaz kimlik doğrulaması iste",
   "trainingTitle": "Yapay Zeka Bilgi Tabanına Dahil Et",
-  "trainingSubtitle": "Bu sırdaşı yerel mini-LLM bağlam parçalarına dışa aktar",
+  "trainingSubtitle": "Bu Confidant'ı yerel mini-LLM bağlam parçalarına dışa aktar",
   "aiOptInTitle": "Yerel Yapay Zekayı Etkinleştir",
-  "aiOptInSubtitle": "Sırdaşlarınızı cihaz içi mini-LLM ile sorgulamak için izin verin",
+  "aiOptInSubtitle": "Confidant'larınızı cihaz içi mini-LLM ile sorgulamak için izin verin",
 
   "aiModelSectionTitle": "Yapay Zeka Model Yapılandırması",
   "aiModelDropdownLabel": "Cihaz İçi Modeli Seçin",
@@ -98,7 +98,7 @@
 
   "aiModelQwenOneHalfTitle": "Qwen 2.5 1.5B Instruct",
   "aiModelQwenOneHalfSpecs": "Depolama: ~1.0 GB • RAM: ~1.8 GB",
-  "aiModelQwenOneHalfWarning": "~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu sırdaş çıkarımı için daha iyidir, orta ve üst segment cihazlar için önerilir.",
+  "aiModelQwenOneHalfWarning": "~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu Confidant çıkarımı için daha iyidir, orta ve üst segment cihazlar için önerilir.",
 
   "aiModelLlamaThreeTitle": "Llama 3.2 3B Instruct",
   "aiModelLlamaThreeSpecs": "Depolama: ~2.0 GB • RAM: ~3.2 GB",
@@ -108,10 +108,10 @@
   "@aiModelSwitchedToast": { "placeholders": { "modelName": { "type": "String" } } },
 
   "chatOptInRequiredTitle": "Yerel Yapay Zeka Devre Dışı",
-  "chatOptInRequiredSubtitle": "Ayarlar'dan Yerel Yapay Zekayı etkinleştirin veya cihaz içi sırdaş sorgulama için aşağıya dokunun.",
+  "chatOptInRequiredSubtitle": "Ayarlar'dan Yerel Yapay Zekayı etkinleştirin veya cihaz içi Confidant sorgulama için aşağıya dokunun.",
   "chatOptInButton": "Yerel Yapay Zekayı Etkinleştir",
-  "chatEmptyTitle": "Sırdaşlarınız Hakkında Soru Sorun",
-  "chatEmptySubtitle": "Aktif model: {modelName} • {chunkCount, plural, =0{Henüz dizine eklenmiş sırdaş yok} =1{Bellekte 1 sırdaş parçası} other{Bellekte {chunkCount} sırdaş parçası}}",
+  "chatEmptyTitle": "Confidant'larınız Hakkında Soru Sorun",
+  "chatEmptySubtitle": "Aktif model: {modelName} • {chunkCount, plural, =0{Henüz dizine eklenmiş Confidant yok} =1{Bellekte 1 Confidant parçası} other{Bellekte {chunkCount} Confidant parçası}}",
   "@chatEmptySubtitle": {
     "placeholders": {
       "modelName": { "type": "String" },
@@ -123,7 +123,7 @@
   "chatClearedToast": "Sohbet temizlendi.",
   "chatGeneratingStatus": "Düşünülüyor...",
   "chatErrorResponse": "Yerel yapay zeka bağlamından yanıt üretilemedi.",
-  "chatNoContextResponse": "Henüz yapay zekaya dahil edilmiş sırdaş parçası bulunmuyor. Önce Sırdaşlar sekmesinden bir sırdaş ekleyin.",
+  "chatNoContextResponse": "Henüz yapay zekaya dahil edilmiş Confidant parçası bulunmuyor. Önce Confidants sekmesinden bir Confidant ekleyin.",
   "chatMockPrefix": "[{modelName} • Bağlamda {chunkCount} parça]\n{summary}",
   "@chatMockPrefix": {
     "placeholders": {
@@ -132,30 +132,30 @@
       "summary": { "type": "String" }
     }
   },
-  "chatNoMatchSummary": "Dışa aktarılan sırdaş bağlam parçalarını inceledim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişi adı, takma adı, doğum günü, sevdikleri veya özel nitelikleri belirterek sormayı deneyin.",
+  "chatNoMatchSummary": "Dışa aktarılan Confidant bağlam parçalarını inceledim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişi adı, takma adı, doğum günü, sevdikleri veya özel nitelikleri belirterek sormayı deneyin.",
 
-  "searchProfilesHint": "İsim, telefon veya notlara göre sırdaş ara...",
+  "searchProfilesHint": "İsim, telefon veya notlara göre Confidant ara...",
   "importFromContactsTooltip": "Rehberden İçe Aktar",
-  "newProfileTooltip": "Yeni Sırdaş",
-  "addProfileButton": "Sırdaş Ekle",
+  "newProfileTooltip": "Yeni Confidant",
+  "addProfileButton": "Confidant Ekle",
   "noContactsFound": "Kişi bulunamadı veya rehber izni verilmedi.",
-  "emptyInitialTitle": "Henüz Sırdaş Yok",
-  "emptyInitialSubtitle": "Rehberinizden bir kişi içe aktarın veya manuel olarak zengin bir kişisel sırdaş oluşturun.",
+  "emptyInitialTitle": "Henüz Confidant Yok",
+  "emptyInitialSubtitle": "Rehberinizden bir kişi içe aktarın veya manuel olarak zengin bir kişisel Confidant oluşturun.",
   "importContactButton": "Kişi İçe Aktar",
   "createManuallyButton": "Manuel Oluştur",
-  "emptySearchTitle": "Eşleşen Sırdaş Bulunamadı",
+  "emptySearchTitle": "Eşleşen Confidant Bulunamadı",
   "emptySearchSubtitle": "Arama sözcüklerinizi veya telefon filtresini değiştirmeyi deneyin.",
 
   "importDeviceContactTitle": "Cihaz Kişisi İçe Aktar",
   "searchContactsHint": "İsim veya telefona göre kişi ara...",
   "noMatchingContacts": "Eşleşen kişi bulunamadı.",
 
-  "enterNameError": "Lütfen bu sırdaş için bir isim girin.",
-  "profileSaved": "{name} için sırdaş kaydedildi.",
+  "enterNameError": "Lütfen bu Confidant için bir isim girin.",
+  "profileSaved": "{name} için Confidant kaydedildi.",
   "@profileSaved": { "placeholders": { "name": { "type": "String" } } },
   "profileDeleted": "{name} silindi.",
   "@profileDeleted": { "placeholders": { "name": { "type": "String" } } },
-  "deleteProfileTooltip": "Sırdaşı Sil",
+  "deleteProfileTooltip": "Confidant'ı Sil",
 
   "noPhoneNumber": "Telefon numarası yok",
   "sha256Label": "SHA-256: {hash}",
@@ -164,7 +164,7 @@
   "@customAttributesCount": { "placeholders": { "count": { "type": "int" } } },
 
   "sectionBasicInfo": "Temel Bilgiler",
-  "sectionBasicInfoSubtitle": "İsim, sırdaş simgesi ve favori durumu",
+  "sectionBasicInfoSubtitle": "İsim, Confidant simgesi ve favori durumu",
   "sectionContactDetails": "İletişim Bilgileri",
   "sectionContactDetailsSubtitle": "Telefon, e-posta ve doğum günü",
   "sectionPersonalContext": "Kişisel Bağlam",
@@ -172,10 +172,10 @@
   "sectionCustomAttributes": "Özel Nitelikler",
   "sectionCustomAttributesSubtitle": "Dinamik anahtar-değer çiftleri",
 
-  "chooseAvatarTitle": "Sırdaş Simgesi Seç",
+  "chooseAvatarTitle": "Confidant Simgesi Seç",
   "favoriteTooltip": "Favorilere Ekle/Çıkar",
-  "favoriteLabel": "Favori Sırdaş",
-  "favoriteSubtitle": "Sırdaş listenizin en üstüne sabitleyin",
+  "favoriteLabel": "Favori Confidant",
+  "favoriteSubtitle": "Confidants listenizin en üstüne sabitleyin",
   "favoritesOnlyFilter": "Favoriler",
   "allProfilesFilter": "Tümü",
 
@@ -197,7 +197,7 @@
   "hintHobbies": "Kaya tırmanışı, analog fotoğrafçılık, satranç",
   "selectBirthday": "Doğum Günü Seç",
   "birthdayStoredHint": "ISO 8601 tarihi yerel olarak saklanır",
-  "saveProfileButton": "Sırdaşı Kaydet",
+  "saveProfileButton": "Confidant'ı Kaydet",
 
   "customAttributesTitle": "Özel Nitelikler",
   "addRowButton": "Satır Ekle",
@@ -212,7 +212,7 @@
   "addToPhonebookTitle": "Telefon Rehberine Ekle",
   "addToPhonebookSubtitle": "Bu kişiyi cihazınızın rehberine de kaydedin",
   "phonebookSaveFailed": "Kişi cihaz rehberine kaydedilemedi.",
-  "profileAndPhonebookSaved": "{name} için sırdaş ve telefon kişisi kaydedildi.",
+  "profileAndPhonebookSaved": "{name} için Confidant ve telefon kişisi kaydedildi.",
   "@profileAndPhonebookSaved": {
     "placeholders": {
       "name": { "type": "String" }

@@ -40,6 +40,7 @@
 
 - **Full Localization (i18n)**
   - Localized in **English (`en`)** and **Turkish (`tr`)** using official Flutter ARB files (`lib/l10n/`).
+  - **Confidants Naming Rule:** The app and entity branding **"Confidants"** (singular: **"Confidant"**) is intentionally preserved in its original English across all languages and translations (e.g. In Turkish: *"Confidants"*, *"Yeni Confidant"*, *"Confidant Ekle"* instead of local terms like *"Sırdaşlar"*).
   - Zero hardcoded string literals across UI code.
 
 ---
