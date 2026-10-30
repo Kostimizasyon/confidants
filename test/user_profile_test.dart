@@ -1,5 +1,6 @@
 import 'package:confidants/data_models/user_profile.dart';
 import 'package:confidants/frontend/util/avatar_icon_helper.dart';
+import 'package:confidants/l10n/app_localizations.dart';
 import 'package:confidants/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -77,6 +78,23 @@ void main() {
       await prefs.setLocaleCode('tr');
       expect(prefs.languageCode, 'tr');
       expect(prefs.activeLocale, const Locale('tr'));
+    });
+
+    test('Target language toast resolves to newly selected language', () {
+      final enL10n = lookupAppLocalizations(const Locale('en'));
+      final trL10n = lookupAppLocalizations(const Locale('tr'));
+
+      // Changing to English should render the toast in English
+      expect(
+        enL10n.languageSwitchedToast(enL10n.languageEnglish),
+        'Language changed to English.',
+      );
+
+      // Changing to Turkish should render the toast in Turkish
+      expect(
+        trL10n.languageSwitchedToast(trL10n.languageTurkish),
+        'Uygulama dili Türkçe olarak ayarlandı.',
+      );
     });
   });
 }

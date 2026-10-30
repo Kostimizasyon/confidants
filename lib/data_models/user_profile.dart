@@ -1,3 +1,4 @@
+import '../services/contact_index.dart';
 import 'contact_item.dart';
 import 'custom_field.dart';
 
@@ -102,6 +103,9 @@ class UserProfile {
       'name': name.trim(),
       'nickname': nickname?.trim(),
       'phone_number': phoneNumber.trim(),
+      // Derived search-index columns (see ContactIndex); never read back.
+      'phone_normalized': ContactIndex.normalizePhone(phoneNumber),
+      'name_t9': ContactIndex.toT9(name),
       'email': email?.trim(),
       'birthday': birthday,
       'notes_to_remember': notesToRemember.trim(),

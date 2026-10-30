@@ -22,6 +22,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSettings => 'Settings';
 
   @override
+  String get navKeypad => 'Keypad';
+
+  @override
+  String get settingsTooltip => 'Settings';
+
+  @override
+  String get dialerTitle => 'Keypad';
+
+  @override
+  String get dialerSubtitle => 'Dial a number or search your confidants';
+
+  @override
+  String get dialerEmptyHint => 'Type digits to match numbers and names';
+
+  @override
+  String get dialerNoMatches => 'No matching confidants';
+
+  @override
+  String get dialerCallTooltip => 'Call';
+
+  @override
+  String get dialerBackspaceTooltip => 'Delete';
+
+  @override
+  String get dialerCallFailed =>
+      'Could not open the phone dialer on this device.';
+
+  @override
+  String get dialerCreateProfile => 'Create profile with this number';
+
+  @override
+  String get favoritesSectionTitle => 'Favorites';
+
+  @override
+  String favoriteAddedToast(String name) {
+    return '$name added to favorites.';
+  }
+
+  @override
+  String favoriteRemovedToast(String name) {
+    return '$name removed from favorites.';
+  }
+
+  @override
   String get chatTitle => 'Confidants AI';
 
   @override
@@ -454,4 +498,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addAnotherButton => 'Add Another';
+
+  @override
+  String get addToPhonebookTitle => 'Add to Phone Contacts';
+
+  @override
+  String get addToPhonebookSubtitle =>
+      'Save this person to your device\'s address book';
+
+  @override
+  String get phonebookSaveFailed =>
+      'Could not save contact to device address book.';
+
+  @override
+  String profileAndPhonebookSaved(String name) {
+    return 'Profile and phone contact saved for $name.';
+  }
 }

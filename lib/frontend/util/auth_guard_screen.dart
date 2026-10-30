@@ -55,7 +55,7 @@ class _AuthGuardScreenState extends State<AuthGuardScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isAuthenticated) {
-      return const NavigationShell.chat();
+      return const NavigationShell.dialer();
     }
 
     final l10n = context.l10n;

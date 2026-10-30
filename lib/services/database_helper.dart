@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import '../data_models/custom_field.dart';
 import '../data_models/user_profile.dart';
+import 'contact_index.dart';
 
 class DatabaseHelper {
   DatabaseHelper._();
@@ -9,11 +11,16 @@ class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._();
 
   static const String _dbName = 'confidants.db';
-  static const int _dbVersion = 2;
+  static const int _dbVersion = 3;
 
   static const String tableProfiles = 'profiles';
   static const String tableCustomFields = 'custom_fields';
   static const String tableFileMappings = 'file_mappings';
+
+  /// Incremented after every profile write so open tabs can refresh.
+  final ValueNotifier<int> revision = ValueNotifier<int>(0);
+
+  void _bumpRevision() => revision.value++;
 
   Database? _database;
 
@@ -55,6 +62,8 @@ class DatabaseHelper {
         hobbies TEXT NOT NULL,
         avatar_icon TEXT NOT NULL DEFAULT 'user',
         is_favorite INTEGER NOT NULL DEFAULT 0,
+        phone_normalized TEXT NOT NULL DEFAULT '',
+        name_t9 TEXT NOT NULL DEFAULT '',
         is_training_enabled INTEGER NOT NULL DEFAULT 1,
         created_at INTEGER NOT NULL,
         updated_at INTEGER NOT NULL
@@ -83,6 +92,16 @@ class DatabaseHelper {
     await db.execute(
       'CREATE INDEX idx_custom_fields_profile_id ON $tableCustomFields (profile_id)',
     );
+    await _createSearchIndexes(db);
+  }
+
+  Future<void> _createSearchIndexes(DatabaseExecutor db) async {
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_profiles_phone_normalized ON $tableProfiles (phone_normalized)',
+    );
+    await db.execute(
+      'CREATE INDEX IF NOT EXISTS idx_profiles_name_t9 ON $tableProfiles (name_t9)',
+    );
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -94,6 +113,34 @@ class DatabaseHelper {
         "ALTER TABLE $tableProfiles ADD COLUMN is_favorite INTEGER NOT NULL DEFAULT 0",
       );
     }
+    if (oldVersion < 3) {
+      await db.execute(
+        "ALTER TABLE $tableProfiles ADD COLUMN phone_normalized TEXT NOT NULL DEFAULT ''",
+      );
+      await db.execute(
+        "ALTER TABLE $tableProfiles ADD COLUMN name_t9 TEXT NOT NULL DEFAULT ''",
+      );
+      // Backfill the derived search columns for existing rows.
+      final rows = await db.query(
+        tableProfiles,
+        columns: ['id', 'name', 'phone_number'],
+      );
+      final batch = db.batch();
+      for (final row in rows) {
+        batch.update(
+          tableProfiles,
+          {
+            'phone_normalized':
+                ContactIndex.normalizePhone((row['phone_number'] as String?) ?? ''),
+            'name_t9': ContactIndex.toT9((row['name'] as String?) ?? ''),
+          },
+          where: 'id = ?',
+          whereArgs: [row['id']],
+        );
+      }
+      await batch.commit(noResult: true);
+      await _createSearchIndexes(db);
+    }
   }
 
   Future<int> saveProfile(UserProfile profile) async {
@@ -101,7 +148,7 @@ class DatabaseHelper {
     final now = DateTime.now().millisecondsSinceEpoch;
     final updatedProfile = profile.copyWith(updatedAt: now);
 
-    return db.transaction((txn) async {
+    final savedId = await db.transaction((txn) async {
       int profileId;
       if (updatedProfile.id != null) {
         profileId = updatedProfile.id!;
@@ -158,6 +205,8 @@ class DatabaseHelper {
 
       return profileId;
     });
+    _bumpRevision();
+    return savedId;
   }
 
   Future<void> toggleFavorite(int id, bool isFavorite) async {
@@ -168,6 +217,60 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+    _bumpRevision();
+  }
+
+  /// Exact lookup by normalized phone digits, served by `idx_profiles_phone_normalized`.
+  Future<UserProfile?> findProfileByPhone(String rawPhone) async {
+    final normalized = ContactIndex.normalizePhone(rawPhone);
+    if (normalized.isEmpty) return null;
+    final db = await database;
+    final rows = await db.query(
+      tableProfiles,
+      where: 'phone_normalized = ?',
+      whereArgs: [normalized],
+      limit: 1,
+    );
+    if (rows.isEmpty) return null;
+    final hydrated = await _hydrateProfilesWithCustomFields(db, rows);
+    return hydrated.first;
+  }
+
+  /// Live dialer matching: phone digits anywhere in the number, or T9 name
+  /// digits at the start of any word in the name. Prefix/exact hits rank first.
+  Future<List<UserProfile>> searchForDialer(String dialInput, {int limit = 30}) async {
+    final digits = ContactIndex.normalizePhone(dialInput);
+    if (digits.isEmpty) return const [];
+
+    final db = await database;
+    final rows = await db.rawQuery(
+      '''
+      SELECT * FROM $tableProfiles
+      WHERE phone_normalized LIKE ?
+         OR name_t9 LIKE ?
+         OR name_t9 LIKE ?
+      ORDER BY
+        CASE
+          WHEN phone_normalized = ? THEN 0
+          WHEN phone_normalized LIKE ? THEN 1
+          WHEN name_t9 LIKE ? THEN 2
+          ELSE 3
+        END,
+        is_favorite DESC,
+        name COLLATE NOCASE ASC
+      LIMIT ?
+      ''',
+      [
+        '%$digits%',
+        '$digits%',
+        '% $digits%',
+        digits,
+        '$digits%',
+        '$digits%',
+        limit,
+      ],
+    );
+    return _hydrateProfilesWithCustomFields(db, rows);
   }
 
   Future<List<UserProfile>> getAllProfiles({String? searchQuery}) async {
@@ -233,7 +336,7 @@ class DatabaseHelper {
 
   Future<int> deleteProfile(int id) async {
     final db = await database;
-    return db.transaction((txn) async {
+    final deleted = await db.transaction((txn) async {
       final rows = await txn.query(
         tableProfiles,
         columns: ['profile_hash'],
@@ -257,6 +360,8 @@ class DatabaseHelper {
         whereArgs: [id],
       );
     });
+    _bumpRevision();
+    return deleted;
   }
 
   Future<void> upsertFileMapping({

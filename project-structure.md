@@ -33,9 +33,16 @@ lib/
 │   │   │   ├── chat_bubble.dart
 │   │   │   └── chat_input_bar.dart
 │   │   └── chat_page.dart
+│   ├── dialer_page/
+│   │   ├── util/
+│   │   │   ├── dial_pad.dart
+│   │   │   └── dialer_match_tile.dart
+│   │   └── dialer_page.dart
 │   ├── profiles_page/
 │   │   ├── util/
+│   │   │   ├── contact_section.dart
 │   │   │   ├── custom_field_editor.dart
+│   │   │   ├── favorites_grid.dart
 │   │   │   ├── profile_card.dart
 │   │   │   └── profile_form.dart
 │   │   ├── profile_detail_page.dart
@@ -43,6 +50,7 @@ lib/
 │   ├── settings_page/
 │   │   ├── util/
 │   │   │   ├── model_selector_card.dart
+│   │   │   ├── settings_language_tile.dart
 │   │   │   └── settings_toggle_tile.dart
 │   │   └── settings_page.dart
 │   ├── theme/
@@ -50,6 +58,8 @@ lib/
 │   │   └── app_theme.dart
 │   └── util/
 │       ├── auth_guard_screen.dart
+│       ├── avatar_icon_helper.dart
+│       ├── contact_avatar.dart
 │       ├── contact_picker_dialog.dart
 │       ├── custom_app_bar.dart
 │       ├── l10n_extensions.dart
@@ -58,6 +68,7 @@ lib/
 ├── services/
 │   ├── ai_service.dart
 │   ├── auth_service.dart
+│   ├── contact_index.dart
 │   ├── contact_service.dart
 │   ├── database_helper.dart
 │   ├── export_service.dart
@@ -93,10 +104,11 @@ lib/
 - `lib/services/ai_service.dart`: Orchestrates local mini-LLM context assembly and query execution. Reads exported `.json` chunks from `ExportService`, builds the system prompt, resolves the active `AiModelConfig` from `PreferencesService`, and exposes the standardized `// TODO: AI API call` boundary alongside an offline in-context matcher for immediate testing.
 - `lib/services/preferences_service.dart`: Singleton wrapper over `SharedPreferences` persisting `is_dark_mode`, `require_fingerprint_lock`, `is_ai_enabled` (AI opt-in), `selected_ai_model`, and `custom_ai_model_path`. Exposes `ValueNotifier` streams for zero-dependency reactive UI updates.
 - `lib/services/auth_service.dart`: Singleton biometric authentication service built on `local_auth`. Verifies hardware biometric/credential availability and triggers the native OS unlock prompt with graceful `PlatformException` handling.
-- `lib/services/contact_service.dart`: Device address book service using `flutter_contacts`. Requests read-only contact permissions and extracts normalized `ContactItem` entries.
+- `lib/services/contact_service.dart`: Device address book service using `flutter_contacts`. Requests contact permissions (read-only for importing, read-write for adding), extracts normalized `ContactItem` entries, and provides `insertDeviceContact` for saving new profiles directly to the device phonebook.
 - `lib/services/hash_service.dart`: Stateless SHA-256 cryptographic utility (`crypto` package). Normalizes phone numbers/identifiers into deterministic hashes (`hashIdentifier`) and calculates payload checksums (`computeChecksum`) for exported JSON chunks.
 - `lib/services/export_service.dart`: Singleton exporter writing one pretty-printed JSON chunk per training-enabled profile to `<app documents>/ai_context_chunks/<profile_hash>.json` (phone number omitted, filename is the SHA-256 hash). `syncProfile` skips rewrites when the stored checksum matches and removes the chunk when training is disabled; `removeProfileChunk` deletes file + mapping; `syncAll` reconciles the folder with the database at startup; `listChunkFiles` provides the context files to `AiService`.
-- `lib/services/database_helper.dart`: Singleton SQLite manager (`sqflite`) initializing `confidants.db` with `PRAGMA foreign_keys = ON` and managing three tables: `profiles`, `custom_fields` (with `ON DELETE CASCADE`), and `file_mappings`.
+- `lib/services/contact_index.dart`: Pure, dependency-free helper for phone normalization (`normalizePhone`), dialer input sanitization (`sanitizeDialInput`), T9 digit conversion (`toT9` with Turkish/accent folding), and Samsung One UI section grouping (`&` first for emojis/symbols, `A`–`Z` in the middle, `#` last for numbers/punctuation).
+- `lib/services/database_helper.dart`: Singleton SQLite manager (`sqflite`) initializing `confidants.db` (v3) with `PRAGMA foreign_keys = ON`, managing `profiles`, `custom_fields` (with `ON DELETE CASCADE`), and `file_mappings`, maintaining B-tree indexes on `phone_normalized` (`idx_profiles_phone_normalized`) and `name_t9` (`idx_profiles_name_t9`), and providing real-time dialer matching (`searchForDialer`, `findProfileByPhone`).
 
 ### Frontend Theme (`lib/frontend/theme/`)
 - `lib/frontend/theme/app_colors.dart`: Single source of truth for the minimalist Black (`#0A0A0A`), White (`#F8F9FA` / `#FFFFFF`), and Dark Blue (`#0D1B2A`, `#1B263B`, `#415A77`, `#778DA9`) palette. Prevents raw hex codes across UI files.
@@ -104,21 +116,27 @@ lib/
 
 ### Frontend Shared Utilities (`lib/frontend/util/`)
 - `lib/frontend/util/avatar_icon_helper.dart`: Maps and resolves 16 curated Lucide icons (`user`, `smile`, `heart`, `star`, `sparkles`, `coffee`, `briefcase`, `music`, `code`, `palette`, `camera`, `flame`, `compass`, `gem`, `crown`, `sun`) for profile avatars.
+- `lib/frontend/util/contact_avatar.dart`: Circular contact avatar (`ContactAvatar` and `ContactAvatar.favorite`) rendering custom avatar icons, A–Z initials, or a fallback user icon.
 - `lib/frontend/util/l10n_extensions.dart`: `L10nText` typedef and `context.l10n` shortcut for `AppLocalizations.of(context)`.
 - `lib/frontend/util/proteinbar.dart`: Custom blurred overlay toast notification (`proteinBar`) replacing standard Flutter `SnackBar` throughout the application.
-- `lib/frontend/util/custom_app_bar.dart`: Shared header widget with semantic named constructors (`CustomAppBar.chat`, `CustomAppBar.profiles`, `CustomAppBar.settings`, `CustomAppBar.detail`) that pre-populate Lucide icons, titles, and subtitles.
+- `lib/frontend/util/custom_app_bar.dart`: Shared header widget with semantic named constructors (`CustomAppBar.dialer`, `CustomAppBar.chat`, `CustomAppBar.profiles`, `CustomAppBar.settings`, `CustomAppBar.detail`) and top-right Settings navigation action on main tabs.
 - `lib/frontend/util/contact_picker_dialog.dart`: Searchable modal bottom sheet (`ContactPickerDialog.show`) for selecting an imported `ContactItem` from the device address book.
-- `lib/frontend/util/auth_guard_screen.dart`: Startup security gate that checks `require_fingerprint_lock`. Immediately enters `NavigationShell.chat` if disabled, or presents a biometric unlock prompt and locked vault barrier (`LucideIcons.fingerprint` / `LucideIcons.shieldAlert`) until verified.
-- `lib/frontend/util/navigation_shell.dart`: Persistent 3-tab `BottomNavigationBar` scaffold (`Chat`, `Profiles`, `Settings`) using `IndexedStack` and named constructors (`NavigationShell.chat`, `NavigationShell.profiles`, `NavigationShell.settings`).
+- `lib/frontend/util/auth_guard_screen.dart`: Startup security gate that checks `require_fingerprint_lock`. Immediately enters `NavigationShell.dialer` if disabled, or presents a biometric unlock prompt and locked vault barrier (`LucideIcons.fingerprint` / `LucideIcons.shieldAlert`) until verified.
+- `lib/frontend/util/navigation_shell.dart`: Persistent 3-tab `BottomNavigationBar` scaffold wrapped in `SafeArea` (`Keypad`, `Profiles`, `AI Chat`) using `IndexedStack` and named constructors (`NavigationShell.dialer`, `NavigationShell.profiles`, `NavigationShell.chat`).
 
 ### Frontend Pages (`lib/frontend/`)
+- `lib/frontend/dialer_page/dialer_page.dart`: Keypad / Call tab featuring live contact matching above a 12-key numeric dial pad, active number display with tap-to-delete and long-press-to-clear, quick profile creation for unknown numbers, and native dialer launching via `url_launcher` (`tel:<number>`).
+- `lib/frontend/dialer_page/util/dial_pad.dart`: 12-key numeric keypad (`1`–`9`, `*`, `0`/`+`, `#`) with T9 letter sub-labels.
+- `lib/frontend/dialer_page/util/dialer_match_tile.dart`: Live dialer match row showing contact avatar, name, phone number, and quick-call button.
 - `lib/frontend/chat_page/chat_page.dart`: Conversational AI interface gated by the user's `isAiEnabled` opt-in setting. Uses `_ChatStateView.optInRequired` and `_ChatStateView.ready` preset named constructors, renders `ChatBubble.user` / `ChatBubble.ai` items, and dispatches queries to `AiService`.
 - `lib/frontend/chat_page/util/chat_bubble.dart`: Message bubble widget with `ChatBubble.user` and `ChatBubble.ai` named constructors, generation spinner, error state, and timestamps.
 - `lib/frontend/chat_page/util/chat_input_bar.dart`: Bottom message composer with send button (`LucideIcons.sendHorizontal`) and busy state lock while generating.
-- `lib/frontend/profiles_page/profiles_page.dart`: Searchable list of personal profiles with favorites prioritized at top, quick favorite toggling, clean empty-state actions (`_ProfilesEmptyState.initial`, `_ProfilesEmptyState.search`), and conditional header/FAB rendering (no header import/FAB buttons when database is empty).
+- `lib/frontend/profiles_page/profiles_page.dart`: Samsung One UI-style contacts view with a 3-column Favorites Grid at the top and custom `&` / `A`–`Z` / `#` grouped sections below.
+- `lib/frontend/profiles_page/util/favorites_grid.dart`: 3-column gradient card grid (`FavoritesGrid`) for pinned favorite confidants.
+- `lib/frontend/profiles_page/util/contact_section.dart`: Section letter headers (`ContactSectionHeader`) and rounded grouped contact tiles (`ContactListTile`).
 - `lib/frontend/profiles_page/profile_detail_page.dart`: Focused, non-duplicated profile creator (`ProfileDetailPage.create`) and editor (`ProfileDetailPage.edit`) with `proteinBar` notifications and automatic `ExportService` context synchronization.
 - `lib/frontend/profiles_page/util/profile_card.dart`: Reusable profile summary card with `ProfileCard.compact` (featuring dynamic avatar icon, favorite star badge, and direct favorite toggle) and `ProfileCard.detailed` (showing SHA-256 hash, birthday, and custom attribute count).
-- `lib/frontend/profiles_page/util/profile_form.dart`: De-cluttered, beautifully organized profile form grouped into 4 distinct semantic sections: Basic Information (avatar icon picker & favorite toggle), Contact Details (phone, email, birthday), Personal Context (notes, likes, dislikes, hobbies), and Custom Attributes (dynamic attributes & AI training toggle).
+- `lib/frontend/profiles_page/util/profile_form.dart`: De-cluttered, beautifully organized profile form grouped into 4 distinct semantic sections: Basic Information (avatar icon picker & favorite toggle), Contact Details (phone, email, birthday), Personal Context (notes, likes, dislikes, hobbies), and Custom Attributes (dynamic attributes, add-to-phonebook check button on new profile creation, and AI training toggle).
 - `lib/frontend/profiles_page/util/custom_field_editor.dart`: Dynamic key-value row editor for adding, updating, and removing arbitrary custom profile attributes.
 - `lib/frontend/settings_page/settings_page.dart`: Settings screen wrapping In-App Display Language Switcher (`SettingsLanguageTile`), Dark Mode (`SettingsToggleTile.theme`), Biometric Launch Lock (`SettingsToggleTile.biometrics`), Local AI Opt-In (`SettingsToggleTile.aiOptIn`), and the model selection card (`ModelSelectorCard`).
 - `lib/frontend/settings_page/util/settings_language_tile.dart`: In-app display language selector (`SettingsLanguageTile`) supporting System Default, English, and Türkçe with instant reactive UI rebuilds.

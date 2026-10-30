@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../data_models/contact_item.dart';
 import '../../data_models/user_profile.dart';
+import '../../services/contact_service.dart';
 import '../../services/database_helper.dart';
 import '../../services/export_service.dart';
 import '../../services/hash_service.dart';
@@ -60,7 +61,10 @@ class ProfileDetailPage extends StatefulWidget {
 class _ProfileDetailPageState extends State<ProfileDetailPage> {
   final DatabaseHelper _dbHelper = DatabaseHelper.instance;
 
-  Future<void> _handleSave(UserProfile updatedProfile) async {
+  Future<void> _handleSave(
+    UserProfile updatedProfile, {
+    bool addToDeviceContacts = false,
+  }) async {
     final l10n = context.l10n;
 
     if (updatedProfile.name.trim().isEmpty) {
@@ -75,11 +79,31 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     final savedId = await _dbHelper.saveProfile(updatedProfile);
     final saved = await _dbHelper.getProfileById(savedId);
     await ExportService.instance.syncProfile(saved ?? updatedProfile);
+
+    bool phonebookSaved = false;
+    if (addToDeviceContacts) {
+      phonebookSaved = await ContactService.instance.insertDeviceContact(
+        name: updatedProfile.name,
+        phoneNumber: updatedProfile.phoneNumber,
+        email: updatedProfile.email,
+        notes: updatedProfile.notesToRemember,
+      );
+      if (!phonebookSaved && mounted) {
+        proteinBar(
+          context,
+          l10n.phonebookSaveFailed,
+          icon: LucideIcons.circleAlert,
+        );
+      }
+    }
+
     if (!mounted) return;
 
     proteinBar(
       context,
-      l10n.profileSaved(updatedProfile.name),
+      (addToDeviceContacts && phonebookSaved)
+          ? l10n.profileAndPhonebookSaved(updatedProfile.name)
+          : l10n.profileSaved(updatedProfile.name),
       icon: LucideIcons.check,
     );
     Navigator.of(context).pop(true);
@@ -129,14 +153,18 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
             ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        children: [
-          ProfileForm(
-            initialProfile: widget.initialProfile,
-            onSave: _handleSave,
-          ),
-        ],
+      body: SafeArea(
+        top: false,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          children: [
+            ProfileForm(
+              initialProfile: widget.initialProfile,
+              isNew: widget.isNew,
+              onSave: _handleSave,
+            ),
+          ],
+        ),
       ),
     );
   }

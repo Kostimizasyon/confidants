@@ -43,4 +43,42 @@ class ContactService {
 
     return items;
   }
+
+  Future<bool> insertDeviceContact({
+    required String name,
+    required String phoneNumber,
+    String? email,
+    String? notes,
+  }) async {
+    try {
+      final hasPermission =
+          await FlutterContacts.requestPermission(readonly: false);
+      if (!hasPermission) return false;
+
+      final trimmedName = name.trim();
+      final contact = Contact();
+      final lastSpace = trimmedName.lastIndexOf(' ');
+      if (lastSpace > 0) {
+        contact.name.first = trimmedName.substring(0, lastSpace);
+        contact.name.last = trimmedName.substring(lastSpace + 1);
+      } else {
+        contact.name.first = trimmedName;
+      }
+
+      if (phoneNumber.trim().isNotEmpty) {
+        contact.phones = [Phone(phoneNumber.trim())];
+      }
+      if (email != null && email.trim().isNotEmpty) {
+        contact.emails = [Email(email.trim())];
+      }
+      if (notes != null && notes.trim().isNotEmpty) {
+        contact.notes = [Note(notes.trim())];
+      }
+
+      await contact.insert();
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 }

@@ -10,13 +10,20 @@ import '../../util/avatar_icon_helper.dart';
 import '../../util/l10n_extensions.dart';
 import 'custom_field_editor.dart';
 
+typedef ProfileSaveCallback = void Function(
+  UserProfile profile, {
+  bool addToDeviceContacts,
+});
+
 class ProfileForm extends StatefulWidget {
   final UserProfile initialProfile;
-  final ValueChanged<UserProfile> onSave;
+  final bool isNew;
+  final ProfileSaveCallback onSave;
 
   const ProfileForm({
     super.key,
     required this.initialProfile,
+    this.isNew = false,
     required this.onSave,
   });
 
@@ -39,6 +46,7 @@ class _ProfileFormState extends State<ProfileForm> {
   late String? _birthday;
   late bool _isTrainingEnabled;
   late List<CustomField> _customFields;
+  bool _addToDeviceContacts = false;
 
   @override
   void initState() {
@@ -231,7 +239,10 @@ class _ProfileFormState extends State<ProfileForm> {
       customFields: cleanedFields,
     );
 
-    widget.onSave(updated);
+    widget.onSave(
+      updated,
+      addToDeviceContacts: _addToDeviceContacts,
+    );
   }
 
   String? _emptyToNull(String raw) {
@@ -427,13 +438,13 @@ class _ProfileFormState extends State<ProfileForm> {
               children: [
                 _ProfileField.phone(controller: _phoneController),
                 _ProfileField.email(controller: _emailController),
-                Container(
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? AppColors.backgroundDark
-                        : AppColors.backgroundLight,
+                Material(
+                  color: isDark
+                      ? AppColors.backgroundDark
+                      : AppColors.backgroundLight,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
+                    side: BorderSide(
                       color: isDark
                           ? AppColors.borderDark
                           : AppColors.borderLight,
@@ -508,6 +519,59 @@ class _ProfileFormState extends State<ProfileForm> {
           fields: _customFields,
           onChanged: (updated) => setState(() => _customFields = updated),
         ),
+
+        if (widget.isNew || widget.initialProfile.id == null) ...[
+          const SizedBox(height: 6),
+          Card(
+            margin: const EdgeInsets.only(bottom: 12),
+            child: CheckboxListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              secondary: Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? AppColors.secondaryDarkBlue
+                      : AppColors.backgroundLight,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  LucideIcons.bookUser,
+                  size: 20,
+                  color: isDark
+                      ? AppColors.accentHighlight
+                      : AppColors.primaryDarkBlue,
+                ),
+              ),
+              title: Text(
+                l10n.addToPhonebookTitle,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  l10n.addToPhonebookSubtitle,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: secondaryTextColor,
+                  ),
+                ),
+              ),
+              value: _addToDeviceContacts,
+              activeColor:
+                  isDark ? AppColors.accentBlue : AppColors.primaryDarkBlue,
+              checkColor: AppColors.surfaceLight,
+              checkboxShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              controlAffinity: ListTileControlAffinity.trailing,
+              onChanged: (val) =>
+                  setState(() => _addToDeviceContacts = val ?? false),
+            ),
+          ),
+        ],
 
         const SizedBox(height: 6),
         SettingsToggleTile.training(

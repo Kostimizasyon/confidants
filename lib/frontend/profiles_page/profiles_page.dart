@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../data_models/contact_item.dart';
 import '../../data_models/user_profile.dart';
+import '../../services/contact_index.dart';
 import '../../services/contact_service.dart';
 import '../../services/database_helper.dart';
 import '../theme/app_colors.dart';
@@ -11,7 +12,8 @@ import '../util/custom_app_bar.dart';
 import '../util/l10n_extensions.dart';
 import '../util/proteinbar.dart';
 import 'profile_detail_page.dart';
-import 'util/profile_card.dart';
+import 'util/contact_section.dart';
+import 'util/favorites_grid.dart';
 
 class ProfilesPage extends StatefulWidget {
   const ProfilesPage({super.key});
@@ -32,13 +34,18 @@ class _ProfilesPageState extends State<ProfilesPage> {
   void initState() {
     super.initState();
     _loadProfiles();
+    // Refresh when profiles change elsewhere (e.g. created from the dialer).
+    _dbHelper.revision.addListener(_onDatabaseChanged);
   }
 
   @override
   void dispose() {
+    _dbHelper.revision.removeListener(_onDatabaseChanged);
     _searchController.dispose();
     super.dispose();
   }
+
+  void _onDatabaseChanged() => _loadProfiles();
 
   Future<void> _loadProfiles([String? query]) async {
     final loaded = await _dbHelper.getAllProfiles(
@@ -54,8 +61,56 @@ class _ProfilesPageState extends State<ProfilesPage> {
   Future<void> _handleToggleFavorite(UserProfile profile) async {
     final id = profile.id;
     if (id == null) return;
-    await _dbHelper.toggleFavorite(id, !profile.isFavorite);
-    await _loadProfiles();
+    final l10n = context.l10n;
+    final nowFavorite = !profile.isFavorite;
+    await _dbHelper.toggleFavorite(id, nowFavorite);
+    if (!mounted) return;
+    final name =
+        profile.name.trim().isNotEmpty ? profile.name.trim() : l10n.unnamedProfile;
+    proteinBar(
+      context,
+      nowFavorite ? l10n.favoriteAddedToast(name) : l10n.favoriteRemovedToast(name),
+      icon: nowFavorite ? LucideIcons.star : LucideIcons.starOff,
+    );
+  }
+
+  /// Flattens favorites + `&` / A–Z / `#` sections into lazily-built rows.
+  List<Widget Function()> _buildRows() {
+    final rows = <Widget Function()>[];
+    final isSearching = _searchController.text.trim().isNotEmpty;
+    final favorites = _profiles.where((p) => p.isFavorite).toList()
+      ..sort((a, b) => ContactIndex.foldString(a.name.trim())
+          .compareTo(ContactIndex.foldString(b.name.trim())));
+
+    if (!isSearching && favorites.isNotEmpty) {
+      rows.add(() => FavoritesGrid(
+            favorites: favorites,
+            onTap: _openEditProfile,
+            onLongPress: _handleToggleFavorite,
+          ));
+    }
+
+    final sections = ContactIndex.groupBySection<UserProfile>(
+      _profiles,
+      (p) => p.name,
+    );
+    for (final section in sections) {
+      rows.add(() => ContactSectionHeader(letter: section.key));
+      final members = section.value;
+      for (var i = 0; i < members.length; i++) {
+        final profile = members[i];
+        final isFirst = i == 0;
+        final isLast = i == members.length - 1;
+        rows.add(() => ContactListTile(
+              profile: profile,
+              isFirst: isFirst,
+              isLast: isLast,
+              onTap: () => _openEditProfile(profile),
+              onLongPress: () => _handleToggleFavorite(profile),
+            ));
+      }
+    }
+    return rows;
   }
 
   Future<void> _openCreateManual() async {
@@ -121,7 +176,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
     final buttonBg =
         isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
     final hasSearchQuery = _searchController.text.trim().isNotEmpty;
-    final hasProfiles = _profiles.isNotEmpty;
+    // A search with zero hits still means the user has profiles.
+    final hasProfiles = _profiles.isNotEmpty || hasSearchQuery;
 
     return Scaffold(
       appBar: CustomAppBar.profiles(
@@ -135,7 +191,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
               ]
             : null,
       ),
-      body: Column(
+      body: SafeArea(
+        top: false,
+        child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -167,21 +225,19 @@ class _ProfilesPageState extends State<ProfilesPage> {
                             onImport: _openImportContact,
                             onCreateManual: _openCreateManual,
                           ))
-                    : ListView.builder(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: _profiles.length,
-                        itemBuilder: (context, index) {
-                          final profile = _profiles[index];
-                          return ProfileCard.compact(
-                            profile: profile,
-                            onTap: () => _openEditProfile(profile),
-                            onToggleFavorite: () =>
-                                _handleToggleFavorite(profile),
+                    : Builder(
+                        builder: (context) {
+                          final rows = _buildRows();
+                          return ListView.builder(
+                            padding: const EdgeInsets.fromLTRB(12, 4, 12, 96),
+                            itemCount: rows.length,
+                            itemBuilder: (context, index) => rows[index](),
                           );
                         },
                       ),
           ),
         ],
+      ),
       ),
       floatingActionButton: hasProfiles
           ? FloatingActionButton.extended(

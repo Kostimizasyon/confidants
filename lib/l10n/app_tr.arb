@@ -5,6 +5,23 @@
   "navChat": "Sohbet",
   "navProfiles": "Profiller",
   "navSettings": "Ayarlar",
+  "navKeypad": "Tuş Takımı",
+  "settingsTooltip": "Ayarlar",
+
+  "dialerTitle": "Tuş Takımı",
+  "dialerSubtitle": "Numara çevirin veya kişilerinizde arayın",
+  "dialerEmptyHint": "Numara ve isim eşleştirmek için rakam yazın",
+  "dialerNoMatches": "Eşleşen kişi yok",
+  "dialerCallTooltip": "Ara",
+  "dialerBackspaceTooltip": "Sil",
+  "dialerCallFailed": "Bu cihazda telefon çeviricisi açılamadı.",
+  "dialerCreateProfile": "Bu numarayla profil oluştur",
+
+  "favoritesSectionTitle": "Favorilerim",
+  "favoriteAddedToast": "{name} favorilere eklendi.",
+  "@favoriteAddedToast": { "placeholders": { "name": { "type": "String" } } },
+  "favoriteRemovedToast": "{name} favorilerden çıkarıldı.",
+  "@favoriteRemovedToast": { "placeholders": { "name": { "type": "String" } } },
 
   "chatTitle": "Confidants AI",
   "chatSubtitle": "Çevrimdışı kişisel bağlam asistanı",
@@ -175,5 +192,15 @@
   "valueLabel": "Değer",
   "valueHint": "ör. Yulaflı Cortado",
   "removeAttributeTooltip": "Niteliği kaldır",
-  "addAnotherButton": "Bir Tane Daha Ekle"
+  "addAnotherButton": "Bir Tane Daha Ekle",
+
+  "addToPhonebookTitle": "Telefon Rehberine Ekle",
+  "addToPhonebookSubtitle": "Bu kişiyi cihazınızın rehberine de kaydedin",
+  "phonebookSaveFailed": "Kişi cihaz rehberine kaydedilemedi.",
+  "profileAndPhonebookSaved": "{name} için profil ve telefon kişisi kaydedildi.",
+  "@profileAndPhonebookSaved": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  }
 }

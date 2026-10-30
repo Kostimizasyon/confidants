@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:confidants/l10n/app_localizations.dart';
+import '../settings_page/settings_page.dart';
 import '../theme/app_colors.dart';
 import 'l10n_extensions.dart';
 
@@ -11,6 +12,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool showBackButton;
 
+  /// Appends the top-right Settings button (used by the three main tabs).
+  final bool showSettingsAction;
+
   const CustomAppBar({
     super.key,
     required this.leadingIcon,
@@ -18,7 +22,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.subtitleOf,
     this.actions,
     this.showBackButton = false,
+    this.showSettingsAction = false,
   });
+
+  const CustomAppBar.dialer({
+    super.key,
+    this.actions,
+  })  : leadingIcon = LucideIcons.grid3x3,
+        titleOf = _dialerTitle,
+        subtitleOf = _dialerSubtitle,
+        showBackButton = false,
+        showSettingsAction = true;
 
   const CustomAppBar.chat({
     super.key,
@@ -26,7 +40,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   })  : leadingIcon = LucideIcons.bot,
         titleOf = _chatTitle,
         subtitleOf = _chatSubtitle,
-        showBackButton = false;
+        showBackButton = false,
+        showSettingsAction = true;
 
   const CustomAppBar.profiles({
     super.key,
@@ -34,15 +49,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   })  : leadingIcon = LucideIcons.users,
         titleOf = _profilesTitle,
         subtitleOf = _profilesSubtitle,
-        showBackButton = false;
+        showBackButton = false,
+        showSettingsAction = true;
 
+  /// Settings is now a pushed route, so it shows a back button instead of tabs.
   const CustomAppBar.settings({
     super.key,
     this.actions,
   })  : leadingIcon = LucideIcons.slidersHorizontal,
         titleOf = _settingsTitle,
         subtitleOf = _settingsSubtitle,
-        showBackButton = false;
+        showBackButton = true,
+        showSettingsAction = false;
 
   /// [title] is dynamic (a profile name or an already-localized string).
   CustomAppBar.detail({
@@ -52,8 +70,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   })  : leadingIcon = LucideIcons.userCheck,
         titleOf = ((_) => title),
         subtitleOf = _detailSubtitle,
-        showBackButton = true;
+        showBackButton = true,
+        showSettingsAction = false;
 
+  static String _dialerTitle(AppLocalizations l10n) => l10n.dialerTitle;
+  static String _dialerSubtitle(AppLocalizations l10n) => l10n.dialerSubtitle;
   static String _chatTitle(AppLocalizations l10n) => l10n.chatTitle;
   static String _chatSubtitle(AppLocalizations l10n) => l10n.chatSubtitle;
   static String _profilesTitle(AppLocalizations l10n) => l10n.profilesTitle;
@@ -67,6 +88,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(68);
 
+  void _openSettings(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const SettingsPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -78,6 +105,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final badgeBackground =
         isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
     final subtitle = subtitleOf?.call(l10n);
+
+    final mergedActions = <Widget>[
+      ...?actions,
+      if (showSettingsAction)
+        IconButton(
+          onPressed: () => _openSettings(context),
+          icon: const Icon(LucideIcons.settings, size: 20),
+          tooltip: l10n.settingsTooltip,
+        ),
+      if (showSettingsAction) const SizedBox(width: 4),
+    ];
 
     return AppBar(
       automaticallyImplyLeading: showBackButton,
@@ -128,7 +166,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: actions,
+      actions: mergedActions.isEmpty ? null : mergedActions,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
         child: Divider(

@@ -1,3 +1,4 @@
+import 'package:confidants/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../services/auth_service.dart';
@@ -22,19 +23,31 @@ class _SettingsPageState extends State<SettingsPage> {
   final AuthService _authService = AuthService.instance;
 
   Future<void> _handleLanguageChanged(String code) async {
-    final l10n = context.l10n;
     await _prefs.setLocaleCode(code);
     if (!mounted) return;
+
+    final targetL10n = _resolveTargetL10n(code);
     final langName = switch (code) {
-      'en' => l10n.languageEnglish,
-      'tr' => l10n.languageTurkish,
-      _ => l10n.languageSystem,
+      'en' => targetL10n.languageEnglish,
+      'tr' => targetL10n.languageTurkish,
+      _ => targetL10n.languageSystem,
     };
     proteinBar(
       context,
-      l10n.languageSwitchedToast(langName),
+      targetL10n.languageSwitchedToast(langName),
       icon: LucideIcons.globe,
     );
+  }
+
+  static AppLocalizations _resolveTargetL10n(String code) {
+    if (code == 'en') return lookupAppLocalizations(const Locale('en'));
+    if (code == 'tr') return lookupAppLocalizations(const Locale('tr'));
+
+    final platformLocale = WidgetsBinding.instance.platformDispatcher.locale;
+    if (platformLocale.languageCode == 'tr') {
+      return lookupAppLocalizations(const Locale('tr'));
+    }
+    return lookupAppLocalizations(const Locale('en'));
   }
 
   Future<void> _handleFingerprintToggle(bool requestedValue) async {
@@ -82,7 +95,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: const CustomAppBar.settings(),
-      body: ListView(
+      body: SafeArea(
+        top: false,
+        child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           ValueListenableBuilder<String>(
@@ -150,6 +165,7 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
         ],
+      ),
       ),
     );
   }

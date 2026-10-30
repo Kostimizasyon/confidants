@@ -122,6 +122,84 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get navSettings;
 
+  /// No description provided for @navKeypad.
+  ///
+  /// In en, this message translates to:
+  /// **'Keypad'**
+  String get navKeypad;
+
+  /// No description provided for @settingsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTooltip;
+
+  /// No description provided for @dialerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keypad'**
+  String get dialerTitle;
+
+  /// No description provided for @dialerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dial a number or search your confidants'**
+  String get dialerSubtitle;
+
+  /// No description provided for @dialerEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type digits to match numbers and names'**
+  String get dialerEmptyHint;
+
+  /// No description provided for @dialerNoMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching confidants'**
+  String get dialerNoMatches;
+
+  /// No description provided for @dialerCallTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get dialerCallTooltip;
+
+  /// No description provided for @dialerBackspaceTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get dialerBackspaceTooltip;
+
+  /// No description provided for @dialerCallFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the phone dialer on this device.'**
+  String get dialerCallFailed;
+
+  /// No description provided for @dialerCreateProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Create profile with this number'**
+  String get dialerCreateProfile;
+
+  /// No description provided for @favoritesSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favoritesSectionTitle;
+
+  /// No description provided for @favoriteAddedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added to favorites.'**
+  String favoriteAddedToast(String name);
+
+  /// No description provided for @favoriteRemovedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed from favorites.'**
+  String favoriteRemovedToast(String name);
+
   /// No description provided for @chatTitle.
   ///
   /// In en, this message translates to:
@@ -883,6 +961,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Another'**
   String get addAnotherButton;
+
+  /// No description provided for @addToPhonebookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Phone Contacts'**
+  String get addToPhonebookTitle;
+
+  /// No description provided for @addToPhonebookSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this person to your device\'s address book'**
+  String get addToPhonebookSubtitle;
+
+  /// No description provided for @phonebookSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save contact to device address book.'**
+  String get phonebookSaveFailed;
+
+  /// No description provided for @profileAndPhonebookSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile and phone contact saved for {name}.'**
+  String profileAndPhonebookSaved(String name);
 }
 
 class _AppLocalizationsDelegate

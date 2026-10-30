@@ -142,41 +142,44 @@ class _ChatPageState extends State<ChatPage> {
                 ),
             ],
           ),
-          body: !isAiEnabled
-              ? _ChatStateView.optInRequired(
-                  onEnable: () => _prefs.setAiEnabled(true),
-                )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: _messages.isEmpty
-                          ? ValueListenableBuilder<String>(
-                              valueListenable: _prefs.selectedModelIdNotifier,
-                              builder: (context, _, _) {
-                                return _ChatStateView.ready(
-                                  modelName: _prefs.activeAiModel.displayName,
-                                  chunkCount: _indexedChunks,
-                                );
-                              },
-                            )
-                          : ListView.builder(
-                              controller: _scrollController,
-                              padding: const EdgeInsets.all(16),
-                              itemCount: _messages.length,
-                              itemBuilder: (context, index) {
-                                final msg = _messages[index];
-                                return msg.isUser
-                                    ? ChatBubble.user(chatMessage: msg)
-                                    : ChatBubble.ai(chatMessage: msg);
-                              },
-                            ),
-                    ),
-                    ChatInputBar(
-                      onSend: _handleSend,
-                      isBusy: _isGenerating,
-                    ),
-                  ],
-                ),
+          body: SafeArea(
+            top: false,
+            child: !isAiEnabled
+                ? _ChatStateView.optInRequired(
+                    onEnable: () => _prefs.setAiEnabled(true),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: _messages.isEmpty
+                            ? ValueListenableBuilder<String>(
+                                valueListenable: _prefs.selectedModelIdNotifier,
+                                builder: (context, _, _) {
+                                  return _ChatStateView.ready(
+                                    modelName: _prefs.activeAiModel.displayName,
+                                    chunkCount: _indexedChunks,
+                                  );
+                                },
+                              )
+                            : ListView.builder(
+                                controller: _scrollController,
+                                padding: const EdgeInsets.all(16),
+                                itemCount: _messages.length,
+                                itemBuilder: (context, index) {
+                                  final msg = _messages[index];
+                                  return msg.isUser
+                                      ? ChatBubble.user(chatMessage: msg)
+                                      : ChatBubble.ai(chatMessage: msg);
+                                },
+                              ),
+                      ),
+                      ChatInputBar(
+                        onSend: _handleSend,
+                        isBusy: _isGenerating,
+                      ),
+                    ],
+                  ),
+          ),
         );
       },
     );

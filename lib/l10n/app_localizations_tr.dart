@@ -22,6 +22,49 @@ class AppLocalizationsTr extends AppLocalizations {
   String get navSettings => 'Ayarlar';
 
   @override
+  String get navKeypad => 'Tuş Takımı';
+
+  @override
+  String get settingsTooltip => 'Ayarlar';
+
+  @override
+  String get dialerTitle => 'Tuş Takımı';
+
+  @override
+  String get dialerSubtitle => 'Numara çevirin veya kişilerinizde arayın';
+
+  @override
+  String get dialerEmptyHint => 'Numara ve isim eşleştirmek için rakam yazın';
+
+  @override
+  String get dialerNoMatches => 'Eşleşen kişi yok';
+
+  @override
+  String get dialerCallTooltip => 'Ara';
+
+  @override
+  String get dialerBackspaceTooltip => 'Sil';
+
+  @override
+  String get dialerCallFailed => 'Bu cihazda telefon çeviricisi açılamadı.';
+
+  @override
+  String get dialerCreateProfile => 'Bu numarayla profil oluştur';
+
+  @override
+  String get favoritesSectionTitle => 'Favorilerim';
+
+  @override
+  String favoriteAddedToast(String name) {
+    return '$name favorilere eklendi.';
+  }
+
+  @override
+  String favoriteRemovedToast(String name) {
+    return '$name favorilerden çıkarıldı.';
+  }
+
+  @override
   String get chatTitle => 'Confidants AI';
 
   @override
@@ -457,4 +500,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get addAnotherButton => 'Bir Tane Daha Ekle';
+
+  @override
+  String get addToPhonebookTitle => 'Telefon Rehberine Ekle';
+
+  @override
+  String get addToPhonebookSubtitle =>
+      'Bu kişiyi cihazınızın rehberine de kaydedin';
+
+  @override
+  String get phonebookSaveFailed => 'Kişi cihaz rehberine kaydedilemedi.';
+
+  @override
+  String profileAndPhonebookSaved(String name) {
+    return '$name için profil ve telefon kişisi kaydedildi.';
+  }
 }

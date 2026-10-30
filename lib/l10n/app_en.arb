@@ -7,6 +7,23 @@
   "navChat": "Chat",
   "navProfiles": "Profiles",
   "navSettings": "Settings",
+  "navKeypad": "Keypad",
+  "settingsTooltip": "Settings",
+
+  "dialerTitle": "Keypad",
+  "dialerSubtitle": "Dial a number or search your confidants",
+  "dialerEmptyHint": "Type digits to match numbers and names",
+  "dialerNoMatches": "No matching confidants",
+  "dialerCallTooltip": "Call",
+  "dialerBackspaceTooltip": "Delete",
+  "dialerCallFailed": "Could not open the phone dialer on this device.",
+  "dialerCreateProfile": "Create profile with this number",
+
+  "favoritesSectionTitle": "Favorites",
+  "favoriteAddedToast": "{name} added to favorites.",
+  "@favoriteAddedToast": { "placeholders": { "name": { "type": "String" } } },
+  "favoriteRemovedToast": "{name} removed from favorites.",
+  "@favoriteRemovedToast": { "placeholders": { "name": { "type": "String" } } },
 
   "chatTitle": "Confidants AI",
   "chatSubtitle": "Offline personal context assistant",
@@ -177,5 +194,15 @@
   "valueLabel": "Value",
   "valueHint": "e.g. Oat Cortado",
   "removeAttributeTooltip": "Remove attribute",
-  "addAnotherButton": "Add Another"
+  "addAnotherButton": "Add Another",
+
+  "addToPhonebookTitle": "Add to Phone Contacts",
+  "addToPhonebookSubtitle": "Save this person to your device's address book",
+  "phonebookSaveFailed": "Could not save contact to device address book.",
+  "profileAndPhonebookSaved": "Profile and phone contact saved for {name}.",
+  "@profileAndPhonebookSaved": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  }
 }
