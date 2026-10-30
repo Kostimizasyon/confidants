@@ -217,5 +217,9 @@
     "placeholders": {
       "name": { "type": "String" }
     }
-  }
+  },
+  "editProfileButton": "Düzenle",
+  "cancelButton": "İptal",
+  "deleteButton": "Sil",
+  "messageTooltip": "Mesaj"
 }

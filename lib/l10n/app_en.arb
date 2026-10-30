@@ -219,5 +219,9 @@
     "placeholders": {
       "name": { "type": "String" }
     }
-  }
+  },
+  "editProfileButton": "Edit",
+  "cancelButton": "Cancel",
+  "deleteButton": "Delete",
+  "messageTooltip": "Message"
 }

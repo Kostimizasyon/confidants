@@ -1,9 +1,11 @@
 import 'package:confidants/data_models/user_profile.dart';
+import 'package:confidants/frontend/profiles_page/profile_detail_page.dart';
 import 'package:confidants/frontend/profiles_page/util/profile_form.dart';
 import 'package:confidants/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 Widget _buildTestApp({required Widget child}) {
   return MaterialApp(
@@ -106,6 +108,47 @@ void main() {
 
       // Check button should not be present
       expect(find.byType(Checkbox), findsNothing);
+    });
+
+    testWidgets('ProfileDetailPage starts in island view mode and transitions to clickable fields on Edit tap', (
+      WidgetTester tester,
+    ) async {
+      const existingProfile = UserProfile(
+        id: 2,
+        profileHash: 'hash789',
+        name: 'Annem',
+        phoneNumber: '+905551112233',
+        createdAt: 0,
+        updatedAt: 0,
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const ProfileDetailPage.edit(profile: existingProfile),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Starts in read-only island view mode: displays name & phone without TextFields
+      expect(find.text('Annem'), findsOneWidget);
+      expect(find.text('+905551112233'), findsOneWidget);
+      expect(find.byType(TextField), findsNothing);
+
+      // Tap the Edit button in the floating bottom capsule bar
+      final editBtn = find.byIcon(LucideIcons.pencil);
+      expect(editBtn, findsOneWidget);
+      await tester.tap(editBtn);
+      await tester.pumpAndSettle();
+
+      // Fields transition in-place to clickable TextFields
+      expect(find.byType(TextField), findsWidgets);
     });
   });
 }

@@ -558,4 +558,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String profileAndPhonebookSaved(String name) {
     return '$name için Confidant ve telefon kişisi kaydedildi.';
   }
+
+  @override
+  String get editProfileButton => 'Düzenle';
+
+  @override
+  String get cancelButton => 'İptal';
+
+  @override
+  String get deleteButton => 'Sil';
+
+  @override
+  String get messageTooltip => 'Mesaj';
 }

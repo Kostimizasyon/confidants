@@ -1063,6 +1063,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confidant and phone contact saved for {name}.'**
   String profileAndPhonebookSaved(String name);
+
+  /// No description provided for @editProfileButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editProfileButton;
+
+  /// No description provided for @cancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelButton;
+
+  /// No description provided for @deleteButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteButton;
+
+  /// No description provided for @messageTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get messageTooltip;
 }
 
 class _AppLocalizationsDelegate

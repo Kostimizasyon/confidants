@@ -1,4 +1,3 @@
-import 'package:confidants/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../data_models/custom_field.dart';
@@ -7,6 +6,7 @@ import '../../../services/hash_service.dart';
 import '../../settings_page/util/settings_toggle_tile.dart';
 import '../../theme/app_colors.dart';
 import '../../util/avatar_icon_helper.dart';
+import '../../util/contact_avatar.dart';
 import '../../util/l10n_extensions.dart';
 import 'custom_field_editor.dart';
 
@@ -18,20 +18,28 @@ typedef ProfileSaveCallback = void Function(
 class ProfileForm extends StatefulWidget {
   final UserProfile initialProfile;
   final bool isNew;
+  final bool isEditing;
   final ProfileSaveCallback onSave;
+  final VoidCallback? onCall;
+  final VoidCallback? onMessage;
+  final VoidCallback? onEmail;
 
   const ProfileForm({
     super.key,
     required this.initialProfile,
     this.isNew = false,
+    this.isEditing = true,
     required this.onSave,
+    this.onCall,
+    this.onMessage,
+    this.onEmail,
   });
 
   @override
-  State<ProfileForm> createState() => _ProfileFormState();
+  State<ProfileForm> createState() => ProfileFormState();
 }
 
-class _ProfileFormState extends State<ProfileForm> {
+class ProfileFormState extends State<ProfileForm> {
   late final TextEditingController _nameController;
   late final TextEditingController _nicknameController;
   late final TextEditingController _phoneController;
@@ -51,7 +59,30 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   void initState() {
     super.initState();
-    final p = widget.initialProfile;
+    _syncFromProfile(widget.initialProfile);
+  }
+
+  @override
+  void didUpdateWidget(covariant ProfileForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialProfile != widget.initialProfile && !widget.isEditing) {
+      _nameController.text = widget.initialProfile.name;
+      _nicknameController.text = widget.initialProfile.nickname ?? '';
+      _phoneController.text = widget.initialProfile.phoneNumber;
+      _emailController.text = widget.initialProfile.email ?? '';
+      _notesController.text = widget.initialProfile.notesToRemember;
+      _likesController.text = widget.initialProfile.likes.join(', ');
+      _dislikesController.text = widget.initialProfile.dislikes.join(', ');
+      _hobbiesController.text = widget.initialProfile.hobbies.join(', ');
+      _avatarIcon = widget.initialProfile.avatarIcon;
+      _isFavorite = widget.initialProfile.isFavorite;
+      _birthday = widget.initialProfile.birthday;
+      _isTrainingEnabled = widget.initialProfile.isTrainingEnabled;
+      _customFields = List<CustomField>.from(widget.initialProfile.customFields);
+    }
+  }
+
+  void _syncFromProfile(UserProfile p) {
     _nameController = TextEditingController(text: p.name);
     _nicknameController = TextEditingController(text: p.nickname ?? '');
     _phoneController = TextEditingController(text: p.phoneNumber);
@@ -82,6 +113,7 @@ class _ProfileFormState extends State<ProfileForm> {
   }
 
   Future<void> _pickBirthday() async {
+    if (!widget.isEditing) return;
     final now = DateTime.now();
     final initialDate = _birthday != null
         ? (DateTime.tryParse(_birthday!) ?? DateTime(now.year - 25, 1, 1))
@@ -102,6 +134,7 @@ class _ProfileFormState extends State<ProfileForm> {
   }
 
   void _showAvatarPicker() {
+    if (!widget.isEditing) return;
     final l10n = context.l10n;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.surfaceDark : AppColors.surfaceLight;
@@ -201,7 +234,7 @@ class _ProfileFormState extends State<ProfileForm> {
     );
   }
 
-  void _submit() {
+  void submit() {
     final initial = widget.initialProfile;
     final rawPhone = _phoneController.text.trim();
     final rawName = _nameController.text.trim();
@@ -259,46 +292,127 @@ class _ProfileFormState extends State<ProfileForm> {
         .toList();
   }
 
-  Widget _buildSectionHeader({
+  Widget _buildIsland({
+    required bool isDark,
+    required Widget child,
+    EdgeInsetsGeometry padding = const EdgeInsets.all(20),
+    double radius = 26,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Material(
+        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radius),
+          side: BorderSide(
+            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            width: 0.8,
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: padding,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeroActionCircle({
+    required bool isDark,
     required IconData icon,
-    required String title,
-    required String subtitle,
+    required Color iconColor,
+    required String tooltip,
+    required VoidCallback? onTap,
+  }) {
+    final circleBg = isDark ? AppColors.navBarDark : AppColors.navBarLight;
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: circleBg,
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: SizedBox(
+            width: 48,
+            height: 48,
+            child: Icon(icon, size: 22, color: iconColor),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEditableIslandRow({
+    required BuildContext context,
+    required bool isDark,
+    required IconData icon,
+    required Color iconBadgeColor,
+    required String label,
+    required String hint,
+    required TextEditingController controller,
+    TextInputType keyboardType = TextInputType.text,
+    int maxLines = 1,
   }) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final accentColor =
-        isDark ? AppColors.accentHighlight : AppColors.primaryDarkBlue;
-    final secondaryTextColor =
+    final secondaryColor =
         isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final val = controller.text.trim();
+
+    if (!widget.isEditing) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: secondaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    val.isNotEmpty ? val : '—',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: val.isNotEmpty ? null : secondaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: iconBadgeColor.withValues(alpha: 0.16),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, size: 18, color: iconBadgeColor),
+            ),
+          ],
+        ),
+      );
+    }
 
     return Padding(
-      padding: const EdgeInsets.only(top: 14, bottom: 8, left: 4),
-      child: Row(
-        children: [
-          Icon(icon, size: 16, color: accentColor),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.3,
-                  ),
-                ),
-                Text(
-                  subtitle,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: secondaryTextColor,
-                    fontSize: 11,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: TextField(
+        controller: controller,
+        keyboardType: keyboardType,
+        maxLines: maxLines,
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: hint,
+          prefixIcon: Icon(icon, size: 18, color: iconBadgeColor),
+        ),
       ),
     );
   }
@@ -312,57 +426,121 @@ class _ProfileFormState extends State<ProfileForm> {
         isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
     final secondaryTextColor =
         isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
-    final avatarBg =
-        isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
-    final favoriteStarColor =
-        isDark ? AppColors.accentHighlight : AppColors.primaryDarkBlue;
+
+    final previewProfile = widget.initialProfile.copyWith(
+      name: _nameController.text,
+      avatarIcon: _avatarIcon,
+      isFavorite: _isFavorite,
+    );
+
+    final displayName = _nameController.text.trim().isNotEmpty
+        ? _nameController.text.trim()
+        : l10n.unnamedProfile;
+    final displayNickname = _nicknameController.text.trim();
+    final displayPhone = _phoneController.text.trim().isNotEmpty
+        ? _phoneController.text.trim()
+        : l10n.noPhoneNumber;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // SECTION 1: Basic Information
-        _buildSectionHeader(
-          icon: LucideIcons.userCheck,
-          title: l10n.sectionBasicInfo,
-          subtitle: l10n.sectionBasicInfoSubtitle,
-        ),
-        Card(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                // Avatar icon + Favorite toggle row
-                Row(
-                  children: [
-                    InkWell(
-                      onTap: _showAvatarPicker,
-                      borderRadius: BorderRadius.circular(16),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Container(
-                            width: 58,
-                            height: 58,
-                            decoration: BoxDecoration(
-                              color: avatarBg,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Icon(
-                              AvatarIconHelper.resolve(_avatarIcon),
-                              size: 28,
-                              color: AppColors.surfaceLight,
-                            ),
+        // ISLAND 1: Hero Island (Name, Nickname, Phone, Avatar & Quick Actions)
+        _buildIsland(
+          isDark: isDark,
+          radius: 28,
+          padding: const EdgeInsets.fromLTRB(22, 22, 22, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: widget.isEditing
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextField(
+                                controller: _nameController,
+                                keyboardType: TextInputType.name,
+                                onChanged: (_) => setState(() {}),
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                decoration: InputDecoration(
+                                  labelText: l10n.fieldFullName,
+                                  hintText: l10n.hintFullName,
+                                  prefixIcon: const Icon(LucideIcons.user, size: 18),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              TextField(
+                                controller: _nicknameController,
+                                decoration: InputDecoration(
+                                  labelText: l10n.fieldNickname,
+                                  hintText: l10n.hintNickname,
+                                  prefixIcon: const Icon(LucideIcons.tag, size: 18),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              TextField(
+                                controller: _phoneController,
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(
+                                  labelText: l10n.fieldPhone,
+                                  hintText: l10n.hintPhone,
+                                  prefixIcon: const Icon(LucideIcons.phone, size: 18),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                displayName,
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              if (displayNickname.isNotEmpty) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  displayNickname,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: secondaryTextColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                              const SizedBox(height: 10),
+                              Text(
+                                displayPhone,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: secondaryTextColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
+                  ),
+                  const SizedBox(width: 16),
+                  GestureDetector(
+                    onTap: widget.isEditing ? _showAvatarPicker : null,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        ContactAvatar(profile: previewProfile, size: 64),
+                        if (widget.isEditing)
                           Positioned(
-                            right: -4,
-                            bottom: -4,
+                            right: -2,
+                            bottom: -2,
                             child: Container(
-                              padding: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: isDark
-                                    ? AppColors.surfaceDark
-                                    : AppColors.surfaceLight,
+                                    ? AppColors.navPillDark
+                                    : AppColors.navPillLight,
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: isDark
@@ -372,161 +550,248 @@ class _ProfileFormState extends State<ProfileForm> {
                               ),
                               child: Icon(
                                 LucideIcons.pencil,
-                                size: 11,
+                                size: 12,
                                 color: isDark
-                                    ? AppColors.accentHighlight
-                                    : AppColors.primaryDarkBlue,
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimaryLight,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                      ],
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l10n.favoriteLabel,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            l10n.favoriteSubtitle,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: secondaryTextColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                  ),
+                ],
+              ),
+              if (!widget.isEditing) ...[
+                const SizedBox(height: 22),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildHeroActionCircle(
+                      isDark: isDark,
+                      icon: LucideIcons.phone,
+                      iconColor: AppColors.success,
+                      tooltip: l10n.dialerCallTooltip,
+                      onTap: widget.onCall,
                     ),
-                    IconButton(
-                      icon: Icon(
-                        _isFavorite ? LucideIcons.star : LucideIcons.starOff,
-                        size: 24,
-                        color: _isFavorite
-                            ? favoriteStarColor
-                            : secondaryTextColor,
-                      ),
-                      tooltip: l10n.favoriteTooltip,
-                      onPressed: () => setState(() => _isFavorite = !_isFavorite),
+                    _buildHeroActionCircle(
+                      isDark: isDark,
+                      icon: LucideIcons.messageSquare,
+                      iconColor: AppColors.avatarGradientEnd,
+                      tooltip: l10n.messageTooltip,
+                      onTap: widget.onMessage,
+                    ),
+                    _buildHeroActionCircle(
+                      isDark: isDark,
+                      icon: LucideIcons.mail,
+                      iconColor: AppColors.avatarGradientStart,
+                      tooltip: l10n.fieldEmail,
+                      onTap: widget.onEmail,
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                _ProfileField.name(controller: _nameController),
-                _ProfileField.nickname(controller: _nicknameController),
               ],
-            ),
+            ],
           ),
         ),
 
-        // SECTION 2: Contact Details
-        _buildSectionHeader(
-          icon: LucideIcons.contact,
-          title: l10n.sectionContactDetails,
-          subtitle: l10n.sectionContactDetailsSubtitle,
-        ),
-        Card(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _ProfileField.phone(controller: _phoneController),
-                _ProfileField.email(controller: _emailController),
-                Material(
-                  color: isDark
-                      ? AppColors.backgroundDark
-                      : AppColors.backgroundLight,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(
-                      color: isDark
-                          ? AppColors.borderDark
-                          : AppColors.borderLight,
-                    ),
-                  ),
-                  child: ListTile(
-                    onTap: _pickBirthday,
-                    dense: true,
-                    leading: Icon(
-                      LucideIcons.cake,
-                      size: 20,
-                      color: isDark
-                          ? AppColors.accentHighlight
-                          : AppColors.primaryDarkBlue,
-                    ),
-                    title: Text(
-                      _birthday ?? l10n.selectBirthday,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight:
-                            _birthday != null ? FontWeight.w600 : FontWeight.w400,
-                        color: _birthday != null ? null : secondaryTextColor,
+        // ISLAND 2: Contact Details (Email & Birthday)
+        _buildIsland(
+          isDark: isDark,
+          child: Column(
+            children: [
+              _buildEditableIslandRow(
+                context: context,
+                isDark: isDark,
+                icon: LucideIcons.mail,
+                iconBadgeColor: AppColors.avatarGradientEnd,
+                label: l10n.fieldEmail,
+                hint: l10n.hintEmail,
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              Divider(
+                height: 16,
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              ),
+              InkWell(
+                onTap: widget.isEditing ? _pickBirthday : null,
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l10n.selectBirthday,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: secondaryTextColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              _birthday ?? '—',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: _birthday != null ? null : secondaryTextColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      l10n.birthdayStoredHint,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: secondaryTextColor,
-                        fontSize: 11,
+                      if (widget.isEditing && _birthday != null)
+                        IconButton(
+                          icon: const Icon(LucideIcons.x, size: 18),
+                          onPressed: () => setState(() => _birthday = null),
+                        ),
+                      Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: AppColors.gradientPeachStart.withValues(alpha: 0.16),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          LucideIcons.cake,
+                          size: 18,
+                          color: AppColors.gradientPeachStart,
+                        ),
                       ),
-                    ),
-                    trailing: _birthday != null
-                        ? IconButton(
-                            icon: const Icon(LucideIcons.x, size: 18),
-                            onPressed: () => setState(() => _birthday = null),
-                          )
-                        : const Icon(LucideIcons.calendar, size: 18),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
 
-        // SECTION 3: Personal Context & Reminders
-        _buildSectionHeader(
-          icon: LucideIcons.sparkles,
-          title: l10n.sectionPersonalContext,
-          subtitle: l10n.sectionPersonalContextSubtitle,
-        ),
-        Card(
-          margin: const EdgeInsets.only(bottom: 12),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _ProfileField.notes(controller: _notesController),
-                _ProfileField.likes(controller: _likesController),
-                _ProfileField.dislikes(controller: _dislikesController),
-                _ProfileField.hobbies(controller: _hobbiesController),
-              ],
-            ),
+        // ISLAND 3: Personal Context (Notes, Likes, Dislikes, Hobbies)
+        _buildIsland(
+          isDark: isDark,
+          child: Column(
+            children: [
+              _buildEditableIslandRow(
+                context: context,
+                isDark: isDark,
+                icon: LucideIcons.notebookPen,
+                iconBadgeColor: AppColors.accentHighlight,
+                label: l10n.fieldNotes,
+                hint: l10n.hintNotes,
+                controller: _notesController,
+                keyboardType: TextInputType.multiline,
+                maxLines: 3,
+              ),
+              Divider(
+                height: 16,
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              ),
+              _buildEditableIslandRow(
+                context: context,
+                isDark: isDark,
+                icon: LucideIcons.thumbsUp,
+                iconBadgeColor: AppColors.success,
+                label: l10n.fieldLikes,
+                hint: l10n.hintLikes,
+                controller: _likesController,
+              ),
+              Divider(
+                height: 16,
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              ),
+              _buildEditableIslandRow(
+                context: context,
+                isDark: isDark,
+                icon: LucideIcons.thumbsDown,
+                iconBadgeColor: AppColors.error,
+                label: l10n.fieldDislikes,
+                hint: l10n.hintDislikes,
+                controller: _dislikesController,
+              ),
+              Divider(
+                height: 16,
+                color: isDark ? AppColors.borderDark : AppColors.borderLight,
+              ),
+              _buildEditableIslandRow(
+                context: context,
+                isDark: isDark,
+                icon: LucideIcons.compass,
+                iconBadgeColor: AppColors.gradientSkyEnd,
+                label: l10n.fieldHobbies,
+                hint: l10n.hintHobbies,
+                controller: _hobbiesController,
+              ),
+            ],
           ),
         ),
 
-        // SECTION 4: Custom Attributes
-        _buildSectionHeader(
-          icon: LucideIcons.layers,
-          title: l10n.sectionCustomAttributes,
-          subtitle: l10n.sectionCustomAttributesSubtitle,
-        ),
-        CustomFieldEditor(
-          fields: _customFields,
-          onChanged: (updated) => setState(() => _customFields = updated),
-        ),
+        // ISLAND 4: Custom Attributes
+        if (widget.isEditing)
+          _buildIsland(
+            isDark: isDark,
+            padding: const EdgeInsets.all(14),
+            child: CustomFieldEditor(
+              fields: _customFields,
+              onChanged: (updated) => setState(() => _customFields = updated),
+            ),
+          )
+        else if (_customFields.isNotEmpty)
+          ..._customFields.map(
+            (field) => _buildIsland(
+              isDark: isDark,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          field.fieldKey,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: secondaryTextColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          field.fieldValue,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      color: AppColors.gradientLavenderEnd.withValues(alpha: 0.16),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      LucideIcons.sparkles,
+                      size: 18,
+                      color: AppColors.gradientLavenderEnd,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
 
-        if (widget.isNew || widget.initialProfile.id == null) ...[
-          const SizedBox(height: 6),
-          Card(
-            margin: const EdgeInsets.only(bottom: 12),
+        // ISLAND 5: Phonebook Sync (New Confidants) & Local AI Knowledge Base
+        if (widget.isEditing && (widget.isNew || widget.initialProfile.id == null))
+          _buildIsland(
+            isDark: isDark,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: CheckboxListTile(
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               secondary: Container(
                 width: 40,
                 height: 40,
@@ -534,7 +799,7 @@ class _ProfileFormState extends State<ProfileForm> {
                   color: isDark
                       ? AppColors.secondaryDarkBlue
                       : AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   LucideIcons.bookUser,
@@ -571,134 +836,33 @@ class _ProfileFormState extends State<ProfileForm> {
                   setState(() => _addToDeviceContacts = val ?? false),
             ),
           ),
-        ],
 
-        const SizedBox(height: 6),
         SettingsToggleTile.training(
           isEnabled: _isTrainingEnabled,
-          onChanged: (val) => setState(() => _isTrainingEnabled = val),
+          onChanged: (val) {
+            if (widget.isEditing) {
+              setState(() => _isTrainingEnabled = val);
+            }
+          },
         ),
-        const SizedBox(height: 16),
-        FilledButton.icon(
-          onPressed: _submit,
-          style: FilledButton.styleFrom(
-            backgroundColor: primaryBtnBg,
-            foregroundColor: AppColors.surfaceLight,
-            padding: const EdgeInsets.symmetric(vertical: 16),
+
+        if (widget.isEditing) ...[
+          const SizedBox(height: 16),
+          FilledButton.icon(
+            onPressed: submit,
+            style: FilledButton.styleFrom(
+              backgroundColor: primaryBtnBg,
+              foregroundColor: AppColors.surfaceLight,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+            ),
+            icon: const Icon(LucideIcons.save, size: 18),
+            label: Text(l10n.saveProfileButton),
           ),
-          icon: const Icon(LucideIcons.save, size: 18),
-          label: Text(l10n.saveProfileButton),
-        ),
+        ],
       ],
-    );
-  }
-}
-
-class _ProfileField extends StatelessWidget {
-  final TextEditingController controller;
-  final IconData icon;
-  final L10nText labelOf;
-  final L10nText hintOf;
-  final TextInputType keyboardType;
-  final int maxLines;
-
-  const _ProfileField.name({
-    required this.controller,
-  })  : icon = LucideIcons.user,
-        labelOf = _nameLabel,
-        hintOf = _nameHint,
-        keyboardType = TextInputType.name,
-        maxLines = 1;
-
-  const _ProfileField.nickname({
-    required this.controller,
-  })  : icon = LucideIcons.tag,
-        labelOf = _nicknameLabel,
-        hintOf = _nicknameHint,
-        keyboardType = TextInputType.text,
-        maxLines = 1;
-
-  const _ProfileField.phone({
-    required this.controller,
-  })  : icon = LucideIcons.phone,
-        labelOf = _phoneLabel,
-        hintOf = _phoneHint,
-        keyboardType = TextInputType.phone,
-        maxLines = 1;
-
-  const _ProfileField.email({
-    required this.controller,
-  })  : icon = LucideIcons.mail,
-        labelOf = _emailLabel,
-        hintOf = _emailHint,
-        keyboardType = TextInputType.emailAddress,
-        maxLines = 1;
-
-  const _ProfileField.notes({
-    required this.controller,
-  })  : icon = LucideIcons.notebookPen,
-        labelOf = _notesLabel,
-        hintOf = _notesHint,
-        keyboardType = TextInputType.multiline,
-        maxLines = 3;
-
-  const _ProfileField.likes({
-    required this.controller,
-  })  : icon = LucideIcons.thumbsUp,
-        labelOf = _likesLabel,
-        hintOf = _likesHint,
-        keyboardType = TextInputType.text,
-        maxLines = 1;
-
-  const _ProfileField.dislikes({
-    required this.controller,
-  })  : icon = LucideIcons.thumbsDown,
-        labelOf = _dislikesLabel,
-        hintOf = _dislikesHint,
-        keyboardType = TextInputType.text,
-        maxLines = 1;
-
-  const _ProfileField.hobbies({
-    required this.controller,
-  })  : icon = LucideIcons.compass,
-        labelOf = _hobbiesLabel,
-        hintOf = _hobbiesHint,
-        keyboardType = TextInputType.text,
-        maxLines = 1;
-
-  static String _nameLabel(AppLocalizations l10n) => l10n.fieldFullName;
-  static String _nameHint(AppLocalizations l10n) => l10n.hintFullName;
-  static String _nicknameLabel(AppLocalizations l10n) => l10n.fieldNickname;
-  static String _nicknameHint(AppLocalizations l10n) => l10n.hintNickname;
-  static String _phoneLabel(AppLocalizations l10n) => l10n.fieldPhone;
-  static String _phoneHint(AppLocalizations l10n) => l10n.hintPhone;
-  static String _emailLabel(AppLocalizations l10n) => l10n.fieldEmail;
-  static String _emailHint(AppLocalizations l10n) => l10n.hintEmail;
-  static String _notesLabel(AppLocalizations l10n) => l10n.fieldNotes;
-  static String _notesHint(AppLocalizations l10n) => l10n.hintNotes;
-  static String _likesLabel(AppLocalizations l10n) => l10n.fieldLikes;
-  static String _likesHint(AppLocalizations l10n) => l10n.hintLikes;
-  static String _dislikesLabel(AppLocalizations l10n) => l10n.fieldDislikes;
-  static String _dislikesHint(AppLocalizations l10n) => l10n.hintDislikes;
-  static String _hobbiesLabel(AppLocalizations l10n) => l10n.fieldHobbies;
-  static String _hobbiesHint(AppLocalizations l10n) => l10n.hintHobbies;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: TextField(
-        controller: controller,
-        keyboardType: keyboardType,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          labelText: labelOf(l10n),
-          hintText: hintOf(l10n),
-          prefixIcon: Icon(icon, size: 18),
-        ),
-      ),
     );
   }
 }

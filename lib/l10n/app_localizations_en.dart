@@ -556,4 +556,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String profileAndPhonebookSaved(String name) {
     return 'Confidant and phone contact saved for $name.';
   }
+
+  @override
+  String get editProfileButton => 'Edit';
+
+  @override
+  String get cancelButton => 'Cancel';
+
+  @override
+  String get deleteButton => 'Delete';
+
+  @override
+  String get messageTooltip => 'Message';
 }
