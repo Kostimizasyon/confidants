@@ -53,6 +53,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dialerCreateProfile => 'Create confidant with this number';
 
   @override
+  String get dialerOpenKeypad => 'Open keypad';
+
+  @override
+  String get dialerHideKeypad => 'Hide keypad';
+
+  @override
+  String get recentCallsTitle => 'Recent Calls';
+
+  @override
+  String get recentCallsEmpty => 'No recent calls found';
+
+  @override
+  String get recentCallsPermissionTitle => 'Call History Permission';
+
+  @override
+  String get recentCallsPermissionSubtitle =>
+      'Allow Confidants to access your device call history to display recent calls.';
+
+  @override
+  String get recentCallsPermissionButton => 'Grant Permission';
+
+  @override
+  String get callTypeIncoming => 'Incoming';
+
+  @override
+  String get callTypeOutgoing => 'Outgoing';
+
+  @override
+  String get callTypeMissed => 'Missed';
+
+  @override
+  String get callTypeRejected => 'Rejected';
+
+  @override
+  String get callTypeBlocked => 'Blocked';
+
+  @override
+  String callNowTooltip(String name) {
+    return 'Call $name';
+  }
+
+  @override
   String get favoritesSectionTitle => 'Favorites';
 
   @override

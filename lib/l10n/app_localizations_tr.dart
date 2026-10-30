@@ -52,6 +52,48 @@ class AppLocalizationsTr extends AppLocalizations {
   String get dialerCreateProfile => 'Bu numarayla sırdaş oluştur';
 
   @override
+  String get dialerOpenKeypad => 'Klavyeyi aç';
+
+  @override
+  String get dialerHideKeypad => 'Klavyeyi kapat';
+
+  @override
+  String get recentCallsTitle => 'Son Aramalar';
+
+  @override
+  String get recentCallsEmpty => 'Henüz son arama yok';
+
+  @override
+  String get recentCallsPermissionTitle => 'Arama Geçmişi İzni';
+
+  @override
+  String get recentCallsPermissionSubtitle =>
+      'Son aramaları görüntülemek için Confidants\'ın cihaz arama geçmişine erişmesine izin verin.';
+
+  @override
+  String get recentCallsPermissionButton => 'İzin Ver';
+
+  @override
+  String get callTypeIncoming => 'Gelen';
+
+  @override
+  String get callTypeOutgoing => 'Giden';
+
+  @override
+  String get callTypeMissed => 'Cevapsız';
+
+  @override
+  String get callTypeRejected => 'Reddedilen';
+
+  @override
+  String get callTypeBlocked => 'Engellenen';
+
+  @override
+  String callNowTooltip(String name) {
+    return '$name ara';
+  }
+
+  @override
   String get favoritesSectionTitle => 'Favorilerim';
 
   @override

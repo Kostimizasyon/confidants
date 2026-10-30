@@ -28,9 +28,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar.dialer({
     super.key,
     this.actions,
-  })  : leadingIcon = LucideIcons.grid3x3,
-        titleOf = _dialerTitle,
-        subtitleOf = _dialerSubtitle,
+    L10nText? titleOf,
+    L10nText? subtitleOf,
+    IconData? leadingIcon,
+  })  : leadingIcon = leadingIcon ?? LucideIcons.grid3x3,
+        titleOf = titleOf ?? _dialerTitle,
+        subtitleOf = subtitleOf ?? _dialerSubtitle,
         showBackButton = false,
         showSettingsAction = true;
 

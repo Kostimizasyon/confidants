@@ -21,6 +21,8 @@ class UserProfile {
   final int updatedAt;
   final List<CustomField> customFields;
 
+  String get normalizedPhone => ContactIndex.normalizePhone(phoneNumber);
+
   const UserProfile({
     this.id,
     required this.profileHash,

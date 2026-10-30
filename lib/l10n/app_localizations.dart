@@ -182,6 +182,84 @@ abstract class AppLocalizations {
   /// **'Create confidant with this number'**
   String get dialerCreateProfile;
 
+  /// No description provided for @dialerOpenKeypad.
+  ///
+  /// In en, this message translates to:
+  /// **'Open keypad'**
+  String get dialerOpenKeypad;
+
+  /// No description provided for @dialerHideKeypad.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide keypad'**
+  String get dialerHideKeypad;
+
+  /// No description provided for @recentCallsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Calls'**
+  String get recentCallsTitle;
+
+  /// No description provided for @recentCallsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent calls found'**
+  String get recentCallsEmpty;
+
+  /// No description provided for @recentCallsPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Call History Permission'**
+  String get recentCallsPermissionTitle;
+
+  /// No description provided for @recentCallsPermissionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Confidants to access your device call history to display recent calls.'**
+  String get recentCallsPermissionSubtitle;
+
+  /// No description provided for @recentCallsPermissionButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Grant Permission'**
+  String get recentCallsPermissionButton;
+
+  /// No description provided for @callTypeIncoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming'**
+  String get callTypeIncoming;
+
+  /// No description provided for @callTypeOutgoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Outgoing'**
+  String get callTypeOutgoing;
+
+  /// No description provided for @callTypeMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get callTypeMissed;
+
+  /// No description provided for @callTypeRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get callTypeRejected;
+
+  /// No description provided for @callTypeBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get callTypeBlocked;
+
+  /// No description provided for @callNowTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Call {name}'**
+  String callNowTooltip(String name);
+
   /// No description provided for @favoritesSectionTitle.
   ///
   /// In en, this message translates to:
