@@ -113,7 +113,7 @@ abstract class AppLocalizations {
   /// No description provided for @navProfiles.
   ///
   /// In en, this message translates to:
-  /// **'Profiles'**
+  /// **'Confidants'**
   String get navProfiles;
 
   /// No description provided for @navSettings.
@@ -179,7 +179,7 @@ abstract class AppLocalizations {
   /// No description provided for @dialerCreateProfile.
   ///
   /// In en, this message translates to:
-  /// **'Create profile with this number'**
+  /// **'Create confidant with this number'**
   String get dialerCreateProfile;
 
   /// No description provided for @favoritesSectionTitle.
@@ -221,13 +221,13 @@ abstract class AppLocalizations {
   /// No description provided for @chatPlaceholderMessage.
   ///
   /// In en, this message translates to:
-  /// **'Ask anything about your saved profiles. Context chunks are loaded locally on your device.'**
+  /// **'Ask anything about your saved confidants. Context chunks are loaded locally on your device.'**
   String get chatPlaceholderMessage;
 
   /// No description provided for @profilesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Profiles'**
+  /// **'Confidants'**
   String get profilesTitle;
 
   /// No description provided for @profilesSubtitle.
@@ -251,19 +251,19 @@ abstract class AppLocalizations {
   /// No description provided for @detailSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Profile details & custom attributes'**
+  /// **'Confidant details & custom attributes'**
   String get detailSubtitle;
 
   /// No description provided for @newProfileTitle.
   ///
   /// In en, this message translates to:
-  /// **'New Confidant Profile'**
+  /// **'New Confidant'**
   String get newProfileTitle;
 
   /// No description provided for @unnamedProfile.
   ///
   /// In en, this message translates to:
-  /// **'Unnamed Profile'**
+  /// **'Unnamed Confidant'**
   String get unnamedProfile;
 
   /// No description provided for @authVaultLockedTitle.
@@ -281,7 +281,7 @@ abstract class AppLocalizations {
   /// No description provided for @authVaultFailedMessage.
   ///
   /// In en, this message translates to:
-  /// **'Authentication was canceled or did not succeed. Verify your identity to access offline profiles.'**
+  /// **'Authentication was canceled or did not succeed. Verify your identity to access offline confidants.'**
   String get authVaultFailedMessage;
 
   /// No description provided for @authUnlockButton.
@@ -383,7 +383,7 @@ abstract class AppLocalizations {
   /// No description provided for @trainingSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Export this profile to local mini-LLM context chunks'**
+  /// **'Export this confidant to local mini-LLM context chunks'**
   String get trainingSubtitle;
 
   /// No description provided for @aiOptInTitle.
@@ -395,7 +395,7 @@ abstract class AppLocalizations {
   /// No description provided for @aiOptInSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Opt in to query your profiles with an on-device mini-LLM'**
+  /// **'Opt in to query your confidants with an on-device mini-LLM'**
   String get aiOptInSubtitle;
 
   /// No description provided for @aiModelSectionTitle.
@@ -479,7 +479,7 @@ abstract class AppLocalizations {
   /// No description provided for @aiModelQwenOneHalfWarning.
   ///
   /// In en, this message translates to:
-  /// **'Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-profile reasoning, recommended for mid-to-high-tier devices.'**
+  /// **'Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-confidant reasoning, recommended for mid-to-high-tier devices.'**
   String get aiModelQwenOneHalfWarning;
 
   /// No description provided for @aiModelLlamaThreeTitle.
@@ -515,7 +515,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatOptInRequiredSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Opt in to Local AI in Settings or tap below to enable on-device profile querying.'**
+  /// **'Opt in to Local AI in Settings or tap below to enable on-device confidant querying.'**
   String get chatOptInRequiredSubtitle;
 
   /// No description provided for @chatOptInButton.
@@ -533,7 +533,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatEmptySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Active model: {modelName} • {chunkCount, plural, =0{No profile chunks indexed yet} =1{1 profile chunk in memory} other{{chunkCount} profile chunks in memory}}'**
+  /// **'Active model: {modelName} • {chunkCount, plural, =0{No confidant chunks indexed yet} =1{1 confidant chunk in memory} other{{chunkCount} confidant chunks in memory}}'**
   String chatEmptySubtitle(String modelName, int chunkCount);
 
   /// No description provided for @chatInputHint.
@@ -569,7 +569,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatNoContextResponse.
   ///
   /// In en, this message translates to:
-  /// **'No training-enabled profile chunks are indexed yet. Add a profile in the Profiles tab first.'**
+  /// **'No training-enabled confidant chunks are indexed yet. Add a confidant in the Confidants tab first.'**
   String get chatNoContextResponse;
 
   /// No description provided for @chatMockPrefix.
@@ -581,13 +581,13 @@ abstract class AppLocalizations {
   /// No description provided for @chatNoMatchSummary.
   ///
   /// In en, this message translates to:
-  /// **'I checked your exported profile context chunks, but couldn\'t find a direct match for that query. Try asking by a person\'s name, nickname, birthday, likes, or custom attributes.'**
+  /// **'I checked your exported confidant context chunks, but couldn\'t find a direct match for that query. Try asking by a person\'s name, nickname, birthday, likes, or custom attributes.'**
   String get chatNoMatchSummary;
 
   /// No description provided for @searchProfilesHint.
   ///
   /// In en, this message translates to:
-  /// **'Search profiles by name, phone, or notes...'**
+  /// **'Search confidants by name, phone, or notes...'**
   String get searchProfilesHint;
 
   /// No description provided for @importFromContactsTooltip.
@@ -599,13 +599,13 @@ abstract class AppLocalizations {
   /// No description provided for @newProfileTooltip.
   ///
   /// In en, this message translates to:
-  /// **'New Profile'**
+  /// **'New Confidant'**
   String get newProfileTooltip;
 
   /// No description provided for @addProfileButton.
   ///
   /// In en, this message translates to:
-  /// **'Add Profile'**
+  /// **'Add Confidant'**
   String get addProfileButton;
 
   /// No description provided for @noContactsFound.
@@ -617,13 +617,13 @@ abstract class AppLocalizations {
   /// No description provided for @emptyInitialTitle.
   ///
   /// In en, this message translates to:
-  /// **'No Confidant Profiles Yet'**
+  /// **'No Confidants Yet'**
   String get emptyInitialTitle;
 
   /// No description provided for @emptyInitialSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Import a contact from your address book or create a rich personal profile manually.'**
+  /// **'Import a contact from your address book or create a rich personal confidant manually.'**
   String get emptyInitialSubtitle;
 
   /// No description provided for @importContactButton.
@@ -641,7 +641,7 @@ abstract class AppLocalizations {
   /// No description provided for @emptySearchTitle.
   ///
   /// In en, this message translates to:
-  /// **'No Matching Profiles'**
+  /// **'No Matching Confidants'**
   String get emptySearchTitle;
 
   /// No description provided for @emptySearchSubtitle.
@@ -671,13 +671,13 @@ abstract class AppLocalizations {
   /// No description provided for @enterNameError.
   ///
   /// In en, this message translates to:
-  /// **'Please enter a name for this profile.'**
+  /// **'Please enter a name for this confidant.'**
   String get enterNameError;
 
   /// No description provided for @profileSaved.
   ///
   /// In en, this message translates to:
-  /// **'Profile saved for {name}.'**
+  /// **'Confidant saved for {name}.'**
   String profileSaved(String name);
 
   /// No description provided for @profileDeleted.
@@ -689,7 +689,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteProfileTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Delete Profile'**
+  /// **'Delete Confidant'**
   String get deleteProfileTooltip;
 
   /// No description provided for @noPhoneNumber.
@@ -779,7 +779,7 @@ abstract class AppLocalizations {
   /// No description provided for @favoriteSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Pin to the top of your profiles list'**
+  /// **'Pin to the top of your confidants list'**
   String get favoriteSubtitle;
 
   /// No description provided for @favoritesOnlyFilter.
@@ -905,7 +905,7 @@ abstract class AppLocalizations {
   /// No description provided for @saveProfileButton.
   ///
   /// In en, this message translates to:
-  /// **'Save Profile'**
+  /// **'Save Confidant'**
   String get saveProfileButton;
 
   /// No description provided for @customAttributesTitle.
@@ -983,7 +983,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileAndPhonebookSaved.
   ///
   /// In en, this message translates to:
-  /// **'Profile and phone contact saved for {name}.'**
+  /// **'Confidant and phone contact saved for {name}.'**
   String profileAndPhonebookSaved(String name);
 }
 

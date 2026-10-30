@@ -5,7 +5,7 @@
   "@appTitle": { "description": "Application name shown in the OS task switcher." },
 
   "navChat": "Chat",
-  "navProfiles": "Profiles",
+  "navProfiles": "Confidants",
   "navSettings": "Settings",
   "navKeypad": "Keypad",
   "settingsTooltip": "Settings",
@@ -17,7 +17,7 @@
   "dialerCallTooltip": "Call",
   "dialerBackspaceTooltip": "Delete",
   "dialerCallFailed": "Could not open the phone dialer on this device.",
-  "dialerCreateProfile": "Create profile with this number",
+  "dialerCreateProfile": "Create confidant with this number",
 
   "favoritesSectionTitle": "Favorites",
   "favoriteAddedToast": "{name} added to favorites.",
@@ -28,19 +28,19 @@
   "chatTitle": "Confidants AI",
   "chatSubtitle": "Offline personal context assistant",
   "chatPlaceholderTitle": "Local AI Chat Interface",
-  "chatPlaceholderMessage": "Ask anything about your saved profiles. Context chunks are loaded locally on your device.",
+  "chatPlaceholderMessage": "Ask anything about your saved confidants. Context chunks are loaded locally on your device.",
 
-  "profilesTitle": "Profiles",
+  "profilesTitle": "Confidants",
   "profilesSubtitle": "Contacts & personal knowledge base",
   "settingsTitle": "Settings",
   "settingsSubtitle": "Security, appearance & AI",
-  "detailSubtitle": "Profile details & custom attributes",
-  "newProfileTitle": "New Confidant Profile",
-  "unnamedProfile": "Unnamed Profile",
+  "detailSubtitle": "Confidant details & custom attributes",
+  "newProfileTitle": "New Confidant",
+  "unnamedProfile": "Unnamed Confidant",
 
   "authVaultLockedTitle": "Confidants Vault Locked",
   "authVaultLockedMessage": "Verify your identity with biometrics or device credentials to continue.",
-  "authVaultFailedMessage": "Authentication was canceled or did not succeed. Verify your identity to access offline profiles.",
+  "authVaultFailedMessage": "Authentication was canceled or did not succeed. Verify your identity to access offline confidants.",
   "authUnlockButton": "Unlock Confidants",
   "authUnlockReason": "Authenticate to unlock Confidants",
   "authEnableReason": "Confirm your identity to enable biometric launch lock",
@@ -64,9 +64,9 @@
   "biometricLockTitle": "Biometric Launch Lock",
   "biometricLockSubtitle": "Require fingerprint or device authentication on startup",
   "trainingTitle": "Include in AI Knowledge Base",
-  "trainingSubtitle": "Export this profile to local mini-LLM context chunks",
+  "trainingSubtitle": "Export this confidant to local mini-LLM context chunks",
   "aiOptInTitle": "Enable Local AI Assistant",
-  "aiOptInSubtitle": "Opt in to query your profiles with an on-device mini-LLM",
+  "aiOptInSubtitle": "Opt in to query your confidants with an on-device mini-LLM",
 
   "aiModelSectionTitle": "AI Model Configuration",
   "aiModelDropdownLabel": "Select On-Device Model",
@@ -85,7 +85,7 @@
 
   "aiModelQwenOneHalfTitle": "Qwen 2.5 1.5B Instruct",
   "aiModelQwenOneHalfSpecs": "Storage: ~1.0 GB • RAM: ~1.8 GB",
-  "aiModelQwenOneHalfWarning": "Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-profile reasoning, recommended for mid-to-high-tier devices.",
+  "aiModelQwenOneHalfWarning": "Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-confidant reasoning, recommended for mid-to-high-tier devices.",
 
   "aiModelLlamaThreeTitle": "Llama 3.2 3B Instruct",
   "aiModelLlamaThreeSpecs": "Storage: ~2.0 GB • RAM: ~3.2 GB",
@@ -95,10 +95,10 @@
   "@aiModelSwitchedToast": { "placeholders": { "modelName": { "type": "String" } } },
 
   "chatOptInRequiredTitle": "Local AI is Disabled",
-  "chatOptInRequiredSubtitle": "Opt in to Local AI in Settings or tap below to enable on-device profile querying.",
+  "chatOptInRequiredSubtitle": "Opt in to Local AI in Settings or tap below to enable on-device confidant querying.",
   "chatOptInButton": "Enable Local AI",
   "chatEmptyTitle": "Ask About Your Confidants",
-  "chatEmptySubtitle": "Active model: {modelName} • {chunkCount, plural, =0{No profile chunks indexed yet} =1{1 profile chunk in memory} other{{chunkCount} profile chunks in memory}}",
+  "chatEmptySubtitle": "Active model: {modelName} • {chunkCount, plural, =0{No confidant chunks indexed yet} =1{1 confidant chunk in memory} other{{chunkCount} confidant chunks in memory}}",
   "@chatEmptySubtitle": {
     "placeholders": {
       "modelName": { "type": "String" },
@@ -110,7 +110,7 @@
   "chatClearedToast": "Conversation cleared.",
   "chatGeneratingStatus": "Thinking...",
   "chatErrorResponse": "Unable to generate a response from local AI context.",
-  "chatNoContextResponse": "No training-enabled profile chunks are indexed yet. Add a profile in the Profiles tab first.",
+  "chatNoContextResponse": "No training-enabled confidant chunks are indexed yet. Add a confidant in the Confidants tab first.",
   "chatMockPrefix": "[{modelName} • {chunkCount} chunks in context]\n{summary}",
   "@chatMockPrefix": {
     "placeholders": {
@@ -119,30 +119,30 @@
       "summary": { "type": "String" }
     }
   },
-  "chatNoMatchSummary": "I checked your exported profile context chunks, but couldn't find a direct match for that query. Try asking by a person's name, nickname, birthday, likes, or custom attributes.",
+  "chatNoMatchSummary": "I checked your exported confidant context chunks, but couldn't find a direct match for that query. Try asking by a person's name, nickname, birthday, likes, or custom attributes.",
 
-  "searchProfilesHint": "Search profiles by name, phone, or notes...",
+  "searchProfilesHint": "Search confidants by name, phone, or notes...",
   "importFromContactsTooltip": "Import from Contacts",
-  "newProfileTooltip": "New Profile",
-  "addProfileButton": "Add Profile",
+  "newProfileTooltip": "New Confidant",
+  "addProfileButton": "Add Confidant",
   "noContactsFound": "No contacts found or permission denied.",
-  "emptyInitialTitle": "No Confidant Profiles Yet",
-  "emptyInitialSubtitle": "Import a contact from your address book or create a rich personal profile manually.",
+  "emptyInitialTitle": "No Confidants Yet",
+  "emptyInitialSubtitle": "Import a contact from your address book or create a rich personal confidant manually.",
   "importContactButton": "Import Contact",
   "createManuallyButton": "Create Manually",
-  "emptySearchTitle": "No Matching Profiles",
+  "emptySearchTitle": "No Matching Confidants",
   "emptySearchSubtitle": "Try adjusting your search keywords or phone number filter.",
 
   "importDeviceContactTitle": "Import Device Contact",
   "searchContactsHint": "Search contacts by name or phone...",
   "noMatchingContacts": "No matching contacts found.",
 
-  "enterNameError": "Please enter a name for this profile.",
-  "profileSaved": "Profile saved for {name}.",
+  "enterNameError": "Please enter a name for this confidant.",
+  "profileSaved": "Confidant saved for {name}.",
   "@profileSaved": { "placeholders": { "name": { "type": "String" } } },
   "profileDeleted": "Deleted {name}.",
   "@profileDeleted": { "placeholders": { "name": { "type": "String" } } },
-  "deleteProfileTooltip": "Delete Profile",
+  "deleteProfileTooltip": "Delete Confidant",
 
   "noPhoneNumber": "No phone number",
   "sha256Label": "SHA-256: {hash}",
@@ -162,7 +162,7 @@
   "chooseAvatarTitle": "Choose Avatar Icon",
   "favoriteTooltip": "Toggle Favorite",
   "favoriteLabel": "Favorite Confidant",
-  "favoriteSubtitle": "Pin to the top of your profiles list",
+  "favoriteSubtitle": "Pin to the top of your confidants list",
   "favoritesOnlyFilter": "Favorites",
   "allProfilesFilter": "All",
 
@@ -184,7 +184,7 @@
   "hintHobbies": "Bouldering, analog photography, chess",
   "selectBirthday": "Select Birthday",
   "birthdayStoredHint": "ISO 8601 date stored locally",
-  "saveProfileButton": "Save Profile",
+  "saveProfileButton": "Save Confidant",
 
   "customAttributesTitle": "Custom Attributes",
   "addRowButton": "Add Row",
@@ -199,7 +199,7 @@
   "addToPhonebookTitle": "Add to Phone Contacts",
   "addToPhonebookSubtitle": "Save this person to your device's address book",
   "phonebookSaveFailed": "Could not save contact to device address book.",
-  "profileAndPhonebookSaved": "Profile and phone contact saved for {name}.",
+  "profileAndPhonebookSaved": "Confidant and phone contact saved for {name}.",
   "@profileAndPhonebookSaved": {
     "placeholders": {
       "name": { "type": "String" }

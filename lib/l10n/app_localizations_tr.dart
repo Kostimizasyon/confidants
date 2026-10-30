@@ -16,19 +16,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get navChat => 'Sohbet';
 
   @override
-  String get navProfiles => 'Profiller';
+  String get navProfiles => 'Sırdaşlar';
 
   @override
   String get navSettings => 'Ayarlar';
 
   @override
-  String get navKeypad => 'Tuş Takımı';
+  String get navKeypad => 'Klavye';
 
   @override
   String get settingsTooltip => 'Ayarlar';
 
   @override
-  String get dialerTitle => 'Tuş Takımı';
+  String get dialerTitle => 'Klavye';
 
   @override
   String get dialerSubtitle => 'Numara çevirin veya kişilerinizde arayın';
@@ -49,7 +49,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get dialerCallFailed => 'Bu cihazda telefon çeviricisi açılamadı.';
 
   @override
-  String get dialerCreateProfile => 'Bu numarayla profil oluştur';
+  String get dialerCreateProfile => 'Bu numarayla sırdaş oluştur';
 
   @override
   String get favoritesSectionTitle => 'Favorilerim';
@@ -75,13 +75,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get chatPlaceholderMessage =>
-      'Kayıtlı profilleriniz hakkında sorular sorun. Bağlam parçaları cihazınızda tamamen yerel olarak işlenir.';
+      'Kayıtlı sırdaşlarınız hakkında sorular sorun. Bağlam parçaları cihazınızda tamamen yerel olarak işlenir.';
 
   @override
-  String get profilesTitle => 'Profiller';
+  String get profilesTitle => 'Sırdaşlar';
 
   @override
-  String get profilesSubtitle => 'Kişiler ve kişisel bilgi tabanı';
+  String get profilesSubtitle => 'Sırdaşlar ve kişisel bilgi tabanı';
 
   @override
   String get settingsTitle => 'Ayarlar';
@@ -90,13 +90,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsSubtitle => 'Güvenlik, görünüm ve yapay zeka';
 
   @override
-  String get detailSubtitle => 'Profil detayları ve özel nitelikler';
+  String get detailSubtitle => 'Sırdaş detayları ve özel nitelikler';
 
   @override
-  String get newProfileTitle => 'Yeni Confidant Profili';
+  String get newProfileTitle => 'Yeni Sırdaş';
 
   @override
-  String get unnamedProfile => 'İsimsiz Profil';
+  String get unnamedProfile => 'İsimsiz Sırdaş';
 
   @override
   String get authVaultLockedTitle => 'Confidants Kasası Kilitli';
@@ -107,7 +107,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get authVaultFailedMessage =>
-      'Kimlik doğrulama iptal edildi veya başarısız oldu. Çevrimdışı profillere erişmek için kimliğinizi doğrulayın.';
+      'Kimlik doğrulama iptal edildi veya başarısız oldu. Çevrimdışı sırdaşlara erişmek için kimliğinizi doğrulayın.';
 
   @override
   String get authUnlockButton => 'Confidants Kilidini Aç';
@@ -165,14 +165,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get trainingSubtitle =>
-      'Bu profili yerel mini-LLM bağlam parçalarına dışa aktar';
+      'Bu sırdaşı yerel mini-LLM bağlam parçalarına dışa aktar';
 
   @override
   String get aiOptInTitle => 'Yerel Yapay Zekayı Etkinleştir';
 
   @override
   String get aiOptInSubtitle =>
-      'Profillerinizi cihaz içi mini-LLM ile sorgulamak için izin verin';
+      'Sırdaşlarınızı cihaz içi mini-LLM ile sorgulamak için izin verin';
 
   @override
   String get aiModelSectionTitle => 'Yapay Zeka Model Yapılandırması';
@@ -218,7 +218,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get aiModelQwenOneHalfWarning =>
-      '~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu profil çıkarımı için daha iyidir, orta ve üst segment cihazlar için önerilir.';
+      '~1 GB depolama ve yaklaşık 2 GB boş RAM gerektirir. Çoklu sırdaş çıkarımı için daha iyidir, orta ve üst segment cihazlar için önerilir.';
 
   @override
   String get aiModelLlamaThreeTitle => 'Llama 3.2 3B Instruct';
@@ -240,22 +240,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get chatOptInRequiredSubtitle =>
-      'Ayarlar\'dan Yerel Yapay Zekayı etkinleştirin veya cihaz içi sorgulama için aşağıya dokunun.';
+      'Ayarlar\'dan Yerel Yapay Zekayı etkinleştirin veya cihaz içi sırdaş sorgulama için aşağıya dokunun.';
 
   @override
   String get chatOptInButton => 'Yerel Yapay Zekayı Etkinleştir';
 
   @override
-  String get chatEmptyTitle => 'Kişileriniz Hakkında Soru Sorun';
+  String get chatEmptyTitle => 'Sırdaşlarınız Hakkında Soru Sorun';
 
   @override
   String chatEmptySubtitle(String modelName, int chunkCount) {
     String _temp0 = intl.Intl.pluralLogic(
       chunkCount,
       locale: localeName,
-      other: 'Bellekte $chunkCount profil parçası',
-      one: 'Bellekte 1 profil parçası',
-      zero: 'Henüz dizine eklenmiş profil yok',
+      other: 'Bellekte $chunkCount sırdaş parçası',
+      one: 'Bellekte 1 sırdaş parçası',
+      zero: 'Henüz dizine eklenmiş sırdaş yok',
     );
     return 'Aktif model: $modelName • $_temp0';
   }
@@ -279,7 +279,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get chatNoContextResponse =>
-      'Henüz yapay zekaya dahil edilmiş profil parçası bulunmuyor. Önce Profiller sekmesinden bir profil ekleyin.';
+      'Henüz yapay zekaya dahil edilmiş sırdaş parçası bulunmuyor. Önce Sırdaşlar sekmesinden bir sırdaş ekleyin.';
 
   @override
   String chatMockPrefix(String modelName, int chunkCount, String summary) {
@@ -288,29 +288,30 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get chatNoMatchSummary =>
-      'Dışa aktarılan profil bağlam parçalarını inceledim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişi adı, takma adı, doğum günü, sevdikleri veya özel nitelikleri belirterek sormayı deneyin.';
+      'Dışa aktarılan sırdaş bağlam parçalarını inceledim ancak bu sorguyla doğrudan eşleşen bir bilgi bulamadım. Kişi adı, takma adı, doğum günü, sevdikleri veya özel nitelikleri belirterek sormayı deneyin.';
 
   @override
-  String get searchProfilesHint => 'İsim, telefon veya notlara göre ara...';
+  String get searchProfilesHint =>
+      'İsim, telefon veya notlara göre sırdaş ara...';
 
   @override
   String get importFromContactsTooltip => 'Rehberden İçe Aktar';
 
   @override
-  String get newProfileTooltip => 'Yeni Profil';
+  String get newProfileTooltip => 'Yeni Sırdaş';
 
   @override
-  String get addProfileButton => 'Profil Ekle';
+  String get addProfileButton => 'Sırdaş Ekle';
 
   @override
   String get noContactsFound => 'Kişi bulunamadı veya rehber izni verilmedi.';
 
   @override
-  String get emptyInitialTitle => 'Henüz Confidant Profili Yok';
+  String get emptyInitialTitle => 'Henüz Sırdaş Yok';
 
   @override
   String get emptyInitialSubtitle =>
-      'Rehberinizden bir kişi içe aktarın veya manuel olarak zengin bir kişisel profil oluşturun.';
+      'Rehberinizden bir kişi içe aktarın veya manuel olarak zengin bir kişisel sırdaş oluşturun.';
 
   @override
   String get importContactButton => 'Kişi İçe Aktar';
@@ -319,7 +320,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get createManuallyButton => 'Manuel Oluştur';
 
   @override
-  String get emptySearchTitle => 'Eşleşen Profil Bulunamadı';
+  String get emptySearchTitle => 'Eşleşen Sırdaş Bulunamadı';
 
   @override
   String get emptySearchSubtitle =>
@@ -335,11 +336,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noMatchingContacts => 'Eşleşen kişi bulunamadı.';
 
   @override
-  String get enterNameError => 'Lütfen bu profil için bir isim girin.';
+  String get enterNameError => 'Lütfen bu sırdaş için bir isim girin.';
 
   @override
   String profileSaved(String name) {
-    return '$name için profil kaydedildi.';
+    return '$name için sırdaş kaydedildi.';
   }
 
   @override
@@ -348,7 +349,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get deleteProfileTooltip => 'Profili Sil';
+  String get deleteProfileTooltip => 'Sırdaşı Sil';
 
   @override
   String get noPhoneNumber => 'Telefon numarası yok';
@@ -375,7 +376,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get sectionBasicInfoSubtitle =>
-      'İsim, profil simgesi ve favori durumu';
+      'İsim, sırdaş simgesi ve favori durumu';
 
   @override
   String get sectionContactDetails => 'İletişim Bilgileri';
@@ -398,16 +399,16 @@ class AppLocalizationsTr extends AppLocalizations {
       'Dinamik anahtar-değer çiftleri';
 
   @override
-  String get chooseAvatarTitle => 'Profil Simgesi Seç';
+  String get chooseAvatarTitle => 'Sırdaş Simgesi Seç';
 
   @override
   String get favoriteTooltip => 'Favorilere Ekle/Çıkar';
 
   @override
-  String get favoriteLabel => 'Favori Kişi';
+  String get favoriteLabel => 'Favori Sırdaş';
 
   @override
-  String get favoriteSubtitle => 'Profil listenizin en üstüne sabitleyin';
+  String get favoriteSubtitle => 'Sırdaş listenizin en üstüne sabitleyin';
 
   @override
   String get favoritesOnlyFilter => 'Favoriler';
@@ -471,7 +472,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get birthdayStoredHint => 'ISO 8601 tarihi yerel olarak saklanır';
 
   @override
-  String get saveProfileButton => 'Profili Kaydet';
+  String get saveProfileButton => 'Sırdaşı Kaydet';
 
   @override
   String get customAttributesTitle => 'Özel Nitelikler';
@@ -513,6 +514,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String profileAndPhonebookSaved(String name) {
-    return '$name için profil ve telefon kişisi kaydedildi.';
+    return '$name için sırdaş ve telefon kişisi kaydedildi.';
   }
 }

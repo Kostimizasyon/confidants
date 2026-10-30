@@ -44,41 +44,162 @@ class _NavigationShellState extends State<NavigationShell> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderColor = isDark ? AppColors.borderDark : AppColors.borderLight;
 
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
         children: _tabs,
       ),
-      // SafeArea keeps the tab bar clear of Android 3-button navigation.
       bottomNavigationBar: SafeArea(
         top: false,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(color: borderColor, width: 1),
-            ),
-          ),
-          child: BottomNavigationBar(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: _FloatingCapsuleNavBar(
             currentIndex: _currentIndex,
             onTap: (index) => setState(() => _currentIndex = index),
             items: [
-              BottomNavigationBarItem(
-                icon: const Icon(LucideIcons.grid3x3),
-                activeIcon: const Icon(LucideIcons.phone),
+              _CapsuleNavItem(
+                icon: LucideIcons.grid3x3,
                 label: l10n.navKeypad,
               ),
-              BottomNavigationBarItem(
-                icon: const Icon(LucideIcons.users),
-                activeIcon: const Icon(LucideIcons.userCheck),
+              _CapsuleNavItem(
+                icon: LucideIcons.user,
                 label: l10n.navProfiles,
               ),
-              BottomNavigationBarItem(
-                icon: const Icon(LucideIcons.messageSquare),
-                activeIcon: const Icon(LucideIcons.messageSquareDot),
+              _CapsuleNavItem(
+                icon: LucideIcons.messageSquare,
                 label: l10n.navChat,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FloatingCapsuleNavBar extends StatelessWidget {
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+  final List<_CapsuleNavItem> items;
+
+  const _FloatingCapsuleNavBar({
+    required this.currentIndex,
+    required this.onTap,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final backgroundColor =
+        isDark ? AppColors.navBarDark : AppColors.navBarLight;
+    final borderColor =
+        isDark ? AppColors.navBarBorderDark : AppColors.navBarBorderLight;
+
+    return Container(
+      height: 66,
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(36),
+        border: Border.all(color: borderColor, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          for (int i = 0; i < items.length; i++)
+            Expanded(
+              child: _CapsuleTile(
+                item: items[i],
+                isSelected: i == currentIndex,
+                onTap: () => onTap(i),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CapsuleNavItem {
+  final IconData icon;
+  final String label;
+
+  const _CapsuleNavItem({
+    required this.icon,
+    required this.label,
+  });
+}
+
+class _CapsuleTile extends StatelessWidget {
+  final _CapsuleNavItem item;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CapsuleTile({
+    required this.item,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final pillColor = isSelected
+        ? (isDark ? AppColors.navPillDark : AppColors.navPillLight)
+        : AppColors.transparent;
+
+    final textColor = isSelected
+        ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)
+        : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight);
+
+    final iconColor = textColor;
+    final fontWeight = isSelected ? FontWeight.w600 : FontWeight.w500;
+
+    return Material(
+      color: AppColors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(28),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOutCubic,
+          decoration: BoxDecoration(
+            color: pillColor,
+            borderRadius: BorderRadius.circular(28),
+          ),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                item.icon,
+                size: 20,
+                color: iconColor,
+              ),
+              const SizedBox(height: 3),
+              Text(
+                item.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: textColor,
+                  fontWeight: fontWeight,
+                  fontSize: 11.5,
+                  letterSpacing: -0.1,
+                ),
               ),
             ],
           ),

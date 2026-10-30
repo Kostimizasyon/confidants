@@ -24,4 +24,28 @@ abstract final class AppColors {
   static const Color error = Color(0xFFD32F2F);
   static const Color success = Color(0xFF388E3C);
   static const Color transparent = Colors.transparent;
+
+  // Floating capsule navigation tokens (One UI style)
+  static const Color navBarDark = Color(0xFF202024);
+  static const Color navBarLight = Color(0xFFE8E8ED);
+  static const Color navBarBorderDark = Color(0xFF2C2C32);
+  static const Color navBarBorderLight = Color(0xFFD8D8DE);
+  static const Color navPillDark = Color(0xFF34343A);
+  static const Color navPillLight = Color(0xFFD4D4DC);
+
+  // Samsung One UI pastel gradient tokens
+  static const Color gradientPeachStart = Color(0xFFFFB074);
+  static const Color gradientPeachEnd = Color(0xFFFF8B66);
+  static const Color gradientSkyStart = Color(0xFF82C8FA);
+  static const Color gradientSkyEnd = Color(0xFF5BA3F5);
+  static const Color gradientBlueStart = Color(0xFF70B8F8);
+  static const Color gradientBlueEnd = Color(0xFF5296EE);
+  static const Color gradientLavenderStart = Color(0xFFB39DDB);
+  static const Color gradientLavenderEnd = Color(0xFF9575CD);
+  static const Color gradientMintStart = Color(0xFF80CBC4);
+  static const Color gradientMintEnd = Color(0xFF4DB6AC);
+
+  // Avatar cyan-to-blue gradient
+  static const Color avatarGradientStart = Color(0xFF4DD0E1);
+  static const Color avatarGradientEnd = Color(0xFF42A5F5);
 }

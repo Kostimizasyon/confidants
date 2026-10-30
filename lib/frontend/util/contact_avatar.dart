@@ -58,17 +58,21 @@ class ContactAvatar extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        color: isOutlined ? AppColors.surfaceLight.withValues(alpha: 0.12) : null,
         gradient: isOutlined
             ? null
             : const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [AppColors.accentHighlight, AppColors.accentBlue],
+                colors: [
+                  AppColors.avatarGradientStart,
+                  AppColors.avatarGradientEnd,
+                ],
               ),
         border: isOutlined
             ? Border.all(
-                color: AppColors.surfaceLight.withValues(alpha: 0.55),
-                width: 1.2,
+                color: AppColors.surfaceLight.withValues(alpha: 0.65),
+                width: 1.5,
               )
             : null,
       ),

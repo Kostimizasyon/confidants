@@ -16,7 +16,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navChat => 'Chat';
 
   @override
-  String get navProfiles => 'Profiles';
+  String get navProfiles => 'Confidants';
 
   @override
   String get navSettings => 'Settings';
@@ -50,7 +50,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not open the phone dialer on this device.';
 
   @override
-  String get dialerCreateProfile => 'Create profile with this number';
+  String get dialerCreateProfile => 'Create confidant with this number';
 
   @override
   String get favoritesSectionTitle => 'Favorites';
@@ -76,10 +76,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatPlaceholderMessage =>
-      'Ask anything about your saved profiles. Context chunks are loaded locally on your device.';
+      'Ask anything about your saved confidants. Context chunks are loaded locally on your device.';
 
   @override
-  String get profilesTitle => 'Profiles';
+  String get profilesTitle => 'Confidants';
 
   @override
   String get profilesSubtitle => 'Contacts & personal knowledge base';
@@ -91,13 +91,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSubtitle => 'Security, appearance & AI';
 
   @override
-  String get detailSubtitle => 'Profile details & custom attributes';
+  String get detailSubtitle => 'Confidant details & custom attributes';
 
   @override
-  String get newProfileTitle => 'New Confidant Profile';
+  String get newProfileTitle => 'New Confidant';
 
   @override
-  String get unnamedProfile => 'Unnamed Profile';
+  String get unnamedProfile => 'Unnamed Confidant';
 
   @override
   String get authVaultLockedTitle => 'Confidants Vault Locked';
@@ -108,7 +108,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authVaultFailedMessage =>
-      'Authentication was canceled or did not succeed. Verify your identity to access offline profiles.';
+      'Authentication was canceled or did not succeed. Verify your identity to access offline confidants.';
 
   @override
   String get authUnlockButton => 'Unlock Confidants';
@@ -165,14 +165,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trainingSubtitle =>
-      'Export this profile to local mini-LLM context chunks';
+      'Export this confidant to local mini-LLM context chunks';
 
   @override
   String get aiOptInTitle => 'Enable Local AI Assistant';
 
   @override
   String get aiOptInSubtitle =>
-      'Opt in to query your profiles with an on-device mini-LLM';
+      'Opt in to query your confidants with an on-device mini-LLM';
 
   @override
   String get aiModelSectionTitle => 'AI Model Configuration';
@@ -218,7 +218,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aiModelQwenOneHalfWarning =>
-      'Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-profile reasoning, recommended for mid-to-high-tier devices.';
+      'Requires ~1 GB storage and nearly 2 GB free RAM. Better multi-confidant reasoning, recommended for mid-to-high-tier devices.';
 
   @override
   String get aiModelLlamaThreeTitle => 'Llama 3.2 3B Instruct';
@@ -240,7 +240,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatOptInRequiredSubtitle =>
-      'Opt in to Local AI in Settings or tap below to enable on-device profile querying.';
+      'Opt in to Local AI in Settings or tap below to enable on-device confidant querying.';
 
   @override
   String get chatOptInButton => 'Enable Local AI';
@@ -253,9 +253,9 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       chunkCount,
       locale: localeName,
-      other: '$chunkCount profile chunks in memory',
-      one: '1 profile chunk in memory',
-      zero: 'No profile chunks indexed yet',
+      other: '$chunkCount confidant chunks in memory',
+      one: '1 confidant chunk in memory',
+      zero: 'No confidant chunks indexed yet',
     );
     return 'Active model: $modelName • $_temp0';
   }
@@ -278,7 +278,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatNoContextResponse =>
-      'No training-enabled profile chunks are indexed yet. Add a profile in the Profiles tab first.';
+      'No training-enabled confidant chunks are indexed yet. Add a confidant in the Confidants tab first.';
 
   @override
   String chatMockPrefix(String modelName, int chunkCount, String summary) {
@@ -287,30 +287,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatNoMatchSummary =>
-      'I checked your exported profile context chunks, but couldn\'t find a direct match for that query. Try asking by a person\'s name, nickname, birthday, likes, or custom attributes.';
+      'I checked your exported confidant context chunks, but couldn\'t find a direct match for that query. Try asking by a person\'s name, nickname, birthday, likes, or custom attributes.';
 
   @override
   String get searchProfilesHint =>
-      'Search profiles by name, phone, or notes...';
+      'Search confidants by name, phone, or notes...';
 
   @override
   String get importFromContactsTooltip => 'Import from Contacts';
 
   @override
-  String get newProfileTooltip => 'New Profile';
+  String get newProfileTooltip => 'New Confidant';
 
   @override
-  String get addProfileButton => 'Add Profile';
+  String get addProfileButton => 'Add Confidant';
 
   @override
   String get noContactsFound => 'No contacts found or permission denied.';
 
   @override
-  String get emptyInitialTitle => 'No Confidant Profiles Yet';
+  String get emptyInitialTitle => 'No Confidants Yet';
 
   @override
   String get emptyInitialSubtitle =>
-      'Import a contact from your address book or create a rich personal profile manually.';
+      'Import a contact from your address book or create a rich personal confidant manually.';
 
   @override
   String get importContactButton => 'Import Contact';
@@ -319,7 +319,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createManuallyButton => 'Create Manually';
 
   @override
-  String get emptySearchTitle => 'No Matching Profiles';
+  String get emptySearchTitle => 'No Matching Confidants';
 
   @override
   String get emptySearchSubtitle =>
@@ -335,11 +335,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noMatchingContacts => 'No matching contacts found.';
 
   @override
-  String get enterNameError => 'Please enter a name for this profile.';
+  String get enterNameError => 'Please enter a name for this confidant.';
 
   @override
   String profileSaved(String name) {
-    return 'Profile saved for $name.';
+    return 'Confidant saved for $name.';
   }
 
   @override
@@ -348,7 +348,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get deleteProfileTooltip => 'Delete Profile';
+  String get deleteProfileTooltip => 'Delete Confidant';
 
   @override
   String get noPhoneNumber => 'No phone number';
@@ -406,7 +406,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get favoriteLabel => 'Favorite Confidant';
 
   @override
-  String get favoriteSubtitle => 'Pin to the top of your profiles list';
+  String get favoriteSubtitle => 'Pin to the top of your confidants list';
 
   @override
   String get favoritesOnlyFilter => 'Favorites';
@@ -469,7 +469,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get birthdayStoredHint => 'ISO 8601 date stored locally';
 
   @override
-  String get saveProfileButton => 'Save Profile';
+  String get saveProfileButton => 'Save Confidant';
 
   @override
   String get customAttributesTitle => 'Custom Attributes';
@@ -512,6 +512,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String profileAndPhonebookSaved(String name) {
-    return 'Profile and phone contact saved for $name.';
+    return 'Confidant and phone contact saved for $name.';
   }
 }

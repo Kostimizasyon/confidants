@@ -84,11 +84,13 @@ class _FavoriteTile extends StatelessWidget {
     required this.onLongPress,
   });
 
-  // Rotating gradients built only from palette tokens.
+  // Rotating vibrant One UI pastel gradients built strictly from palette tokens.
   static const List<List<Color>> _gradients = [
-    [AppColors.accentHighlight, AppColors.accentBlue],
-    [AppColors.accentBlue, AppColors.secondaryDarkBlue],
-    [AppColors.accentHighlight, AppColors.secondaryDarkBlue],
+    [AppColors.gradientPeachStart, AppColors.gradientPeachEnd],
+    [AppColors.gradientSkyStart, AppColors.gradientSkyEnd],
+    [AppColors.gradientBlueStart, AppColors.gradientBlueEnd],
+    [AppColors.gradientLavenderStart, AppColors.gradientLavenderEnd],
+    [AppColors.gradientMintStart, AppColors.gradientMintEnd],
   ];
 
   @override
@@ -100,7 +102,7 @@ class _FavoriteTile extends StatelessWidget {
 
     return Material(
       color: AppColors.transparent,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(22),
       clipBehavior: Clip.antiAlias,
       child: Ink(
         decoration: BoxDecoration(

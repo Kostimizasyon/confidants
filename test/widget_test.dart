@@ -22,4 +22,28 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     expect(find.byType(ConfidantsApp), findsOneWidget);
   });
+
+  testWidgets('NavigationShell renders floating capsule bar and switches tabs', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const ConfidantsApp());
+    await tester.pump(const Duration(milliseconds: 300));
+
+    // Verify floating capsule navigation bar tabs
+    expect(find.text('Keypad'), findsWidgets);
+    expect(find.text('Confidants'), findsWidgets);
+    expect(find.text('Chat'), findsWidgets);
+
+    // Tap on Confidants tab
+    await tester.tap(find.text('Confidants').last);
+    await tester.pump(const Duration(milliseconds: 300));
+
+    // Tap on Chat tab
+    await tester.tap(find.text('Chat').last);
+    await tester.pump(const Duration(milliseconds: 300));
+
+    // Tap back on Keypad tab
+    await tester.tap(find.text('Keypad').last);
+    await tester.pump(const Duration(milliseconds: 300));
+  });
 }
