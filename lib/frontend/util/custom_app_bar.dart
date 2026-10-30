@@ -1,25 +1,25 @@
+import 'package:confidants/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:confidants/l10n/app_localizations.dart';
 import '../settings_page/settings_page.dart';
 import '../theme/app_colors.dart';
 import 'l10n_extensions.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final IconData leadingIcon;
-  final L10nText titleOf;
-  final L10nText? subtitleOf;
+  final L10nText? titleOf;
+  final Widget? titleWidget;
+  final Widget? leading;
   final List<Widget>? actions;
   final bool showBackButton;
 
-  /// Appends the top-right Settings button (used by the three main tabs).
+  /// Appends the top-right 3-dots Settings button (used by the three main tabs).
   final bool showSettingsAction;
 
   const CustomAppBar({
     super.key,
-    required this.leadingIcon,
-    required this.titleOf,
-    this.subtitleOf,
+    this.titleOf,
+    this.titleWidget,
+    this.leading,
     this.actions,
     this.showBackButton = false,
     this.showSettingsAction = false,
@@ -28,68 +28,55 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar.dialer({
     super.key,
     this.actions,
-    L10nText? titleOf,
-    L10nText? subtitleOf,
-    IconData? leadingIcon,
-  })  : leadingIcon = leadingIcon ?? LucideIcons.grid3x3,
-        titleOf = titleOf ?? _dialerTitle,
-        subtitleOf = subtitleOf ?? _dialerSubtitle,
-        showBackButton = false,
+    this.titleOf,
+    this.titleWidget,
+    this.leading,
+  })  : showBackButton = false,
         showSettingsAction = true;
 
   const CustomAppBar.chat({
     super.key,
     this.actions,
-  })  : leadingIcon = LucideIcons.bot,
-        titleOf = _chatTitle,
-        subtitleOf = _chatSubtitle,
+    this.titleWidget,
+    this.leading,
+  })  : titleOf = null,
         showBackButton = false,
         showSettingsAction = true;
 
   const CustomAppBar.profiles({
     super.key,
     this.actions,
-  })  : leadingIcon = LucideIcons.users,
-        titleOf = _profilesTitle,
-        subtitleOf = _profilesSubtitle,
+    this.titleWidget,
+    this.leading,
+  })  : titleOf = null,
         showBackButton = false,
         showSettingsAction = true;
 
-  /// Settings is now a pushed route, so it shows a back button instead of tabs.
+  /// Settings is a pushed route, so it shows a back button and simple title.
   const CustomAppBar.settings({
     super.key,
     this.actions,
-  })  : leadingIcon = LucideIcons.slidersHorizontal,
-        titleOf = _settingsTitle,
-        subtitleOf = _settingsSubtitle,
+  })  : titleOf = _settingsTitle,
+        titleWidget = null,
+        leading = null,
         showBackButton = true,
         showSettingsAction = false;
 
-  /// [title] is dynamic (a profile name or an already-localized string).
+  /// [title] is dynamic (a confidant name or an already-localized string).
   CustomAppBar.detail({
     super.key,
     required String title,
     this.actions,
-  })  : leadingIcon = LucideIcons.userCheck,
-        titleOf = ((_) => title),
-        subtitleOf = _detailSubtitle,
+  })  : titleOf = ((_) => title),
+        titleWidget = null,
+        leading = null,
         showBackButton = true,
         showSettingsAction = false;
 
-  static String _dialerTitle(AppLocalizations l10n) => l10n.dialerTitle;
-  static String _dialerSubtitle(AppLocalizations l10n) => l10n.dialerSubtitle;
-  static String _chatTitle(AppLocalizations l10n) => l10n.chatTitle;
-  static String _chatSubtitle(AppLocalizations l10n) => l10n.chatSubtitle;
-  static String _profilesTitle(AppLocalizations l10n) => l10n.profilesTitle;
-  static String _profilesSubtitle(AppLocalizations l10n) =>
-      l10n.profilesSubtitle;
   static String _settingsTitle(AppLocalizations l10n) => l10n.settingsTitle;
-  static String _settingsSubtitle(AppLocalizations l10n) =>
-      l10n.settingsSubtitle;
-  static String _detailSubtitle(AppLocalizations l10n) => l10n.detailSubtitle;
 
   @override
-  Size get preferredSize => const Size.fromHeight(68);
+  Size get preferredSize => const Size.fromHeight(56);
 
   void _openSettings(BuildContext context) {
     Navigator.of(context).push(
@@ -102,82 +89,48 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
     final l10n = context.l10n;
     final isDark = theme.brightness == Brightness.dark;
-    final secondaryTextColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
-    final borderColor = isDark ? AppColors.borderDark : AppColors.borderLight;
-    final badgeBackground =
-        isDark ? AppColors.secondaryDarkBlue : AppColors.primaryDarkBlue;
-    final subtitle = subtitleOf?.call(l10n);
+    final bgColor = isDark ? AppColors.backgroundDark : AppColors.backgroundLight;
+    final fgColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
 
     final mergedActions = <Widget>[
       ...?actions,
       if (showSettingsAction)
         IconButton(
           onPressed: () => _openSettings(context),
-          icon: const Icon(LucideIcons.settings, size: 20),
+          icon: Icon(LucideIcons.ellipsisVertical, size: 22, color: fgColor),
           tooltip: l10n.settingsTooltip,
         ),
-      if (showSettingsAction) const SizedBox(width: 4),
+      const SizedBox(width: 4),
     ];
 
+    Widget? resolvedTitle = titleWidget;
+    if (resolvedTitle == null && titleOf != null) {
+      final text = titleOf!(l10n);
+      if (text.isNotEmpty) {
+        resolvedTitle = Text(
+          text,
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w600,
+            color: fgColor,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        );
+      }
+    }
+
     return AppBar(
+      backgroundColor: bgColor,
+      foregroundColor: fgColor,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      surfaceTintColor: AppColors.transparent,
       automaticallyImplyLeading: showBackButton,
-      toolbarHeight: 68,
-      titleSpacing: showBackButton ? 0 : 16,
-      title: Row(
-        children: [
-          Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              color: badgeBackground,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(
-              leadingIcon,
-              size: 19,
-              color: AppColors.surfaceLight,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  titleOf(l10n),
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (subtitle != null && subtitle.isNotEmpty) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: secondaryTextColor,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-      actions: mergedActions.isEmpty ? null : mergedActions,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1),
-        child: Divider(
-          height: 1,
-          thickness: 1,
-          color: borderColor,
-        ),
-      ),
+      leading: leading,
+      toolbarHeight: 56,
+      titleSpacing: (showBackButton || leading != null) ? 0 : 20,
+      title: resolvedTitle,
+      actions: mergedActions,
     );
   }
 }

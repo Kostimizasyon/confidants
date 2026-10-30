@@ -85,8 +85,9 @@ void main() {
       await tester.pumpWidget(createDialerTestApp());
       await tester.pump(const Duration(milliseconds: 300));
 
-      // Should show Recent Calls header initially
-      expect(find.text('Recent Calls'), findsOneWidget);
+      // Should show minimal AppBar with search & 3-dots icons initially
+      expect(find.byIcon(LucideIcons.search), findsOneWidget);
+      expect(find.byIcon(LucideIcons.ellipsisVertical), findsOneWidget);
 
       // Should show Open Keypad FAB button
       final fab = find.byType(FloatingActionButton);
@@ -102,7 +103,6 @@ void main() {
 
       // Keypad DialPad should now be visible
       expect(find.byType(DialPad), findsOneWidget);
-      expect(find.text('Keypad'), findsOneWidget);
 
       // Should have collapse / hide keypad button
       final collapseBtn = find.byIcon(LucideIcons.chevronDown);
@@ -112,8 +112,8 @@ void main() {
       await tester.tap(collapseBtn);
       await tester.pump(const Duration(milliseconds: 300));
 
-      // Recent Calls header should be back
-      expect(find.text('Recent Calls'), findsOneWidget);
+      // Recent Calls view should be back
+      expect(find.byIcon(LucideIcons.search), findsOneWidget);
       expect(find.byType(DialPad), findsNothing);
     });
   });

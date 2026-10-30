@@ -236,9 +236,27 @@ class _DialerPageState extends State<DialerPage> {
 
     return Scaffold(
       appBar: CustomAppBar.dialer(
-        leadingIcon: _showKeypad ? LucideIcons.grid3x3 : LucideIcons.phoneCall,
-        titleOf: (loc) => _showKeypad ? loc.dialerTitle : loc.recentCallsTitle,
-        subtitleOf: _showKeypad ? ((loc) => loc.dialerSubtitle) : null,
+        leading: _showKeypad
+            ? IconButton(
+                icon: const Icon(LucideIcons.chevronDown, size: 22),
+                tooltip: l10n.dialerHideKeypad,
+                onPressed: () => setState(() => _showKeypad = false),
+              )
+            : null,
+        actions: [
+          if (!_showKeypad)
+            IconButton(
+              onPressed: () => setState(() => _showKeypad = true),
+              icon: const Icon(LucideIcons.search, size: 22),
+              tooltip: l10n.searchProfilesHint,
+            ),
+          if (_showKeypad && _input.isNotEmpty)
+            IconButton(
+              onPressed: () => _createProfileFromInput(_input),
+              icon: const Icon(LucideIcons.userPlus, size: 22),
+              tooltip: l10n.dialerCreateProfile,
+            ),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -381,30 +399,6 @@ class _DialerPageState extends State<DialerPage> {
 
     return Column(
       children: [
-        // Top collapse button & match results
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: IconButton(
-                icon: const Icon(LucideIcons.chevronDown, size: 22),
-                tooltip: l10n.dialerHideKeypad,
-                onPressed: () => setState(() => _showKeypad = false),
-              ),
-            ),
-            if (_input.isNotEmpty)
-              TextButton.icon(
-                onPressed: () => _createProfileFromInput(_input),
-                icon: Icon(LucideIcons.userPlus, size: 16, color: accentColor),
-                label: Text(
-                  l10n.dialerCreateProfile,
-                  style: TextStyle(color: accentColor, fontSize: 12),
-                ),
-              ),
-            const SizedBox(width: 8),
-          ],
-        ),
         // Live matches above the pad
         Expanded(child: _buildMatchArea(context, secondaryColor, accentColor)),
         Divider(height: 1, color: borderColor),

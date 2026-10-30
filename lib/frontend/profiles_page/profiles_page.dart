@@ -26,9 +26,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
   final DatabaseHelper _dbHelper = DatabaseHelper.instance;
   final ContactService _contactService = ContactService.instance;
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
 
   List<UserProfile> _profiles = const [];
   bool _isLoading = true;
+  bool _isSearching = false;
 
   @override
   void initState() {
@@ -42,7 +44,20 @@ class _ProfilesPageState extends State<ProfilesPage> {
   void dispose() {
     _dbHelper.revision.removeListener(_onDatabaseChanged);
     _searchController.dispose();
+    _searchFocusNode.dispose();
     super.dispose();
+  }
+
+  void _startSearch() {
+    setState(() => _isSearching = true);
+    _searchFocusNode.requestFocus();
+  }
+
+  void _stopSearch() {
+    _searchController.clear();
+    _searchFocusNode.unfocus();
+    setState(() => _isSearching = false);
+    _loadProfiles('');
   }
 
   void _onDatabaseChanged() => _loadProfiles();
@@ -180,64 +195,66 @@ class _ProfilesPageState extends State<ProfilesPage> {
     final hasProfiles = _profiles.isNotEmpty || hasSearchQuery;
 
     return Scaffold(
-      appBar: CustomAppBar.profiles(
-        actions: hasProfiles
-            ? [
-                IconButton(
-                  onPressed: _openImportContact,
-                  icon: const Icon(LucideIcons.bookUser, size: 20),
-                  tooltip: l10n.importFromContactsTooltip,
+      appBar: _isSearching
+          ? CustomAppBar.profiles(
+              leading: IconButton(
+                icon: const Icon(LucideIcons.arrowLeft, size: 22),
+                onPressed: _stopSearch,
+              ),
+              titleWidget: TextField(
+                controller: _searchController,
+                focusNode: _searchFocusNode,
+                onChanged: _loadProfiles,
+                decoration: InputDecoration(
+                  hintText: l10n.searchProfilesHint,
+                  filled: false,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
                 ),
-              ]
-            : null,
-      ),
+              ),
+              actions: [
+                if (hasSearchQuery)
+                  IconButton(
+                    icon: const Icon(LucideIcons.x, size: 20),
+                    onPressed: () {
+                      _searchController.clear();
+                      _loadProfiles('');
+                    },
+                  ),
+              ],
+            )
+          : CustomAppBar.profiles(
+              actions: [
+                IconButton(
+                  onPressed: _startSearch,
+                  icon: const Icon(LucideIcons.search, size: 22),
+                  tooltip: l10n.searchProfilesHint,
+                ),
+              ],
+            ),
       body: SafeArea(
         top: false,
-        child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: TextField(
-              controller: _searchController,
-              onChanged: _loadProfiles,
-              decoration: InputDecoration(
-                hintText: l10n.searchProfilesHint,
-                prefixIcon: const Icon(LucideIcons.search, size: 18),
-                suffixIcon: hasSearchQuery
-                    ? IconButton(
-                        icon: const Icon(LucideIcons.x, size: 16),
-                        onPressed: () {
-                          _searchController.clear();
-                          _loadProfiles('');
-                        },
-                      )
-                    : null,
-              ),
-            ),
-          ),
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _profiles.isEmpty
-                    ? (hasSearchQuery
-                        ? const _ProfilesEmptyState.search()
-                        : _ProfilesEmptyState.initial(
-                            onImport: _openImportContact,
-                            onCreateManual: _openCreateManual,
-                          ))
-                    : Builder(
-                        builder: (context) {
-                          final rows = _buildRows();
-                          return ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(12, 4, 12, 96),
-                            itemCount: rows.length,
-                            itemBuilder: (context, index) => rows[index](),
-                          );
-                        },
-                      ),
-          ),
-        ],
-      ),
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : _profiles.isEmpty
+                ? (hasSearchQuery
+                    ? const _ProfilesEmptyState.search()
+                    : _ProfilesEmptyState.initial(
+                        onImport: _openImportContact,
+                        onCreateManual: _openCreateManual,
+                      ))
+                : Builder(
+                    builder: (context) {
+                      final rows = _buildRows();
+                      return ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(12, 4, 12, 96),
+                        itemCount: rows.length,
+                        itemBuilder: (context, index) => rows[index](),
+                      );
+                    },
+                  ),
       ),
       floatingActionButton: hasProfiles
           ? FloatingActionButton.extended(
