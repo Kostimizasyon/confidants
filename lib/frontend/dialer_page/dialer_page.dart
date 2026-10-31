@@ -267,17 +267,14 @@ class _DialerPageState extends State<DialerPage> {
       ),
       floatingActionButton: _showKeypad
           ? null
-          : Padding(
-              padding: const EdgeInsets.only(bottom: 72),
-              child: FloatingActionButton(
-                onPressed: () => setState(() => _showKeypad = true),
-                backgroundColor: AppColors.success,
-                foregroundColor: AppColors.surfaceLight,
-                tooltip: l10n.dialerOpenKeypad,
-                elevation: 4,
-                shape: const CircleBorder(),
-                child: const Icon(LucideIcons.grid3x3, size: 26),
-              ),
+          : FloatingActionButton(
+              onPressed: () => setState(() => _showKeypad = true),
+              backgroundColor: AppColors.success,
+              foregroundColor: AppColors.surfaceLight,
+              tooltip: l10n.dialerOpenKeypad,
+              elevation: 4,
+              shape: const CircleBorder(),
+              child: const Icon(LucideIcons.grid3x3, size: 26),
             ),
     );
   }
@@ -393,7 +390,6 @@ class _DialerPageState extends State<DialerPage> {
     final isDark = theme.brightness == Brightness.dark;
     final secondaryColor =
         isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
-    final borderColor = isDark ? AppColors.borderDark : AppColors.borderLight;
     final accentColor =
         isDark ? AppColors.accentHighlight : AppColors.primaryDarkBlue;
 
@@ -401,7 +397,6 @@ class _DialerPageState extends State<DialerPage> {
       children: [
         // Live matches above the pad
         Expanded(child: _buildMatchArea(context, secondaryColor, accentColor)),
-        Divider(height: 1, color: borderColor),
         // Active number display
         Padding(
           padding: const EdgeInsets.fromLTRB(56, 8, 8, 2),
@@ -485,16 +480,7 @@ class _DialerPageState extends State<DialerPage> {
     final theme = Theme.of(context);
 
     if (_input.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Text(
-            l10n.dialerEmptyHint,
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(color: secondaryColor),
-          ),
-        ),
-      );
+      return const SizedBox.shrink();
     }
 
     if (_matches.isEmpty) {

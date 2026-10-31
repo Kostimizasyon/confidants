@@ -6,21 +6,27 @@ import 'l10n_extensions.dart';
 
 class ContactPickerDialog extends StatefulWidget {
   final List<ContactItem> contacts;
+  final VoidCallback? onImportAll;
 
   const ContactPickerDialog({
     super.key,
     required this.contacts,
+    this.onImportAll,
   });
 
   static Future<ContactItem?> show(
     BuildContext context, {
     required List<ContactItem> contacts,
+    VoidCallback? onImportAll,
   }) {
     return showModalBottomSheet<ContactItem>(
       context: context,
       isScrollControlled: true,
       backgroundColor: AppColors.transparent,
-      builder: (_) => ContactPickerDialog(contacts: contacts),
+      builder: (_) => ContactPickerDialog(
+        contacts: contacts,
+        onImportAll: onImportAll,
+      ),
     );
   }
 
@@ -124,6 +130,29 @@ class _ContactPickerDialogState extends State<ContactPickerDialog> {
                 ),
               ),
             ),
+            if (widget.contacts.isNotEmpty && widget.onImportAll != null) ...[
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      widget.onImportAll?.call();
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: badgeColor,
+                      foregroundColor: AppColors.surfaceLight,
+                    ),
+                    icon: const Icon(LucideIcons.users, size: 18),
+                    label: Text(
+                      l10n.importAllContactsButton(widget.contacts.length),
+                    ),
+                  ),
+                ),
+              ),
+            ],
             const SizedBox(height: 12),
             const Divider(height: 1),
             Expanded(

@@ -223,5 +223,17 @@
   "editProfileButton": "Edit",
   "cancelButton": "Cancel",
   "deleteButton": "Delete",
-  "messageTooltip": "Message"
+  "messageTooltip": "Message",
+  "importAllContactsButton": "Import All ({count})",
+  "@importAllContactsButton": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importedContactsToast": "Imported {count} Confidants.",
+  "@importedContactsToast": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  }
 }

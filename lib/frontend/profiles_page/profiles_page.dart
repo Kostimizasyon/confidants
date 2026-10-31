@@ -6,6 +6,8 @@ import '../../data_models/user_profile.dart';
 import '../../services/contact_index.dart';
 import '../../services/contact_service.dart';
 import '../../services/database_helper.dart';
+import '../../services/export_service.dart';
+import '../../services/hash_service.dart';
 import '../theme/app_colors.dart';
 import '../util/contact_picker_dialog.dart';
 import '../util/custom_app_bar.dart';
@@ -156,10 +158,62 @@ class _ProfilesPageState extends State<ProfilesPage> {
     final selected = await ContactPickerDialog.show(
       context,
       contacts: contacts,
+      onImportAll: () => _importAllContacts(contacts),
     );
     if (!mounted || selected == null) return;
 
     await _openCreateFromContact(selected);
+  }
+
+  Future<void> _importAllContacts(List<ContactItem> contacts) async {
+    final l10n = context.l10n;
+    final existing = await _dbHelper.getAllProfiles();
+    final existingPhones = <String>{
+      for (final p in existing)
+        if (p.normalizedPhone.isNotEmpty) p.normalizedPhone,
+    };
+    final existingHashes = <String>{
+      for (final p in existing)
+        if (p.profileHash.isNotEmpty) p.profileHash,
+    };
+
+    var importedCount = 0;
+    for (final contact in contacts) {
+      final name = contact.displayName.trim();
+      if (name.isEmpty) continue;
+      final normalizedPhone = ContactIndex.normalizePhone(contact.phoneNumber);
+      final hashSeed = contact.phoneNumber.trim().isNotEmpty
+          ? contact.phoneNumber.trim()
+          : name;
+      final hash = HashService.hashIdentifier(hashSeed);
+
+      if ((normalizedPhone.isNotEmpty &&
+              existingPhones.contains(normalizedPhone)) ||
+          existingHashes.contains(hash)) {
+        continue;
+      }
+
+      final profile = UserProfile.fromContact(
+        contact: contact,
+        profileHash: hash,
+      );
+      await _dbHelper.saveProfile(profile);
+      if (normalizedPhone.isNotEmpty) {
+        existingPhones.add(normalizedPhone);
+      }
+      existingHashes.add(hash);
+      importedCount++;
+    }
+
+    await ExportService.instance.syncAll();
+    await _loadProfiles();
+    if (!mounted) return;
+
+    proteinBar(
+      context,
+      l10n.importedContactsToast(importedCount),
+      icon: LucideIcons.check,
+    );
   }
 
   Future<void> _openCreateFromContact(ContactItem contact) async {
@@ -227,6 +281,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
             )
           : CustomAppBar.profiles(
               actions: [
+                IconButton(
+                  onPressed: _openImportContact,
+                  icon: const Icon(LucideIcons.bookUser, size: 22),
+                  tooltip: l10n.importFromContactsTooltip,
+                ),
                 IconButton(
                   onPressed: _startSearch,
                   icon: const Icon(LucideIcons.search, size: 22),

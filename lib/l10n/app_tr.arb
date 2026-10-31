@@ -221,5 +221,17 @@
   "editProfileButton": "Düzenle",
   "cancelButton": "İptal",
   "deleteButton": "Sil",
-  "messageTooltip": "Mesaj"
+  "messageTooltip": "Mesaj",
+  "importAllContactsButton": "Tümünü İçe Aktar ({count})",
+  "@importAllContactsButton": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "importedContactsToast": "{count} Confidant içe aktarıldı.",
+  "@importedContactsToast": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  }
 }

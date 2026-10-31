@@ -570,4 +570,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get messageTooltip => 'Mesaj';
+
+  @override
+  String importAllContactsButton(int count) {
+    return 'Tümünü İçe Aktar ($count)';
+  }
+
+  @override
+  String importedContactsToast(int count) {
+    return '$count kişi Confidants\'a içe aktarıldı.';
+  }
 }

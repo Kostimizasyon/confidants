@@ -1087,6 +1087,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Message'**
   String get messageTooltip;
+
+  /// No description provided for @importAllContactsButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Import All ({count})'**
+  String importAllContactsButton(int count);
+
+  /// No description provided for @importedContactsToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {count} contacts into Confidants.'**
+  String importedContactsToast(int count);
 }
 
 class _AppLocalizationsDelegate

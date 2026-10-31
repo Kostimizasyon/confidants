@@ -568,4 +568,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messageTooltip => 'Message';
+
+  @override
+  String importAllContactsButton(int count) {
+    return 'Import All ($count)';
+  }
+
+  @override
+  String importedContactsToast(int count) {
+    return 'Imported $count contacts into Confidants.';
+  }
 }
