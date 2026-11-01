@@ -82,11 +82,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
     final nowFavorite = !profile.isFavorite;
     await _dbHelper.toggleFavorite(id, nowFavorite);
     if (!mounted) return;
-    final name =
-        profile.name.trim().isNotEmpty ? profile.name.trim() : l10n.unnamedProfile;
-    proteinBar(
+    ProteinBar.success(
       context,
-      nowFavorite ? l10n.favoriteAddedToast(name) : l10n.favoriteRemovedToast(name),
+      nowFavorite
+          ? l10n.favoriteAddedToastGeneric
+          : l10n.favoriteRemovedToastGeneric,
       icon: nowFavorite ? LucideIcons.star : LucideIcons.starOff,
     );
   }
@@ -147,7 +147,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
     if (!mounted) return;
 
     if (contacts.isEmpty) {
-      proteinBar(
+      ProteinBar.fail(
         context,
         l10n.noContactsFound,
         icon: LucideIcons.bookUser,
@@ -209,10 +209,9 @@ class _ProfilesPageState extends State<ProfilesPage> {
     await _loadProfiles();
     if (!mounted) return;
 
-    proteinBar(
+    ProteinBar.success(
       context,
       l10n.importedContactsToast(importedCount),
-      icon: LucideIcons.check,
     );
   }
 

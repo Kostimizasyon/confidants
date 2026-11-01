@@ -1097,8 +1097,44 @@ abstract class AppLocalizations {
   /// No description provided for @importedContactsToast.
   ///
   /// In en, this message translates to:
-  /// **'Imported {count} contacts into Confidants.'**
+  /// **'Imported {count} Confidants.'**
   String importedContactsToast(int count);
+
+  /// No description provided for @profileSavedGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidant saved!'**
+  String get profileSavedGeneric;
+
+  /// No description provided for @profileDeletedGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidant deleted!'**
+  String get profileDeletedGeneric;
+
+  /// No description provided for @profileAndPhonebookSavedGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidant and phone contact saved!'**
+  String get profileAndPhonebookSavedGeneric;
+
+  /// No description provided for @favoriteAddedToastGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites!'**
+  String get favoriteAddedToastGeneric;
+
+  /// No description provided for @favoriteRemovedToastGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favorites!'**
+  String get favoriteRemovedToastGeneric;
+
+  /// No description provided for @phoneCopiedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number copied!'**
+  String get phoneCopiedToast;
 }
 
 class _AppLocalizationsDelegate

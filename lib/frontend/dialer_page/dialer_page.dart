@@ -143,7 +143,7 @@ class _DialerPageState extends State<DialerPage> {
     }
 
     if (!launched && mounted) {
-      proteinBar(context, l10n.dialerCallFailed, icon: LucideIcons.phoneOff);
+      ProteinBar.fail(context, l10n.dialerCallFailed, icon: LucideIcons.phoneOff);
     }
   }
 
@@ -219,7 +219,11 @@ class _DialerPageState extends State<DialerPage> {
                   onTap: () {
                     Navigator.of(bottomSheetContext).pop();
                     Clipboard.setData(ClipboardData(text: entry.number));
-                    proteinBar(context, '${entry.number} copied');
+                    ProteinBar.success(
+                      context,
+                      l10n.phoneCopiedToast,
+                      icon: LucideIcons.copy,
+                    );
                   },
                 ),
               ],

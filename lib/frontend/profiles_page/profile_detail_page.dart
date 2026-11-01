@@ -80,10 +80,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       await launchUrl(uri);
     } catch (_) {
       if (mounted) {
-        proteinBar(
+        ProteinBar.fail(
           context,
           context.l10n.dialerCallFailed,
-          icon: LucideIcons.circleAlert,
         );
       }
     }
@@ -118,12 +117,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       _profile = _profile.copyWith(isFavorite: nowFav);
       _hasChanges = true;
     });
-    final name = _profile.name.trim().isNotEmpty
-        ? _profile.name.trim()
-        : l10n.unnamedProfile;
-    proteinBar(
+    ProteinBar.success(
       context,
-      nowFav ? l10n.favoriteAddedToast(name) : l10n.favoriteRemovedToast(name),
+      nowFav ? l10n.favoriteAddedToastGeneric : l10n.favoriteRemovedToastGeneric,
       icon: nowFav ? LucideIcons.star : LucideIcons.starOff,
     );
   }
@@ -135,10 +131,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     final l10n = context.l10n;
 
     if (updatedProfile.name.trim().isEmpty) {
-      proteinBar(
+      ProteinBar.fail(
         context,
         l10n.enterNameError,
-        icon: LucideIcons.circleAlert,
       );
       return;
     }
@@ -157,22 +152,20 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
         notes: updatedProfile.notesToRemember,
       );
       if (!phonebookSaved && mounted) {
-        proteinBar(
+        ProteinBar.fail(
           context,
           l10n.phonebookSaveFailed,
-          icon: LucideIcons.circleAlert,
         );
       }
     }
 
     if (!mounted) return;
 
-    proteinBar(
+    ProteinBar.success(
       context,
       (addToDeviceContacts && phonebookSaved)
-          ? l10n.profileAndPhonebookSaved(updatedProfile.name)
-          : l10n.profileSaved(updatedProfile.name),
-      icon: LucideIcons.check,
+          ? l10n.profileAndPhonebookSavedGeneric
+          : l10n.profileSavedGeneric,
     );
 
     if (widget.isNew) {
@@ -195,9 +188,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     await ExportService.instance.removeProfileChunk(_profile.profileHash);
     if (!mounted) return;
 
-    proteinBar(
+    ProteinBar.success(
       context,
-      l10n.profileDeleted(_profile.name),
+      l10n.profileDeletedGeneric,
       icon: LucideIcons.trash2,
     );
     Navigator.of(context).pop(true);

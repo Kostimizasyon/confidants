@@ -233,5 +233,11 @@
     "placeholders": {
       "count": { "type": "int" }
     }
-  }
+  },
+  "profileSavedGeneric": "Confidant kaydedildi!",
+  "profileDeletedGeneric": "Confidant silindi!",
+  "profileAndPhonebookSavedGeneric": "Confidant ve telefon kişisi kaydedildi!",
+  "favoriteAddedToastGeneric": "Favorilere eklendi!",
+  "favoriteRemovedToastGeneric": "Favorilerden çıkarıldı!",
+  "phoneCopiedToast": "Telefon numarası kopyalandı!"
 }

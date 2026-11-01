@@ -106,7 +106,7 @@ class _ChatPageState extends State<ChatPage> {
   void _clearChat() {
     final l10n = context.l10n;
     setState(_messages.clear);
-    proteinBar(
+    ProteinBar.success(
       context,
       l10n.chatClearedToast,
       icon: LucideIcons.trash2,

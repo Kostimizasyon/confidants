@@ -578,6 +578,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String importedContactsToast(int count) {
-    return '$count kişi Confidants\'a içe aktarıldı.';
+    return '$count Confidant içe aktarıldı.';
   }
+
+  @override
+  String get profileSavedGeneric => 'Confidant kaydedildi!';
+
+  @override
+  String get profileDeletedGeneric => 'Confidant silindi!';
+
+  @override
+  String get profileAndPhonebookSavedGeneric =>
+      'Confidant ve telefon kişisi kaydedildi!';
+
+  @override
+  String get favoriteAddedToastGeneric => 'Favorilere eklendi!';
+
+  @override
+  String get favoriteRemovedToastGeneric => 'Favorilerden çıkarıldı!';
+
+  @override
+  String get phoneCopiedToast => 'Telefon numarası kopyalandı!';
 }

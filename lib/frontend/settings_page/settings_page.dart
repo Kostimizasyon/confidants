@@ -32,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
       'tr' => targetL10n.languageTurkish,
       _ => targetL10n.languageSystem,
     };
-    proteinBar(
+    ProteinBar.success(
       context,
       targetL10n.languageSwitchedToast(langName),
       icon: LucideIcons.globe,
@@ -57,10 +57,9 @@ class _SettingsPageState extends State<SettingsPage> {
       final available = await _authService.isBiometricsAvailable();
       if (!available) {
         if (!mounted) return;
-        proteinBar(
+        ProteinBar.fail(
           context,
           l10n.biometricsUnavailable,
-          icon: LucideIcons.circleAlert,
         );
         return;
       }
@@ -78,7 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final l10n = context.l10n;
     await _prefs.setSelectedModelId(modelId);
     if (!mounted) return;
-    proteinBar(
+    ProteinBar.success(
       context,
       l10n.aiModelSwitchedToast(ModelSelectorCard.titleForId(l10n, modelId)),
       icon: LucideIcons.cpu,

@@ -235,5 +235,11 @@
     "placeholders": {
       "count": { "type": "int" }
     }
-  }
+  },
+  "profileSavedGeneric": "Confidant saved!",
+  "profileDeletedGeneric": "Confidant deleted!",
+  "profileAndPhonebookSavedGeneric": "Confidant and phone contact saved!",
+  "favoriteAddedToastGeneric": "Added to favorites!",
+  "favoriteRemovedToastGeneric": "Removed from favorites!",
+  "phoneCopiedToast": "Phone number copied!"
 }
